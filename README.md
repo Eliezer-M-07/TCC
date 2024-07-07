@@ -1,11 +1,11 @@
 # TCC
 
- <img src="" >
+ <img src="https://github.com/Eliezer-M-07/TCC/assets/94458792/506730e6-978b-45d0-9d07-4e81aa9946b2" width="450">
 
-
+<br>
 
 INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA SUL-RIO-GRANDENSE 
-CAMPUS GRAVATAÍ 
+
 CURSO TÉCNICO EM INFORMÁTICA PARA INTERNET
 
 
@@ -17,24 +17,7 @@ Plataforma de adoção e cadastro de animais desaparecidos
 Eliézer Martins da Silva
 
 
-
-
-
-
-
-
-
 Gravataí – RS Ano 2024
-
-
-Eliézer Martins da Silva
-
-
-
-
-
-
-
 
 
 
@@ -64,10 +47,10 @@ A plataforma tem como objetivo centralizar as informações de forma acessível 
 
 JUSTIFICATIVA
 
-		O problema do abandono e da perda de animais de estimação nas áreas urbanas é um assunto que precisa de soluções eficazes e acessíveis. Existem diversos motivos que levariam os tutores a abandonarem seus pets, alguns dos principais motivos é a falta de espaço adequado em casa, as mudanças de residência, e a falta de informação sobre as responsabilidades e os custos significativos envolvidos na guarda e manutenção dos pets são alguns dos principais fatores que levam ao abandono de muitos animais. Como resultado, um número crescente de animais acabam vulnerável nas ruas, enfrentando condições adversas e inseguras.
-		Por esse motivo, o desenvolvimento de uma plataforma web para cadastro de animais tornasse uma opção viável para amenizar essa situação conectando pessoas e informações de maneira eficiente possibilitando que esses donos de animais que não veem mais forma de manter-se cuidando do seu pet não cometer um ato cruel e cadastrá-los na plataforma para adoção evitando o aumento do número de animais que vivem nas ruas.
-		Além de facilitar o processo de adoção, a plataforma serve para ajudar proprietários a localizar seus animais desaparecidos e para pessoas que encontram animais perdidos a devolvê-los aos seus donos. A centralização das informações em um único espaço digital, acessível e fácil de navegar, promove uma rede de colaboração entre as pessoas.	
-	Portanto, acredita-se que com a realização desse projeto proporcionará uma solução prática e abrangente para um problema social e ambiental crítico. Ao promover o bem-estar animal e a qualidade de vida nos locais urbanos, a plataforma torna-se um mecanismo valioso tanto para os animais quanto para as pessoas envolvidas.
+O problema do abandono e da perda de animais de estimação nas áreas urbanas é um assunto que precisa de soluções eficazes e acessíveis. Existem diversos motivos que levariam os tutores a abandonarem seus pets, alguns dos principais motivos é a falta de espaço adequado em casa, as mudanças de residência, e a falta de informação sobre as responsabilidades e os custos significativos envolvidos na guarda e manutenção dos pets são alguns dos principais fatores que levam ao abandono de muitos animais. Como resultado, um número crescente de animais acabam vulnerável nas ruas, enfrentando condições adversas e inseguras.
+Por esse motivo, o desenvolvimento de uma plataforma web para cadastro de animais tornasse uma opção viável para amenizar essa situação conectando pessoas e informações de maneira eficiente possibilitando que esses donos de animais que não veem mais forma de manter-se cuidando do seu pet não cometer um ato cruel e cadastrá-los na plataforma para adoção evitando o aumento do número de animais que vivem nas ruas.
+Além de facilitar o processo de adoção, a plataforma serve para ajudar proprietários a localizar seus animais desaparecidos e para pessoas que encontram animais perdidos a devolvê-los aos seus donos. A centralização das informações em um único espaço digital, acessível e fácil de navegar, promove uma rede de colaboração entre as pessoas.	
+Portanto, acredita-se que com a realização desse projeto proporcionará uma solução prática e abrangente para um problema social e ambiental crítico. Ao promover o bem-estar animal e a qualidade de vida nos locais urbanos, a plataforma torna-se um mecanismo valioso tanto para os animais quanto para as pessoas envolvidas.
 
 
 
@@ -82,12 +65,18 @@ Desenvolver uma plataforma web focada na região sul do Brasil para a realizaç�
 
 ESPECÍFICOS
 
-	• Possibilitar o cadastro e login de usuários.
-	• Permitir que usuários cadastrados registrem animais para adoção, desaparecidos e encontrados.
-	• Permitir que usuários visitantes visualizem os animais disponíveis para adoção, desaparecidos e encontrados.
-	• Permitir que usuários cadastrados excluam e editem seus animais cadastrados.
-	• Administração responsável por validar os cadastros de animais para garantir que não haja cadastros mal intencionados.
-
+• Possibilitar o cadastro e login de usuários.
+<br>
+• Permitir que usuários cadastrados registrem animais para adoção, desaparecidos e encontrados.
+<br>
+• Permitir que usuários visitantes visualizem os animais disponíveis para adoção, desaparecidos e encontrados.
+<br>
+• Permitir que usuários cadastrados excluam e editem seus animais cadastrados.
+<br>
+• Administração responsável por validar os cadastros de animais para garantir que não haja cadastros mal intencionados.
+<br>
+<br>
+<br>
 
 REFERÊNCIAS
 
