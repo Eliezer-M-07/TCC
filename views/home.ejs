@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <%- include('layout/head'); %>
+    </head>
+    <body>
+        <%- include('layout/menu'); %>
+        <br>
+        <% if (alerta) { %>
+            <div class="container">
+                <div class="alert alert-dark" role="alert"><center><%= alerta %></center></div>
+            </div>
+        <%} else { %>
+            
+        <% } %>
+        <br>
+        <br>
+        <div>
+            <article  id="art1">
+                <br><h2 style="margin-left: 10px;">Seja Bem-vindo(a)!</h2><br>
+                <div class="container0">
+                    Seja bem-vindo(a) a SafePet, o seu santuário virtual para os amigos peludos que alegram nossas vidas! 
+                    Aqui, unimos corações com caudas, conectando aqueles que desejam encontrar um novo membro da família com aqueles que anseiam 
+                    por um lar amoroso.<br><br>Sabemos o quanto é angustiante perder um amigo peludo e a importância de reunir a família novamente. 
+                    Por isso, oferecemos uma plataforma onde você pode cadastrar animais perdidos e compartilhar informações para aumentar as chances 
+                    de encontrá-los. Além também de poder cadastrar que encontrou um pet com dono e queira cadastra-lo para ajudar o seu dono a reecontra-lo.
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br> 
+                    <a href="/adotar" style="font-size: 19px; background-color:black; color:aliceblue;" class="btn"><i class="material-icons">pets</i> Adotar</a>
+                    <a href="#" style="background-color:black;color: aliceblue; font-size: 19px; margin-left:42px;" class="btn"><i class="material-icons">handshake</i>&nbsp;Desaparecidos</a>
+                    <a href="#"style="background-color:black;color: aliceblue; font-size: 19px; float:right;" class="btn"><i class="material-icons">notification_important</i> Encontrei um pet</a>
+                </div>
+            </article>
+        </div>
+        <div>
+            <img id="img1" src="/images/f1.png" width=700px">
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <%- include("layout/footer"); %>
+    </body>
+</html>

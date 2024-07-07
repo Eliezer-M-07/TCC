@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoção</title>
+    <%- include('layout/head'); %>
+</head>
+<body>
+    <%- include('layout/menu'); %>
+    <br>
+    <article id="art4">
+        <div class="container">
+            <br>
+            <h5>Filtros</h5>
+            <br>
+            <form action="/adotar" method="GET">
+                <h6>Estado</h6>
+                <select name="estado" class="form-select" style="width: 75%;">
+                    <option value="">Todos</option>
+                    <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                    <option value="Santa Catarina">Santa Catarina</option>
+                    <option value="Paraná">Paraná</option>
+                </select>
+                <br>
+                <h6>Especie</h6>
+                <select name="especie" class="form-select" style="width: 75%;">
+                    <option value="">Todos</option>
+                    <option value="Cachorro">Cachorro</option>
+                    <option value="Gato">Gato</option>
+                </select>
+                <br>
+                <h6>Sexo</h6>
+                <select name="sexo" class="form-select" style="width: 75%;">
+                    <option value="">Todos</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Fêmea">Fêmea</option>
+                </select>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-dark">Aplicar</button>
+            </form>
+        </div>
+    </article>
+    <article id="art5">
+        <br>
+        <% if (all.length > 0) { %>
+            <div id="d5">
+                <%all.forEach(function(dados) { %>
+                    <div id="cardListagem" class="card">
+                        <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0; " >ADOTAR</div>
+                        <img style="height: 280px;" src="animais_adocao/<%= dados.foto %>" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                            <%= dados.nome %>
+                            </h5>
+                            <hr>
+                            <strong>Estado:</strong> <%= dados.estado %>
+                            <br>
+                            <strong>Sexo:</strong> <%= dados.sexo %>
+                            <br>
+                            <br>
+                            <a style="width: 100%; background-color: black; color: white;" href="" class="btn">Quero adotar</a>
+                        </div>
+                    </div>
+                    <br>
+              <% }) %>
+          </div>
+          <%} else { %>
+            <br>
+            <center><h5>Nenhum animal cadastrado.</h5></center>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+          <% } %>
+          <br>
+    </article>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <%- include("layout/footer"); %>
+</body>
+</html>

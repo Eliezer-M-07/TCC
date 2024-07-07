@@ -1,0 +1,167 @@
+body {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+
+}
+
+li:hover {
+    background-color: whitesmoke;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+
+#art1 {
+    float: left;
+    width: 50%;
+    margin-left: 70px;
+}
+
+#art2 {
+    width: 30%;
+    float: left;
+}
+
+#art2 a {
+    text-decoration: none;
+    color: inherit;
+    margin-left: 16%;
+    margin-top: 20px;
+}
+
+#art3 {
+    width: 70%;
+    float: right;
+}
+
+#art4 {
+    width: 20%;
+    height: 100%;
+    margin-left: 5%;
+    float:left; 
+}
+
+#art5 {
+    width: 75%;
+    height: 100%;
+    margin-left: 25%;
+}
+
+
+#img1 {
+    border-radius: 50px 20px;
+    box-shadow: 0 0 10px rgb(12, 12, 44);
+}
+
+#pfp {
+    border: 2px solid black;
+    margin-left: 15%;
+    margin-top: 9%;
+    box-shadow: 0 0 2px black;
+}
+
+i {
+    vertical-align: text-bottom;
+}
+
+.container0 {
+    width: 600px;
+    height: 100px;
+    padding: 10px;
+    text-align: justify;
+}
+
+footer {
+    border: 1px solid rgb(219, 218, 218);
+    width: 100%;
+    height: 2%;
+    position: relative;
+    left: 0;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.footer #d1,
+.footer #d2 {
+    margin: 0 10px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+#d3 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 55px;
+}
+
+
+#d3 a {
+    width: 25em;
+
+}
+
+#d4{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 55px;
+}
+
+#d5{
+    gap: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+#cardListagem{
+    margin-left: 1%; 
+    border-radius: 5px 5px 0 0; 
+    width: 18rem; 
+    margin-bottom: 1px; 
+    margin-top: 1%; 
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.5);
+}
+
+#cardListagem:hover{
+    box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
+
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: darkgray;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(21, 21, 21);
+}
+
+.dropdown-item:active {
+    background-color: rgb(26, 26, 26) !important;
+}
+
+.btn-black:focus,
+.dropdown-menu:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
