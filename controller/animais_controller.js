@@ -33,7 +33,7 @@ module.exports = {
 
             var ext = path.extname(files.foto[0].originalFilename)
             var nomefoto = hash + ext
-            var newpath = path.join(__dirname, '../public/animais_adocao/', nomefoto);
+            var newpath = path.join(__dirname, '../public/animais/', nomefoto);
 
             fs.rename(oldpath, newpath, function (err) {
                 if (err) throw err;
@@ -67,7 +67,7 @@ module.exports = {
                 const animal = result[0];
 
                 if (animal.fk_ani === req.session.Id) {
-                    const img = path.join(__dirname, '../public/animais_adocao/', animal.foto);
+                    const img = path.join(__dirname, '../public/animais/', animal.foto);
                     fs.unlink(img, (err) => {
                         if (err) console.error(err);
                     });
@@ -83,6 +83,17 @@ module.exports = {
         } else {
             res.render('login', { alerta: 'Esta ação não é possivel estando deslogado.', logado: req.session.loggedin })
         }
+    },
+
+
+    editar: function (req, res) {
+        if (req.session.loggedin) {
+            id = req.params.id
+            modelanimais.busca(id).then(result => res.render('editar_animal', { dadosAnimal: result, alerta: '', logado: req.session.loggedin })).catch(err => console.error(err));
+        } else {
+            res.render('login', { alerta: 'É precisa fazer login para editar um animal.', logado: req.session.loggedin })
+        }
+
     },
 
 

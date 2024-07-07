@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Animal</title>
+    <%- include('layout/head'); %>
+</head>
+
+<body>
+    <%- include('layout/menu'); %>
+        <br>
+        <br>
+        <div class="container">
+            <div class="container">
+                <div class="card" style="border-radius: 10px;">
+                    <div class="container" >
+                        <br>
+                        <%dadosAnimal.forEach(function(dados) { %>
+                            <div class="d-flex align-items-center">
+                                <img src="/images/editar_animal.png" width="70px">&nbsp;&nbsp;
+                                <h4 class="ml-2">Editar Animal</h4>
+                            </div>
+                            <br>
+                            <form method="post" action="/" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">
+                                        <h6>Nome</h6>
+                                    </label>
+                                    <input value="<%= dados.nome %>" maxlength="40" name="nome" required type="text"
+                                        class="form-control" id="name" aria-describedby="nameHelp">
+                                    <div id="NameHelp" class="form-text">Informe o nome do animal.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="especie" class="form-label">
+                                        <h6>Espécie</h6>
+                                    </label>
+                                    <select name="especie" id="especie" class="form-select"
+                                        aria-label="Default select example" aria-describedby="especieHelp">
+                                        <option value="Cachorro">Cachorro</option>
+                                        <option value="Gato">Gato</option>
+                                    </select>
+                                    <div id="especieHelp" class="form-text">Informe a espécie do animal.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="raca" class="form-label">
+                                        <h6>Raça</h6>
+                                    </label>
+                                    <select name="raca" id="raca" class="form-select"
+                                        aria-label="Default select example" aria-describedby="racaHelp">
+
+                                    </select>
+                                    <div id="racaHelp" class="form-text">Informe a raça do animal.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sexo" class="form-label">
+                                        <h6>Sexo</h6>
+                                    </label>
+                                    <select name="sexo" id="sexo" class="form-select"
+                                        aria-label="Default select example" aria-describedby="sexoHelp">
+                                        <option value="Macho">Macho</option>
+                                        <option value="Fêmea">Fêmea</option>
+                                    </select>
+                                    <div id="sexoHelp" class="form-text">Informe o sexo do animal.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="porte" class="form-label">
+                                        <h6>Porte</h6>
+                                    </label>
+                                    <select name="porte" id="porte" class="form-select"
+                                        aria-label="Default select example" aria-describedby="porteHelp">
+                                        <option value="Pequeno">Pequeno</option>
+                                        <option value="Médio">Médio</option>
+                                        <option value="Grande">Grande</option>
+                                        <option value="Gigante">Gigante</option>
+                                    </select>
+                                    <div id="sexoHelp" class="form-text">Informe o porte do animal.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="peso" class="form-label">
+                                        <h6>Peso</h6>
+                                    </label>
+                                    <input value="<%= dados.peso %>" name="peso" required type="number"
+                                        class="form-control" step="0.01" min="0" id="peso" aria-describedby="pesoHelp">
+                                    <div id="pesoHelp" class="form-text">Informe o peso do animal.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="estado" class="form-label">
+                                        <h6>Estado</h6>
+                                    </label>
+                                    <select name="estado" id="estado" class="form-select"
+                                        aria-label="Default select example" aria-describedby="estadoHelp">
+                                        <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                                        <option value="Santa Catarina">Santa Catarina</option>
+                                        <option value="Paraná">Paraná</option>
+                                    </select>
+                                    <div id="estadoHelp" class="form-text">Informe o estado que reside o animal.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="textarea" class="form-label">
+                                        <h6>Personalidade</h6>
+                                    </label>
+                                    <textarea name="personalidade" maxlength="255" class="form-control" id="textarea"
+                                        rows="2"><%=dados.caracteristicas %></textarea>
+                                    <div id="personalidadeHelp" class="form-text">Fale sobre a personalidade do animal.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">
+                                        <h6>Foto do animal</h6>
+                                    </label>
+                                    <input name="foto" required class="form-control" type="file" id="formFile">
+                                    <div id="fotoHelp" class="form-text">Envie uma foto.</div>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-dark">Editar</button>
+                            </form>
+                            <% }) %>
+                                <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <%- include("layout/footer"); %>
+            <script>
+                const especieSelect = document.getElementById('especie');
+                const racaSelect = document.getElementById('raca');
+
+                const racasPorEspecie = {
+                    Cachorro: [
+                        "Desconhecida",
+                        "Vira-lata",
+                        "American Staffordshire Terrier",
+                        "American Bully",
+                        "Akita",
+                        "Braco alemão de pelo duro",
+                        "Boiadeiro Australiano",
+                        "Boiadeiro da Flandres",
+                        "Boiadeiro de Berna",
+                        "Bichon havanês",
+                        "Basset Hound",
+                        "Bichon Frisé",
+                        "Boston Terrier",
+                        "Border Collie",
+                        "Bulmastife",
+                        "Boxer",
+                        "Bulldog Americano",
+                        "Bulldog Francês",
+                        "Bulldog Inglês",
+                        "Bull Terrier",
+                        "Cavalier King Charles Spaniel",
+                        "Cão de montanha dos Pirenéus",
+                        "Cão-islandês-de-pastoreio",
+                        "Cocker Spaniel Inglês",
+                        "Cão-de-santo-humberto",
+                        "Cairn terrier",
+                        "Cane corso",
+                        "Chihuahua",
+                        "Chow Chow",
+                        "Collie",
+                        "Dogue-de-bordéus",
+                        "Dogue alemão",
+                        "Dachshund",
+                        "Dálmata",
+                        "Doberman",
+                        "Flat-coated retriever",
+                        "Foxhound-inglês",
+                        "Grande boiadeiro suíço",
+                        "Glen of imaal terrier",
+                        "Golden Retriever",
+                        "Griffon de Bruxelas",
+                        "Husky Siberiano",
+                        "Jack Russell Terrier",
+                        "Kerry Blue Terrier",
+                        "Labrador Retriever",
+                        "Lulu da Pomerânia",
+                        "Lhasa Apso",
+                        "Leonberger",
+                        "Maltês",
+                        "Pastor-polonês-da-planície",
+                        "Pastor-australiano",
+                        "Pastor de Shetland",
+                        "Pinscher alemão",
+                        "Pastor Húngaro",
+                        "Pointer inglês",
+                        "Pastor Alemão",
+                        "Pinscher",
+                        "Poodle",
+                        "Pit Bull",
+                        "Pug",
+                        "Rottweiler",
+                        "Staffordshire Bull Terrier",
+                        "Setter irlandês",
+                        "Spaniel japonês",
+                        "Spaniel bretão",
+                        "Setter gordon",
+                        "Silky terrier",
+                        "São-bernardo",
+                        "Schnauzer",
+                        "Shih Tzu",
+                        "Shar-pei",
+                        "Terrier irlandês",
+                        "Yorkshire",
+                    ],
+                    Gato: [
+                        "Desconhecida",
+                        "Siamês",
+                        "Persa",
+
+                    ]
+                };
+
+                function atualizarRacas() {
+                    racaSelect.innerHTML = '';
+
+                    const especieSelecionada = especieSelect.value;
+
+                    const racas = racasPorEspecie[especieSelecionada];
+
+                    racas.forEach(raca => {
+                        const option = document.createElement('option');
+                        option.textContent = raca;
+                        option.value = raca;
+                        racaSelect.appendChild(option);
+                    });
+                }
+
+                especieSelect.addEventListener('change', atualizarRacas);
+
+                atualizarRacas();
+            </script>
+</body>
+
+</html>

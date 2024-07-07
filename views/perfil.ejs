@@ -76,21 +76,21 @@
                 <h3>Animais Cadastrados</h3>
                 <br>
                 <div id="d3">
-                  <a id="btn-adocao" href="#" class="btn btn-dark"><i class="material-icons">pets</i>&nbsp; Adoção</a>
-                  <a id="btn-desaparecidos" href="#" class="btn btn-dark"><i class="material-icons">question_mark</i>&nbsp;Desaparecidos</a>
-                  <a id="btn-encontrados" href="#" class="btn btn-dark"><i class="material-icons">notification_important</i>&nbsp; Encontrados</a>
+                  <a style="background-color: black; color: white;" id="btn-adocao" href="#" class="btn"><i class="material-icons">pets</i>&nbsp; Adoção</a>
+                  <a style="background-color: black; color: white;" id="btn-desaparecidos" href="#" class="btn"><i class="material-icons">question_mark</i>&nbsp;Desaparecidos</a>
+                  <a style="background-color: black; color: white;" id="btn-encontrados" href="#" class="btn"><i class="material-icons">notification_important</i>&nbsp; Encontrados</a>
               </div>
                 <hr style="width: 98%;">
                 <% if (dadosAdocao.length > 0) { %>
                   <div class="row" style="gap: 9px;">
                     <% dadosAdocao.forEach(function(dados, index) { %>
                       <div class="card" style="width: 19rem; margin-left: 1%; margin-top: 1%; box-shadow: 0 0 5px rgb(12, 12, 44)">
-                        <img class="rounded" style="width: 278px; height: 280px; margin-top: 5%; border: 2px solid rgb(224, 224, 224);" src="animais_adocao/<%= dados.foto %>" class="card-img-top" alt="...">
+                        <img class="rounded" style="width: 278px; height: 280px; margin-top: 5%; border: 2px solid rgb(224, 224, 224);" src="animais/<%= dados.foto %>" class="card-img-top" alt="...">
                         <div class="card-body">
                           <h5 class="card-title"><%= dados.nome %></h5>
                           <hr>
                           <div style="display: flex; justify-content: flex-start; align-items: flex-end; gap: 30px;">
-                            <a style="width:7em; color: white;" href="#" class="btn btn-dark">Editar</a>
+                            <a style="width:7em; color: white;" href="/editar_animal/<%= dados.id %>" class="btn btn-dark">Editar</a>
                             <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
                           </div>
                           <div class="modal fade" id="excluiranimal<%= index %>" tabindex="-1" aria-labelledby="excluiranimalLabel<%= index %>" aria-hidden="true" style="color: black;">
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-                                  <a href="/deletar_adocao/<%= dados.id %>"><button type="button" class="btn btn-dark">Excluir</button></a>
+                                  <a href="/deletar_animal/<%= dados.id %>"><button type="button" class="btn btn-dark">Excluir</button></a>
                                 </div>
                               </div>
                             </div>

@@ -14,7 +14,7 @@ app.use(session({
 }));
 
 const usuarioController = require("./controller/usuarios_controller");
-const adocaoController = require("./controller/animais_controller");
+const animaisController = require("./controller/animais_controller");
 
 
 app.get('/', function(req, res){
@@ -71,7 +71,8 @@ app.get('/perfil', usuarioController.dados);
 app.get('/editar_perfil', usuarioController.editar);
 app.post('/editar', usuarioController.alterar);
 app.get('/deletar/:id', usuarioController.deletar)
-app.get('/deletar_adocao/:id', adocaoController.deletar)
+app.get('/editar_animal/:id', animaisController.editar)
+app.get('/deletar_animal/:id', animaisController.deletar)
 app.post('/cadastrar', usuarioController.cadastrar);
-app.post('/cadastrar_adocao', adocaoController.cadastrar);
-app.get('/adotar', adocaoController.listagem);
+app.post('/cadastrar_adocao', animaisController.cadastrar);
+app.get('/adotar', animaisController.listagem);

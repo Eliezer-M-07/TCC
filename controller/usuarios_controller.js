@@ -67,7 +67,7 @@ module.exports = {
                     }
                 });
             }
-            else { res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin }) }
+            else { res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin })}
         });
 
     },
@@ -141,7 +141,7 @@ module.exports = {
 
     editar: function (req, res) {
         if (req.session.loggedin) {
-            modelusuario.busca(req.session.Id).then(result => res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin, nome: req.session.username })).catch(err => console.error(err));
+            modelusuario.busca(req.session.Id).then(result => res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin})).catch(err => console.error(err));
         } else {
             res.render('login', { alerta: 'É precisa fazer login para editar.', logado: req.session.loggedin })
         }
