@@ -41,6 +41,7 @@ module.exports = {
     
         } else {
             res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin });
+            return;
         }
     },
     
@@ -61,13 +62,16 @@ module.exports = {
                         req.session.loggedin = true;
 
                         res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin });
+                        return;
                     }
                     else {
                         res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin })
+                        return;
                     }
                 });
             }
             else { res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin })}
+            return; 
         });
 
     },
@@ -83,6 +87,7 @@ module.exports = {
             con.query(sql, fields['email'][0], function (err, result) {
                 if (result.length > 0) {
                     res.render('cadastro', { alerta: "E-mail já cadastrado.", logado: req.session.loggedin });
+                    return;
                 } else {
                     var oldpath = files.pfp[0].filepath;
                     var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
@@ -105,6 +110,7 @@ module.exports = {
 
                 };
                 res.render('login', { alerta: 'Usuário cadastrado com sucesso, faça login.', logado: req.session.loggedin });
+                return;
             });
         });
 

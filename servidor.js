@@ -20,36 +20,44 @@ const animaisController = require("./controller/animais_controller");
 app.get('/', function(req, res){
     if (req.session.loggedin) {
         res.render('home', {alerta: '', logado:req.session.loggedin})
+        return;
     }
     else{
         res.render('home', {alerta: '', logado:req.session.loggedin})
+        return;
     }
 });
 
 app.get('/login', function(req, res){
     if (req.session.loggedin) {
         res.render('home', {alerta:'Faça logout para realizar o login.', logado: req.session.loggedin});
+        return;
     }
     else{
         res.render('login', {alerta:"", logado: req.session.loggedin})
+        return;
     }
 });
 
 app.get('/cadastro', function(req, res){
     if (req.session.loggedin) {
         res.render('home', {alerta:'Faça logout para realizar o cadastro.', logado: req.session.loggedin});
+        return;
     }
     else{
        res.render('cadastro',{alerta:'', logado: req.session.loggedin})
+       return;
     }
 })
 
 app.get('/cadastrar_adocao', function(req, res){
     if (req.session.loggedin) {
         res.render('cadastro_adocao',{alerta:'', logado: req.session.loggedin})
+        return;
     }
     else{
         res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin});
+        return;
     }
 })
 
@@ -57,6 +65,7 @@ app.get('/logout',function(req,res){
     req.session.destroy(function(err) {
     })  
     res.redirect('/')
+    return;
 });
 
 
