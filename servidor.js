@@ -85,3 +85,4 @@ app.get('/deletar_animal/:id', animaisController.deletar)
 app.post('/cadastrar', usuarioController.cadastrar);
 app.post('/cadastrar_adocao', animaisController.cadastrar);
 app.get('/adotar', animaisController.listagem);
+app.get('/adotar/:id',animaisController.dados)

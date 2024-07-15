@@ -1,3 +1,8 @@
+body {
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
 li:hover {
     background-color: whitesmoke;
     border-radius: 8px;
@@ -52,6 +57,12 @@ li:hover {
     margin-left: 15%;
     margin-top: 9%;
     box-shadow: 0 0 2px black;
+}
+
+#animal{
+    border: 2px solid black;
+    box-shadow: 0 0 2px black;
+    
 }
 
 i {
@@ -116,6 +127,12 @@ footer {
     align-items: flex-start;
     gap: 30px;
     flex-wrap: wrap;
+}
+
+#d6{
+    margin-top: 1%;
+    border-radius: 5px 5px 0 0; 
+    height: 50rem;
 }
 
 #cardListagem{

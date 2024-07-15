@@ -49,7 +49,7 @@
                 <%all.forEach(function(dados) { %>
                     <div id="cardListagem" class="card">
                         <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0; " >ADOTAR</div>
-                        <img style="height: 280px;" src="animais/<%= dados.foto %>" alt="...">
+                        <img style="height: 280px;" src="/animais/<%= dados.foto %>" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">
                             <%= dados.nome %>
@@ -60,7 +60,7 @@
                             <strong>Sexo:</strong> <%= dados.sexo %>
                             <br>
                             <br>
-                            <a style="width: 100%; background-color: black; color: white;" href="" class="btn">Quero adotar</a>
+                            <a style="width: 100%; background-color: black; color: white;" href="/adotar/<%=dados.id %>" class="btn">Quero adotar</a>
                         </div>
                     </div>
                     <br>
@@ -88,6 +88,8 @@
           <% } %>
           <br>
     </article>
+    <br>
+    <br>
     <br>
     <br>
     <br>

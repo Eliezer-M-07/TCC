@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados animal</title>
+    <%- include('layout/head'); %>
+</head>
+    <body>
+        <%- include('layout/menu'); %>
+        <br>
+        <div id="d6" class="container" style="box-shadow: 0 0 10px rgb(0, 0, 0, 0.5); padding: 10px;">
+            <%dadosAnimal.forEach(function(dados) { %>
+                <img id="animal" src="/animais/<%= dados.foto %>" width="250px">
+                <br>
+                <br>
+                <div style="display: flex; gap: 10%;">
+                <article style="margin-top: 2%;">
+                    <h5><i class="material-icons">description</i> Informações Básicas</h5>
+                    <hr>
+                    <strong>Nome - </strong> <%= dados.nome %>
+                    <br>
+                    <strong>Especie - </strong> <%= dados.especie %>
+                    <br>
+                    <strong>Raça - </strong> <%= dados.raca %>
+                    <br>
+                    <strong>Sexo - </strong> <%= dados.sexo %>
+                    <br>
+                    <strong>Especie:</strong> <%= dados.especie %>
+                    <br>
+                </article>
+                <article style="margin-top: 2%;">
+                    <h5><i class="material-icons">account_box</i> Informações Anunciante</h5>
+                    <hr>
+                    <strong>Nome - </strong> <%= dados.nome %>
+                    <br>
+                    <strong>Especie - </strong> <%= dados.especie %>
+                    <br>
+                    <strong>Raça - </strong> <%= dados.raca %>
+                    <br>
+                    <strong>Sexo - </strong> <%= dados.sexo %>
+                    <br>
+                    <strong>Especie:</strong> <%= dados.especie %>
+                </article>
+                </div>
+            <% }) %>
+        </div>
+        
+        <br>
+        <%- include('layout/footer'); %>
+    </body>
+</html>
