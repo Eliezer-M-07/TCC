@@ -24,8 +24,8 @@ module.exports = {
 
     dados: function(req, res){
         var id = req.params.id;
-        modelanimais.busca(id).then(result=> {
-            res.render('dados_animal', {dadosAnimal: result, logado: req.session.loggedin, alerta: '' })
+        modelanimais.buscaDados(id).then(result=> {''
+            res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' })
         })
         .catch(err => {
             if (err) throw err;

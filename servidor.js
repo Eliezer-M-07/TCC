@@ -64,7 +64,7 @@ app.get('/cadastrar_adocao', function(req, res){
 app.get('/logout',function(req,res){
     req.session.destroy(function(err) {
     })  
-    res.redirect('/')
+    res.redirect('/login')
     return;
 });
 

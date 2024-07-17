@@ -62,8 +62,8 @@ li:hover {
 #animal{
     border: 2px solid black;
     box-shadow: 0 0 2px black;
-    
 }
+
 
 i {
     vertical-align: text-bottom;
@@ -79,13 +79,14 @@ i {
 footer {
     border: 1px solid rgb(219, 218, 218);
     width: 100%;
+    height: 169px;
 }
 
 .footer {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 20px;
+    gap: 25px;
     
 }
 
@@ -109,7 +110,7 @@ footer {
 
 
 #d3 a {
-    width: 25em;
+    width: 395px;
 
 }
 
@@ -130,9 +131,12 @@ footer {
 }
 
 #d6{
-    margin-top: 1%;
-    border-radius: 5px 5px 0 0; 
-    height: 50rem;
+    background-color:rgb(250, 250, 250);
+    color: black;
+    border-radius: 10px; 
+    box-shadow: 0 0 3px rgba(57, 57, 57, 0.5); 
+    padding: 2em;
+    
 }
 
 #cardListagem{
@@ -140,7 +144,6 @@ footer {
     border-radius: 5px 5px 0 0; 
     width: 18rem; 
     margin-bottom: 1px; 
-    margin-top: 1%; 
     box-shadow: 0 0 10px rgb(0, 0, 0, 0.5);
 }
 
@@ -149,9 +152,8 @@ footer {
 }
 
 #cardPerfil{
-    width: 19rem; 
-    margin-left: 1%; 
-    margin-top: 1%; 
+    width: 260px; 
+    margin-left: 14px; 
     box-shadow: 0 0 5px rgb(12, 12, 44);
 }
 
@@ -159,6 +161,8 @@ footer {
     box-shadow: 0 0 10px black;
 
 }
+
+
 
 body::-webkit-scrollbar {
     width: 10px;

@@ -52,6 +52,18 @@ module.exports = {
         });
     },
 
+    async buscaDados(id) {
+        var sql = "SELECT animais.*, usuarios.nome AS anunciante_nome, usuarios.email AS anunciante_email, usuarios.telefone AS anunciante_tel FROM animais JOIN usuarios ON animais.fk_ani = usuarios.id WHERE animais.id = ?";
+        return new Promise((resolve, reject) => {
+            con.query(sql, id, (err, row) => {
+                if (err) return reject(err);
+                resolve(row);
+            });
+        });
+    },
+
+
+
     buscaAdocao: function (userId) {
         return new Promise((resolve, reject) => {
             const sql = "SELECT * FROM animais WHERE fk_ani = ? AND status = 'adocao'";

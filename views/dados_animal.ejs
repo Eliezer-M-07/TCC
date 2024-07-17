@@ -9,12 +9,26 @@
     <body>
         <%- include('layout/menu'); %>
         <br>
-        <div id="d6" class="container" style="box-shadow: 0 0 10px rgb(0, 0, 0, 0.5); padding: 10px;">
-            <%dadosAnimal.forEach(function(dados) { %>
-                <img id="animal" src="/animais/<%= dados.foto %>" width="250px">
+        <div id="d6" class="container" >
+            <%informacoes.forEach(function(dados) { %>
+                <div>
+                    <div>
+                        <img src="/images/logo.png" width="230px" style="float: right;">  
+                        <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0; box-shadow: 0 0 2px black; border: 2px solid black; width: 250px;">ADOTAR</div>
+                        <img id="animal" src="/animais/<%= dados.foto %>" width="250px">
+                        <div style="float: right;">
+                            </div>
+                            <div style="width: 23%; height: 10%;">
+                                <br>
+                                <h4><%= dados.nome %></h4>
+                                <hr width="90%">
+                                <span style="text-align: justify"><%= dados.caracteristicas %></span>
+                            </div>
+                    </div>
+                </div>
                 <br>
                 <br>
-                <div style="display: flex; gap: 10%;">
+                <div style="display: flex; gap: 15%;">
                 <article style="margin-top: 2%;">
                     <h5><i class="material-icons">description</i> Informações Básicas</h5>
                     <hr>
@@ -26,26 +40,23 @@
                     <br>
                     <strong>Sexo - </strong> <%= dados.sexo %>
                     <br>
-                    <strong>Especie:</strong> <%= dados.especie %>
-                    <br>
                 </article>
                 <article style="margin-top: 2%;">
                     <h5><i class="material-icons">account_box</i> Informações Anunciante</h5>
                     <hr>
-                    <strong>Nome - </strong> <%= dados.nome %>
+                    <strong>Nome - </strong> <%= dados.anunciante_nome %>
                     <br>
-                    <strong>Especie - </strong> <%= dados.especie %>
+                    <strong>E-mail - </strong> <%= dados.anunciante_email %>
                     <br>
-                    <strong>Raça - </strong> <%= dados.raca %>
+                    <strong>Telefone - </strong> <%= dados.anunciante_tel %>
                     <br>
-                    <strong>Sexo - </strong> <%= dados.sexo %>
-                    <br>
-                    <strong>Especie:</strong> <%= dados.especie %>
                 </article>
                 </div>
             <% }) %>
         </div>
-        
+        <br>
+        <br>
+        <br>
         <br>
         <%- include('layout/footer'); %>
     </body>
