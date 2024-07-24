@@ -105,7 +105,7 @@ module.exports = {
 
                     bcrypt.hash(senha, saltRounds, function (err, hash) {
                         if (err) throw err;
-                        modelusuario.inserir(fields['nome'][0], fields['email'][0], hash, fields['telefone'][0], nomeimg)
+                        modelusuario.inserir(fields['nome'][0], fields['email'][0], hash, 55 + fields['telefone'][0], nomeimg)
                     });
 
                 };
@@ -180,11 +180,11 @@ module.exports = {
                 fs.rename(oldpath, newpath, function (err) {
                     if (err) throw err;
                 });
-                modelusuario.update(fields['nome'][0], fields['telefone'][0], nomeimg, req.session.Id);
+                modelusuario.update(fields['nome'][0], 55 + fields['telefone'][0], nomeimg, req.session.Id);
 
 
             } else {
-                modelusuario.updateSempfp(fields['nome'][0], fields['telefone'][0], req.session.Id);
+                modelusuario.updateSempfp(fields['nome'][0], 55 + fields['telefone'][0], req.session.Id);
 
 
             }

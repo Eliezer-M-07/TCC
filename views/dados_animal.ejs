@@ -10,6 +10,12 @@
         <%- include('layout/menu'); %>
         <br>
         <div id="d6" class="container" >
+            <% function formatarTelefone(numero) {
+                let numeroLocal = numero.substring(2);
+                let ddd = numeroLocal.substring(0, 2);
+                let telefone = numeroLocal.substring(2);
+                return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
+            } %>
             <%informacoes.forEach(function(dados) { %>
                 <div>
                     <div>
@@ -48,8 +54,9 @@
                     <br>
                     <strong>E-mail - </strong> <%= dados.anunciante_email %>
                     <br>
-                    <strong>Telefone - </strong> <%= dados.anunciante_tel %>
+                    <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
                     <br>
+                    <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
                 </article>
                 </div>
             <% }) %>

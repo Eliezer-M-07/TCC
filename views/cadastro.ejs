@@ -42,8 +42,8 @@
                           </div>
                           <div class="mb-3">
                             <label for="telefone" class="form-label"><h6>Telefone</h6></label>
-                            <input name="telefone" required type="text" class="form-control" id="telefone" pattern="^\(\d{2}\)\s\d{4,5}-\d{4}$">
-                            <div id="passwordHelp" class="form-text">Informe seu telefone. | (XX) XXXXX-XXXX</div>
+                            <input name="telefone" required type="text" class="form-control" id="telefone" pattern="^\d{10,11}$" title="O telefone deve estar no formato solicitado.">
+                            <div id="passwordHelp" class="form-text">Informe seu telefone | ex: 51998762897 </div>
                           </div>
                           <div class="mb-3">
                               <label for="formFile" class="form-label"><h6>Foto de perfil</h6></label>
@@ -68,4 +68,10 @@
       <br>
       <%- include("layout/footer"); %>
   </body>
+  <script>
+    document.getElementById('telefone').addEventListener('input', function (e) {
+        var x = e.target.value.replace(/\D/g, '');
+        e.target.value = x;
+    });
+    </script>
 </html>

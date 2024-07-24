@@ -9,7 +9,13 @@
     <body>
         <%- include('layout/menu'); %>
         <div>
-            <article id="art2">
+                <article id="art2">
+                  <% function formatarTelefone(numero) {
+                    let numeroLocal = numero.substring(2);
+                    let ddd = numeroLocal.substring(0, 2);
+                    let telefone = numeroLocal.substring(2);
+                    return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
+                } %>
                 <%dadosUsuario.forEach(function(dados) { %>
                     <img id="pfp" class="rounded" src="/usuarios/<%= dados.pfp %>" width="280px" height="280px">
                     <br>
@@ -19,7 +25,7 @@
                     <br>
                     <a><i class="material-icons">mail</i>&nbsp;| <%= dados.email %></a>
                     <br>
-                    <a><i class="material-icons">call</i>&nbsp;| <%= dados.telefone %></a>
+                    <a><i class="material-icons">call</i>&nbsp;| <%= formatarTelefone(dados.telefone) %></a>
                     <br>
                     <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="/editar_perfil"><i class="material-icons">edit</i>&nbsp;| Editar Perfil</a>
                     <br>
