@@ -1,6 +1,7 @@
 const fs = require('fs');
-const crypto = require('crypto');
 const path = require('path');
+const sharp = require('sharp'); 
+const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 var formidable = require('formidable');
 
@@ -81,36 +82,39 @@ module.exports = {
         var form = new formidable.IncomingForm();
 
         form.parse(req, (err, fields, files) => {
-
+            if (err) throw err;
+    
             var sql = "SELECT * FROM usuarios where email = ?";
-
+    
             con.query(sql, fields['email'][0], function (err, result) {
+                if (err) throw err;
+    
                 if (result.length > 0) {
                     res.render('cadastro', { alerta: "E-mail já cadastrado.", logado: req.session.loggedin });
                     return;
                 } else {
                     var oldpath = files.pfp[0].filepath;
                     var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
-
-                    var ext = path.extname(files.pfp[0].originalFilename)
-                    var nomeimg = hash + ext
+                    var ext = path.extname(files.pfp[0].originalFilename);
+                    var nomeimg = hash + ext;
                     var newpath = path.join(__dirname, '../public/usuarios/', nomeimg);
-
-                    fs.rename(oldpath, newpath, function (err) {
-                        if (err) throw err;
-                    });
-
-                    const senha = fields['senha'][0];
-                    const saltRounds = 10;
-
-                    bcrypt.hash(senha, saltRounds, function (err, hash) {
-                        if (err) throw err;
-                        modelusuario.inserir(fields['nome'][0], fields['email'][0], hash, 55 + fields['telefone'][0], nomeimg)
-                    });
-
-                };
-                res.render('login', { alerta: 'Usuário cadastrado com sucesso, faça login.', logado: req.session.loggedin });
-                return;
+    
+  
+                    sharp(oldpath)
+                        .resize({ width: 280, height: 280, fit: 'cover' }) 
+                        .toFile(newpath, (err, info) => {
+                            if (err) throw err;
+    
+                            const senha = fields['senha'][0];
+                            const saltRounds = 10;
+    
+                            bcrypt.hash(senha, saltRounds, function (err, hash) {
+                                if (err) throw err;
+                                modelusuario.inserir(fields['nome'][0], fields['email'][0], hash, 55 + fields['telefone'][0], nomeimg);
+                                res.render('login', { alerta: 'Usuário cadastrado com sucesso, faça login.', logado: req.session.loggedin });
+                            });
+                        });
+                }
             });
         });
 
@@ -159,34 +163,33 @@ module.exports = {
         var form = new formidable.IncomingForm();
 
         form.parse(req, (err, fields, files) => {
-
+            
             if (files.pfp) {
                 modelusuario.busca(req.session.Id)
                     .then(result => {
                         var img = path.join(__dirname, '../public/usuarios/', result[0]['pfp']);
-                        fs.unlink(img, (err) => { });
+                        fs.unlink(img, (err) => {
+                            if (err) console.error(err);
+                        });
                     })
-                    .catch(err =>
-                        console.error(err)
-                    );
-
+                    .catch(err => console.error(err));
+    
                 var oldpath = files.pfp[0].filepath;
                 var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
-
-                var ext = path.extname(files.pfp[0].originalFilename)
-                var nomeimg = hash + ext
+                var ext = path.extname(files.pfp[0].originalFilename);
+                var nomeimg = hash + ext;
                 var newpath = path.join(__dirname, '../public/usuarios/', nomeimg);
+    
 
-                fs.rename(oldpath, newpath, function (err) {
-                    if (err) throw err;
-                });
-                modelusuario.update(fields['nome'][0], 55 + fields['telefone'][0], nomeimg, req.session.Id);
-
-
+                sharp(oldpath)
+                    .resize({ width: 280, height: 280, fit: 'cover' }) 
+                    .toFile(newpath, (err, info) => {
+                        if (err) throw err;
+    
+                        modelusuario.update(fields['nome'][0], 55 + fields['telefone'][0], nomeimg, req.session.Id);
+                    });
             } else {
                 modelusuario.updateSempfp(fields['nome'][0], 55 + fields['telefone'][0], req.session.Id);
-
-
             }
         });
         res.redirect('/perfil')

@@ -19,8 +19,7 @@
                         <br>
                         <%dadosAnimal.forEach(function(dados) { %>
                             <div class="d-flex align-items-center">
-                                <img src="/images/editar_animal.png" width="70px">&nbsp;&nbsp;
-                                <h4 class="ml-2">Editar Animal</h4>
+                                <img style="border: solid 1px black;" src="/animais/<%= dados.foto %>" width="100px" class="rounded-circle" >&nbsp;&nbsp;&nbsp;<h4 class="ml-2">Editar <%= dados.nome %></h4>
                             </div>
                             <br>
                             <form method="post" action="/" enctype="multipart/form-data">

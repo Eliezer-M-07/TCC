@@ -99,7 +99,6 @@ module.exports = {
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;
-            console.log("Registro inserido com sucesso!");
         });
     },
     

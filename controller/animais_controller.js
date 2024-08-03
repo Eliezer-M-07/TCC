@@ -1,6 +1,7 @@
 const fs = require('fs');
-const crypto = require('crypto');
 const path = require('path');
+const sharp = require('sharp'); 
+const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 var formidable = require('formidable');
 
@@ -45,23 +46,25 @@ module.exports = {
             var nomefoto = hash + ext
             var newpath = path.join(__dirname, '../public/animais/', nomefoto);
 
-            fs.rename(oldpath, newpath, function (err) {
-                if (err) throw err;
-            });
+            sharp(oldpath)
+                .resize({ width: 250, height: 250, fit: 'cover' }) 
+                .toFile(newpath, (err, info) => {
+                    if (err) throw err;
 
-            modelanimais.inserir_adocao(
-                req.session.Id,
-                'adocao',
-                fields['estado'][0],
-                fields['nome'][0],
-                fields['especie'][0],
-                fields['raca'][0],
-                fields['sexo'][0],
-                fields['porte'][0],
-                fields['peso'][0],
-                fields['personalidade'][0],
-                nomefoto
-            );
+                    modelanimais.inserir_adocao(
+                        req.session.Id,
+                        'adocao',
+                        fields['estado'][0],
+                        fields['nome'][0],
+                        fields['especie'][0],
+                        fields['raca'][0],
+                        fields['sexo'][0],
+                        fields['porte'][0],
+                        fields['peso'][0],
+                        fields['personalidade'][0],
+                        nomefoto
+                    );
+                });
 
         });
 
