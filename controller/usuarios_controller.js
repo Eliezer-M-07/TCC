@@ -72,7 +72,7 @@ module.exports = {
                 });
             }
             else { res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin })}
-            return; 
+             
         });
 
     },
@@ -125,6 +125,9 @@ module.exports = {
 
             if (req.params.id == req.session.Id) {
                 var id = req.params.id;
+
+                modelanimal.deletarComUser(id);
+
                 modelusuario.busca(id)
                     .then(result => {
                         var img = path.join(__dirname, '../public/usuarios/', result[0]['pfp']);
@@ -134,7 +137,8 @@ module.exports = {
                         console.error(err)
                     );
 
-                modelusuario.deletar(id)
+                
+                modelusuario.deletar(id);
 
                 req.session.destroy(function (err) {
                 })

@@ -1,5 +1,6 @@
+const fs = require('fs');
+const path = require('path');
 con = require("../config/db.js").pool;
-
 
 module.exports = {
 
@@ -132,9 +133,28 @@ module.exports = {
         });
     },
 
+    deletarComUser(id){
+        var sql = "SELECT foto FROM animais WHERE fk_ani = ?"
 
+        con.query(sql, id, (err, result) => {
 
+            if (err) throw(err);
 
+            result.forEach(animal => {
+                const imgPath = path.join(__dirname, '../public/animais/', animal.foto);
+                fs.unlink(imgPath, (err) => {
+                   if (err) throw err;
+                });
+            });
+
+            var sql2 = "DELETE FROM animais WHERE fk_ani = ?";
+
+            con.query(sql2, id, function (err, result) {
+                if (err) throw err;
+            });
+
+        })
+    },
 
 
 
