@@ -106,20 +106,19 @@ module.exports = {
     
 
 
-    update(estado, nome, especie, raca, sexo, porte, peso, personalidade, foto, id) {
-        var sql = "UPDATE animais SET estado = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, personalidade = ?, foto = ? WHERE id = ?";
-        var values = [
-            [estado], [nome], [especie], [raca], [sexo], [porte], [peso], [personalidade], [foto], [id]];
+    updateAdocao(nome, especie, raca, sexo, porte, peso, estado, personalidade, foto, id) {
+        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, estado = ?, caracteristicas = ?, foto = ? WHERE id = ?";
+        var values = [[nome], [especie], [raca], [sexo], [porte], [peso], [estado], [personalidade], [foto], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
         });
     },
 
 
-    updateSemFoto(estado, nome, especie, raca, sexo, porte, peso, personalidade, id) {
-        var sql = "UPDATE animais SET estado = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, personalidade = ? WHERE id = ?";
+    updateAdocaoSemFoto(nome, especie, raca, sexo, porte, peso, estado, personalidade, id) {
+        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, estado = ?, caracteristicas = ? WHERE id = ?";
         var values = [
-            [estado], [nome], [especie], [raca], [sexo], [porte], [peso], [personalidade], [id]];
+            [nome], [especie], [raca], [sexo], [porte], [peso], [estado], [personalidade], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
         });

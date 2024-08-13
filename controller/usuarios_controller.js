@@ -34,14 +34,14 @@ module.exports = {
                     const Usuario = results[0];
                     const Adocao = results[1];
     
-                    res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin });
+                    res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin });
                 })
                 .catch(error => {
-                    if (err) throw err;
+                    if (error) throw error;
                 });
     
         } else {
-            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin });
+            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin });
             return;
         }
     },
@@ -49,33 +49,49 @@ module.exports = {
 
     logar: function (req, res) {
         var senha = req.body['senha'];
-        var email = req.body['email']
-        var sql = "SELECT * FROM usuarios where email = ?";
-
+        var email = req.body['email'];
+        var sql = "SELECT * FROM usuarios WHERE email = ?";
+        var sql2 = "SELECT * FROM admin WHERE email = ?";
+    
         con.query(sql, [email], function (err, result) {
             if (err) throw err;
+    
             if (result.length) {
                 bcrypt.compare(senha, result[0]['senha'], function (err, resultado) {
                     if (err) throw err;
                     if (resultado) {
-
                         req.session.Id = result[0]['id'];
                         req.session.loggedin = true;
-
-                        res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin });
-                        return;
+                        req.session.admin = false;
+    
+                        res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin, admin: req.session.admin });
+                    } else {
+                        res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
                     }
-                    else {
-                        res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin })
-                        return;
+                });
+            } else {
+                con.query(sql2, [email], function (err, result) {
+                    if (err) throw err;
+    
+                    if (result.length) {
+                        if (err) throw err;
+                        if (senha == result[0]['senha']) {
+                            req.session.loggedin = true;
+                            req.session.admin = true;
+    
+                            res.render('home', { alerta: "Administrador logado com sucesso.", logado: req.session.loggedin, admin: req.session.admin });
+                        } else {
+                            res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
+                        }
+                        
+                    } else {
+                        res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin, admin: req.session.admin });
                     }
                 });
             }
-            else { res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin })}
-             
         });
-
     },
+    
 
     cadastrar: function (req, res) {
 
@@ -90,7 +106,7 @@ module.exports = {
                 if (err) throw err;
     
                 if (result.length > 0) {
-                    res.render('cadastro', { alerta: "E-mail já cadastrado.", logado: req.session.loggedin });
+                    res.render('cadastro', { alerta: "E-mail já cadastrado.", logado: req.session.loggedin, admin: req.session.admin });
                     return;
                 } else {
                     var oldpath = files.pfp[0].filepath;
@@ -111,7 +127,7 @@ module.exports = {
                             bcrypt.hash(senha, saltRounds, function (err, hash) {
                                 if (err) throw err;
                                 modelusuario.inserir(fields['nome'][0], fields['email'][0], hash, 55 + fields['telefone'][0], nomeimg);
-                                res.render('login', { alerta: 'Usuário cadastrado com sucesso, faça login.', logado: req.session.loggedin });
+                                res.render('login', { alerta: 'Usuário cadastrado com sucesso, faça login.', logado: req.session.loggedin, admin: req.session.admin });
                             });
                         });
                 }
@@ -145,19 +161,19 @@ module.exports = {
                 res.redirect('/');
 
             }else{
-                res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin })
+                res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin })
             }
 
         } else {
-            res.render('login', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin })
+            res.render('login', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin })
         }
     },
 
     editar: function (req, res) {
         if (req.session.loggedin) {
-            modelusuario.busca(req.session.Id).then(result => res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin})).catch(err => console.error(err));
+            modelusuario.busca(req.session.Id).then(result => res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin, admin: req.session.admin})).catch(err => console.error(err));
         } else {
-            res.render('login', { alerta: 'É precisa fazer login para editar.', logado: req.session.loggedin })
+            res.render('login', { alerta: 'É precisa fazer login para editar.', logado: req.session.loggedin, admin: req.session.admin })
         }
 
 

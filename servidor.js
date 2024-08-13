@@ -19,44 +19,44 @@ const animaisController = require("./controller/animais_controller");
 
 app.get('/', function(req, res){
     if (req.session.loggedin) {
-        res.render('home', {alerta: '', logado:req.session.loggedin})
+        res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin})
         return;
     }
     else{
-        res.render('home', {alerta: '', logado:req.session.loggedin})
+        res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin})
         return;
     }
 });
 
 app.get('/login', function(req, res){
     if (req.session.loggedin) {
-        res.render('home', {alerta:'Faça logout para realizar o login.', logado: req.session.loggedin});
+        res.render('home', {alerta:'Faça logout para realizar o login.', logado: req.session.loggedin, admin: req.session.admin});
         return;
     }
     else{
-        res.render('login', {alerta:"", logado: req.session.loggedin})
+        res.render('login', {alerta:"", logado: req.session.loggedin, admin: req.session.admin})
         return;
     }
 });
 
 app.get('/cadastro', function(req, res){
     if (req.session.loggedin) {
-        res.render('home', {alerta:'Faça logout para realizar o cadastro.', logado: req.session.loggedin});
+        res.render('home', {alerta:'Faça logout para realizar o cadastro.', logado: req.session.loggedin, admin: req.session.admin});
         return;
     }
     else{
-       res.render('cadastro',{alerta:'', logado: req.session.loggedin})
+       res.render('cadastro',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
        return;
     }
 })
 
 app.get('/cadastrar_adocao', function(req, res){
     if (req.session.loggedin) {
-        res.render('cadastro_adocao',{alerta:'', logado: req.session.loggedin})
+        res.render('cadastro_adocao',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
         return;
     }
     else{
-        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin});
+        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
         return;
     }
 })
@@ -80,9 +80,11 @@ app.get('/perfil', usuarioController.dados);
 app.get('/editar_perfil', usuarioController.editar);
 app.post('/editar', usuarioController.alterar);
 app.get('/deletar/:id', usuarioController.deletar)
-app.get('/editar_animal/:id', animaisController.editar)
-app.get('/deletar_animal/:id', animaisController.deletar)
 app.post('/cadastrar', usuarioController.cadastrar);
+
+app.get('/editar_adocao/:id', animaisController.editar)
+app.post('/alterar_adocao', animaisController.alterarAdocao)
+app.get('/deletar_animal/:id', animaisController.deletar)
 app.post('/cadastrar_adocao', animaisController.cadastrar);
 app.get('/adotar', animaisController.listagem);
 app.get('/adotar/:id',animaisController.dados)

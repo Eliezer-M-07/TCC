@@ -16,7 +16,7 @@ module.exports = {
 
         buscaDados
             .then(results => {
-                res.render('adocao', { all: results, logado: req.session.loggedin, alerta: '' });
+                res.render('adocao', { all: results, logado: req.session.loggedin, alerta: '' , admin: req.session.admin});
             })
             .catch(err => {
                 if (err) throw err;
@@ -26,7 +26,7 @@ module.exports = {
     dados: function(req, res){
         var id = req.params.id;
         modelanimais.buscaDados(id).then(result=> {''
-            res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' })
+            res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' , admin: req.session.admin})
         })
         .catch(err => {
             if (err) throw err;
@@ -89,12 +89,12 @@ module.exports = {
 
                     res.redirect('/perfil');
                 }else{
-                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin });
+                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin});
                 }
             });
             
         } else {
-            res.render('login', { alerta: 'Esta ação não é possivel estando deslogado.', logado: req.session.loggedin })
+            res.render('login', { alerta: 'Esta ação não é possivel estando deslogado.', logado: req.session.loggedin , admin: req.session.admin})
         }
     },
 
@@ -102,10 +102,67 @@ module.exports = {
     editar: function (req, res) {
         if (req.session.loggedin) {
             id = req.params.id
-            modelanimais.busca(id).then(result => res.render('editar_animal', { dadosAnimal: result, alerta: '', logado: req.session.loggedin })).catch(err => console.error(err));
+            modelanimais.busca(id).then(result => res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
         } else {
-            res.render('login', { alerta: 'É precisa fazer login para editar um animal.', logado: req.session.loggedin })
+            res.render('login', { alerta: 'É precisa fazer login para editar um animal.', logado: req.session.loggedin, admin: req.session.admin })
         }
+
+    },
+
+    alterarAdocao: function (req, res) {
+        var form = new formidable.IncomingForm();
+
+        form.parse(req, (err, fields, files) => {
+            if (files.foto) {
+                modelanimais.busca(fields['id'][0])
+                    .then(result => {
+                        var img = path.join(__dirname, '../public/animais/', result[0]['foto']);
+                        fs.unlink(img, (err) => {
+                            if (err) console.error(err);
+                        });
+                    })
+                    .catch(err => console.error(err));
+    
+                var oldpath = files.foto[0].filepath;
+                var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+                var ext = path.extname(files.foto[0].originalFilename);
+                var nomeimg = hash + ext;
+                var newpath = path.join(__dirname, '../public/animais/', nomeimg);
+    
+
+                sharp(oldpath)
+                    .resize({ width: 280, height: 280, fit: 'cover' }) 
+                    .toFile(newpath, (err, info) => {
+                        if (err) throw err;
+    
+                        modelanimais.updateAdocao(
+                            fields['nome'][0],
+                            fields['especie'][0],
+                            fields['raca'][0],
+                            fields['sexo'][0],
+                            fields['porte'][0],
+                            fields['peso'][0],
+                            fields['estado'][0],
+                            fields['personalidade'][0],
+                            nomeimg,
+                            fields['id'][0]
+                        );
+                    });
+            } else {
+                modelanimais.updateAdocaoSemFoto(
+                    fields['nome'][0],
+                    fields['especie'][0],
+                    fields['raca'][0],
+                    fields['sexo'][0],
+                    fields['porte'][0],
+                    fields['peso'][0],
+                    fields['estado'][0],
+                    fields['personalidade'][0],
+                    fields['id'][0]
+                );
+            }
+        });
+        res.redirect('/perfil')
 
     },
 
