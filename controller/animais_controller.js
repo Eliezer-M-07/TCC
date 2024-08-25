@@ -10,9 +10,9 @@ const modelanimais = require("../model/animais");
 module.exports = {
 
     listagem: function (req, res) {
-        const { estado, especie, sexo } = req.query;
+        const { estado, cidade, especie, sexo } = req.query;
 
-        let buscaDados = modelanimais.buscaTodos({ estado, especie, sexo });
+        let buscaDados = modelanimais.buscaTodos({ estado, cidade, especie, sexo });
 
         buscaDados
             .then(results => {
@@ -55,6 +55,7 @@ module.exports = {
                         req.session.Id,
                         'adocao',
                         fields['estado'][0],
+                        fields['cidade'][0],
                         fields['nome'][0],
                         fields['especie'][0],
                         fields['raca'][0],
@@ -89,12 +90,12 @@ module.exports = {
 
                     res.redirect('/perfil');
                 }else{
-                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin});
+                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome});
                 }
             });
             
         } else {
-            res.render('login', { alerta: 'Esta ação não é possivel estando deslogado.', logado: req.session.loggedin , admin: req.session.admin})
+            res.render('login', { alerta: 'Esta ação não é possivel sem estar logado.', logado: req.session.loggedin , admin: req.session.admin})
         }
     },
 

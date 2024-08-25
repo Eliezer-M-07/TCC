@@ -1,59 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home</title>
-        <%- include('layout/head'); %>
-    </head>
-    <body>
-        <%- include('layout/menu'); %>
-        <br>
-        <% if (alerta) { %>
-            <div class="container">
-                <div class="alert alert-dark" role="alert"><center><%= alerta %></center></div>
-            </div>
-        <%} else { %>
-            
-        <% } %>
-        <br>
-        <br>
-        <div>
-            <article  id="art1">
-                <br><h2 style="margin-left: 10px;">Seja Bem-vindo(a)!</h2><br>
-                <div class="container0">
-                    Lorem ipsum dolor sit amet. Vel expedita eligendi aut doloribus cupiditate non odio commodi et provident 
-                    officia et omnis expedita qui deleniti aperiam. Qui dolor illo non facilis quis quo voluptas quaerat aut 
-                    sint numquam et nostrum ipsam quo autem enim qui sint sapiente. Vel libero voluptas sit totam illo qui 
-                    architecto alias quo debitis deserunt eos nulla quis ut repellat facere ea quis laudantium. In accusantium 
-                    enim et porro optio eos enim quas ut deleniti officia aut aspernatur totam ad doloribus sint. Ut nemo voluptatem 
-                    ad reiciendis accusamus id dolorem consequuntur. Sit repellat voluptate non doloribus modi a dolor quia sed unde 
-                    perspiciatis. Eos dolor quia est molestiae rerum aut officiis accusamus ut maxime ipsa quo maxime facere est rerum 
-                    asperiores qui esse nostrum.
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br> 
-                    <a href="/adotar" style="font-size: 19px; background-color:black; color:aliceblue;" class="btn"><i class="material-icons">pets</i> Adotar</a>
-                    <a href="#" style="background-color:black;color: aliceblue; font-size: 19px; margin-left:42px;" class="btn"><i class="material-icons">handshake</i>&nbsp;Desaparecidos</a>
-                    <a href="#"style="background-color:black;color: aliceblue; font-size: 19px; float:right;" class="btn"><i class="material-icons">notification_important</i> Encontrei um pet</a>
-                </div>
-            </article>
-        </div>
-        <div>
-            <img id="img1" src="/images/f1.png" width=700px">
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <%- include("layout/footer"); %>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <%-include('layout/head') %>
+</head>
+<body>
+    <%-include('layout/menu') %>
+    <div style="position: relative; width: 100%; height: 380px; overflow: hidden; border: solid 0.5px;" >
+      <img src="/images/f3.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+      <div style="position: absolute; bottom: 20%; right: 5%; color: white; font-size: 24px; ">
+          <% if (logado == true) { %>
+            <br>
+            <br>
+            <br>
+            <h1 style="text-shadow:2px 2px 0px black">Bem-vindo(a) <%= nome %>!</h1 >
+            <h5 style="text-shadow:2px 2px 0px black">SafePet, o site que você precisa!</h5>
+            <br>
+            <a class="btn btn-dark" href="/adotar" style="width: 180px; border: solid 1px rgb(18, 18, 18);"><i style="vertical-align:bottom;" class="material-icons">pets</i> Adoção</a>
+            <a class="btn btn-dark" href="" style="width: 180px; border: solid 1px rgb(18, 18, 18);"><i style="vertical-align:bottom;" class="material-icons">handshake</i> Desaparecidos</a>
+          <% }else { %>
+            <br>
+            <br>
+            <br>
+            <h1 style="text-shadow:2px 2px 0px black">Seja Bem-vindo(a)!</h1>
+            <h5 style="text-shadow:2px 2px 0px black">SafePet o site que você precisa!</h5>
+            <br>
+            <br>
+            <a class="btn btn-dark" href="/login" style="width: 180px; border: solid 1px rgb(18, 18, 18);"><i style="vertical-align:bottom;" class="material-icons">login</i>&nbsp; Login</a>
+            <a class="btn btn-dark" href="/cadastro" style="width: 180px; border: solid 1px rgb(18, 18, 18);"><i style="vertical-align:bottom;" class="material-icons">person_add</i>&nbsp; Cadastre-se</a>
+            <% } %> 
+      </div>
+    </div>
+    <%-include('layout/footer') %>
+</body>
 </html>

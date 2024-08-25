@@ -1,6 +1,8 @@
 body {
     box-sizing: border-box;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 li:hover {
@@ -9,15 +11,15 @@ li:hover {
 }
 
 
-#art1 {
-    float: left;
-    width: 50%;
-    margin-left: 70px;
-}
+
 
 #art2 {
     width: 30%;
     float: left;
+    overflow: hidden;
+
+
+
 }
 
 #art2 a {
@@ -25,11 +27,17 @@ li:hover {
     color: inherit;
     margin-left: 16%;
     margin-top: 20px;
+    
+    
 }
 
 #art3 {
     width: 70%;
+ 
     float: right;
+ 
+    position: relative;
+    float:inline-end;
 }
 
 #art4 {
@@ -46,9 +54,15 @@ li:hover {
 }
 
 
+
 #img1 {
     border-radius: 50px 20px;
     box-shadow: 0 0 10px rgb(12, 12, 44);
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10%;
 }
 
 #pfp {
@@ -56,6 +70,8 @@ li:hover {
     margin-left: 15%;
     margin-top: 9%;
     box-shadow: 0 0 2px black;
+    
+    
 }
 
 #animal{
@@ -76,6 +92,7 @@ i {
 }
 
 footer {
+    margin-top: 70vh;
     border: 1px solid rgb(219, 218, 218);
     width: 100%;
     height: 169px;
@@ -137,6 +154,8 @@ footer {
     padding: 2em;
     
 }
+
+
 
 #cardListagem{
     margin-left: 1%; 

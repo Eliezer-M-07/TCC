@@ -15,6 +15,11 @@ module.exports = {
                 queryParams.push(filters.estado);
             }
 
+            if (filters.cidade) {
+                sql += " AND cidade = ?";
+                queryParams.push(filters.cidade);
+            }
+
             if (filters.especie) {
                 sql += " AND especie = ?";
                 queryParams.push(filters.especie);
@@ -94,9 +99,9 @@ module.exports = {
     },
 
 
-    inserir_adocao(fk_ani, status, estado, nome, especie, raca, sexo, porte, peso, caracteristicas, foto) {
-        var sql = "INSERT INTO animais (fk_ani, status, estado, nome, especie, raca, sexo, porte, peso, caracteristicas, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var values = [fk_ani, status, estado, nome, especie, raca, sexo, porte, peso, caracteristicas, foto];
+    inserir_adocao(fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto) {
+        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;

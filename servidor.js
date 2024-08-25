@@ -19,7 +19,7 @@ const animaisController = require("./controller/animais_controller");
 
 app.get('/', function(req, res){
     if (req.session.loggedin) {
-        res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin})
+        res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin, nome: req.session.nome})
         return;
     }
     else{
@@ -64,7 +64,7 @@ app.get('/cadastrar_adocao', function(req, res){
 app.get('/logout',function(req,res){
     req.session.destroy(function(err) {
     })  
-    res.redirect('/login')
+    res.redirect('/')
     return;
 });
 

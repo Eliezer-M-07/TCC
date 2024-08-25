@@ -61,10 +61,11 @@ module.exports = {
                     if (err) throw err;
                     if (resultado) {
                         req.session.Id = result[0]['id'];
+                        req.session.nome = result[0]['nome'];
                         req.session.loggedin = true;
                         req.session.admin = false;
     
-                        res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin, admin: req.session.admin });
+                        res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome});
                     } else {
                         res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
                     }
@@ -79,7 +80,7 @@ module.exports = {
                             req.session.loggedin = true;
                             req.session.admin = true;
     
-                            res.render('home', { alerta: "Administrador logado com sucesso.", logado: req.session.loggedin, admin: req.session.admin });
+                            res.render('home', { alerta: "Administrador logado com sucesso.", logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome});
                         } else {
                             res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
                         }
@@ -161,7 +162,7 @@ module.exports = {
                 res.redirect('/');
 
             }else{
-                res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin })
+                res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome })
             }
 
         } else {
@@ -212,7 +213,9 @@ module.exports = {
                 modelusuario.updateSempfp(fields['nome'][0], 55 + fields['telefone'][0], req.session.Id);
             }
         });
+
         res.redirect('/perfil')
+        return
 
     },
 

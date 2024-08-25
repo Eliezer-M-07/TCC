@@ -16,14 +16,19 @@
             <br>
             <form action="/adotar" method="GET">
                 <h6>Estado</h6>
-                <select name="estado" class="form-select" style="width: 75%;">
+                <select name="estado" id="estado" class="form-select" style="width: 75%;">
                     <option value="">Todos</option>
-                    <option value="Rio Grande do Sul">Rio Grande do Sul</option>
-                    <option value="Santa Catarina">Santa Catarina</option>
-                    <option value="Paraná">Paraná</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="PR">Paraná</option>
                 </select>
                 <br>
-                <h6>Especie</h6>
+                <h6>Cidade</h6>
+                <select name="cidade" id="cidade" class="form-select" style="width: 75%;">
+                    <option value="">Todas</option>
+                </select>
+                <br>
+                <h6>Espécie</h6>
                 <select name="especie" class="form-select" style="width: 75%;">
                     <option value="">Todas</option>
                     <option value="Cachorro">Cachorro</option>
@@ -69,34 +74,42 @@
           <%} else { %>
             <br>
             <center><h5>Nenhum animal cadastrado.</h5></center>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+            
           <% } %>
     </article>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 
     <%- include("layout/footer"); %>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const estadoSelect = document.getElementById('estado');
+          const cidadeSelect = document.getElementById('cidade');
+      
+          
+          function fetchCidades(uf) {
+            fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos`)
+              .then(response => response.json())
+              .then(data => {
+                cidadeSelect.innerHTML = '<option value="">Todas</option>'; 
+                data.forEach(cidade => {
+                  const option = document.createElement('option');
+                  option.value = cidade.nome; 
+                  option.textContent = cidade.nome;
+                  cidadeSelect.appendChild(option);
+                });
+              })
+              .catch(error => console.error('Erro ao buscar cidades:', error));
+          }
+      
+
+          estadoSelect.addEventListener('change', function() {
+            const uf = this.value;
+            if (uf) {
+              fetchCidades(uf);
+            } else {
+              cidadeSelect.innerHTML = '<option value="">Todas</option>';
+            }
+          });
+        });
+      </script>
 </body>
 </html>
