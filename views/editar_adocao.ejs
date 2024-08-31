@@ -36,10 +36,9 @@
                                     <label for="especie" class="form-label">
                                         <h6>Espécie</h6>
                                     </label>
-                                    <select name="especie" id="especie" class="form-select"
-                                        aria-label="Default select example" aria-describedby="especieHelp">
-                                        <option value="Cachorro">Cachorro</option>
-                                        <option value="Gato">Gato</option>
+                                    <select name="especie" id="especie" class="form-select" aria-label="Default select example" aria-describedby="especieHelp">
+                                        <option value="Cachorro" <%= dados.especie === 'Cachorro' ? 'selected' : '' %>>Cachorro</option>
+                                        <option value="Gato" <%= dados.especie === 'Gato' ? 'selected' : '' %>>Gato</option>
                                     </select>
                                     <div id="especieHelp" class="form-text">Informe a espécie do animal.</div>
                                 </div>
@@ -65,17 +64,14 @@
                                     <div id="sexoHelp" class="form-text">Informe o sexo do animal.</div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="porte" class="form-label">
-                                        <h6>Porte</h6>
-                                    </label>
-                                    <select name="porte" id="porte" class="form-select"
-                                        aria-label="Default select example" aria-describedby="porteHelp">
-                                        <option value="Pequeno">Pequeno</option>
-                                        <option value="Médio">Médio</option>
-                                        <option value="Grande">Grande</option>
-                                        <option value="Gigante">Gigante</option>
+                                    <label for="porte" class="form-label"><h6>Porte</h6></label>
+                                    <select name="porte" id="porte" class="form-select" aria-label="Default select example" aria-describedby="porteHelp">
+                                        <option value="Pequeno" <%= dados.porte === 'Pequeno' ? 'selected' : '' %>>Pequeno</option>
+                                        <option value="Médio" <%= dados.porte === 'Médio' ? 'selected' : '' %>>Médio</option>
+                                        <option value="Grande" <%= dados.porte === 'Grande' ? 'selected' : '' %>>Grande</option>
+                                        <option value="Gigante" <%= dados.porte === 'Gigante' ? 'selected' : '' %>>Gigante</option>
                                     </select>
-                                    <div id="sexoHelp" class="form-text">Informe o porte do animal.</div>
+                                    <div id="porteHelp" class="form-text">Informe o porte do animal.</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="peso" class="form-label">
@@ -86,17 +82,22 @@
                                     <div id="pesoHelp" class="form-text">Informe o peso do animal.</div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="estado" class="form-label">
-                                        <h6>Estado</h6>
-                                    </label>
-                                    <select name="estado" id="estado" class="form-select"
-                                        aria-label="Default select example" aria-describedby="estadoHelp">
-                                        <option value="Rio Grande do Sul">Rio Grande do Sul</option>
-                                        <option value="Santa Catarina">Santa Catarina</option>
-                                        <option value="Paraná">Paraná</option>
+                                    <label for="estado" class="form-label"><h6>Estado</h6></label>
+                                    <select required name="estado" id="estado" class="form-select" aria-label="Default select example" aria-describedby="estadoHelp">
+                                      <option value="RS">Rio Grande do Sul</option>
+                                      <option value="SC">Santa Catarina</option>
+                                      <option value="PR">Paraná</option>
                                     </select>
-                                    <div id="estadoHelp" class="form-text">Informe o estado que reside o animal.</div>
-                                </div>
+                                    <div id="estadoHelp" class="form-text">Informe o estado onde o animal está localizado.</div>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="cidade" class="form-label"><h6>Cidade</h6></label>
+                                    <select required name="cidade" id="cidade" class="form-select" aria-label="Default select example" aria-describedby="cidadeHelp">
+                                      <option value="">Selecione a cidade</option>
+                                    </select>
+                                    <div id="cidadeHelp" class="form-text">Informe a cidade onde o animal está localizado.</div>
+                                  </div>
+        
                                 <div class="mb-3">
                                     <label for="textarea" class="form-label">
                                         <h6>Personalidade</h6>
@@ -238,7 +239,41 @@
                 especieSelect.addEventListener('change', atualizarRacas);
 
                 atualizarRacas();
-            </script>
+
+                const estadoSelect = document.getElementById('estado');
+                const cidadeSelect = document.getElementById('cidade');
+
+                function carregarCidades(uf) {
+                    if (uf) {
+                        fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos`)
+                            .then(response => response.json())
+                            .then(cidades => {
+                                cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
+                                cidades.forEach(cidade => {
+                                    const option = document.createElement('option');
+                                    option.textContent = cidade.nome;
+                                    option.value = cidade.nome;
+                                    cidadeSelect.appendChild(option);
+                                });
+                            })
+                            .catch(error => console.error('Erro ao buscar cidades:', error));
+                    }
+                }
+
+                estadoSelect.addEventListener('change', function() {
+                    carregarCidades(this.value);
+                });
+
+                
+                document.addEventListener('DOMContentLoaded', function() {
+                    const estadoSelecionado = estadoSelect.value;
+                    if (estadoSelecionado) {
+                        carregarCidades(estadoSelecionado);
+                    }
+                });
+        </script>
+                
+        
 </body>
 
 </html>

@@ -11,15 +11,10 @@ li:hover {
 }
 
 
-
-
 #art2 {
     width: 30%;
     float: left;
     overflow: hidden;
-
-
-
 }
 
 #art2 a {
@@ -41,10 +36,11 @@ li:hover {
 }
 
 #art4 {
-    width: 20%;
+    width: 19%;
     height: 100%;
-    margin-left: 5%;
+    margin-left: 3%;
     float:left; 
+    
 }
 
 #art5 {
@@ -88,7 +84,7 @@ i {
     width: 600px;
     height: 100px;
     padding: 10px;
-    text-align: justify;
+    
 }
 
 footer {
@@ -162,21 +158,23 @@ footer {
     border-radius: 5px 5px 0 0; 
     width: 18rem; 
     margin-bottom: 1px; 
-    box-shadow: 0 0 10px rgb(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px rgb(0, 0, 0);
 }
 
 #cardListagem:hover{
-    box-shadow: 0 0 12px black;
+    box-shadow: 0 0 6px black;
 }
 
 #cardPerfil{
     width: 260px; 
     margin-left: 14px; 
-    box-shadow: 0 0 5px rgb(12, 12, 44);
+    box-shadow: 0 0 3px rgb(0, 0, 0);
+    margin-bottom: 15px;
+    
 }
 
 #cardPerfil:hover{
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 5px black;
 
 }
 
@@ -203,5 +201,3 @@ body::-webkit-scrollbar-thumb {
     outline: none !important;
     box-shadow: none !important;
 }
-
-

@@ -144,6 +144,7 @@ module.exports = {
                             fields['porte'][0],
                             fields['peso'][0],
                             fields['estado'][0],
+                            fields['cidade'][0],
                             fields['personalidade'][0],
                             nomeimg,
                             fields['id'][0]
@@ -158,6 +159,7 @@ module.exports = {
                     fields['porte'][0],
                     fields['peso'][0],
                     fields['estado'][0],
+                    fields['cidade'][0],
                     fields['personalidade'][0],
                     fields['id'][0]
                 );

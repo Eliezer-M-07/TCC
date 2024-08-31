@@ -60,6 +60,16 @@ app.get('/cadastrar_adocao', function(req, res){
         return;
     }
 })
+app.get('/cadastrar_desaparecido', function(req, res){
+    if (req.session.loggedin) {
+        res.render('cadastro_desaparecidos',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
+        return;
+    }
+    else{
+        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
+        return;
+    }
+})
 
 app.get('/logout',function(req,res){
     req.session.destroy(function(err) {

@@ -80,7 +80,7 @@ module.exports = {
                             req.session.loggedin = true;
                             req.session.admin = true;
     
-                            res.render('home', { alerta: "Administrador logado com sucesso.", logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome});
+                            res.render('home', { alerta: "Administrador logado com sucesso.", logado: req.session.loggedin, admin: req.session.admin});
                         } else {
                             res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
                         }
@@ -206,9 +206,10 @@ module.exports = {
                     .resize({ width: 280, height: 280, fit: 'cover' }) 
                     .toFile(newpath, (err, info) => {
                         if (err) throw err;
-    
-                        modelusuario.update(fields['nome'][0], 55 + fields['telefone'][0], nomeimg, req.session.Id);
                     });
+
+                modelusuario.update(fields['nome'][0], 55 + fields['telefone'][0], nomeimg, req.session.Id);
+                
             } else {
                 modelusuario.updateSempfp(fields['nome'][0], 55 + fields['telefone'][0], req.session.Id);
             }

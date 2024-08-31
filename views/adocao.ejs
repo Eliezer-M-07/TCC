@@ -10,13 +10,13 @@
     <%- include('layout/menu'); %>
     <br>
     <article id="art4">
-        <div class="container">
-            <br>
-            <h5>Filtros</h5>
-            <br>
-            <form action="/adotar" method="GET">
+        <div class="container" >
+          <form action="/adotar" method="GET" style="margin-left: 20px;">
+              <br>
+              <h4>Filtros</h4>
+              <br>
                 <h6>Estado</h6>
-                <select name="estado" id="estado" class="form-select" style="width: 75%;">
+                <select name="estado" id="estado" class="form-select" style="width: 90%;">
                     <option value="">Todos</option>
                     <option value="RS">Rio Grande do Sul</option>
                     <option value="SC">Santa Catarina</option>
@@ -24,19 +24,19 @@
                 </select>
                 <br>
                 <h6>Cidade</h6>
-                <select name="cidade" id="cidade" class="form-select" style="width: 75%;">
+                <select name="cidade" id="cidade" class="form-select" style="width: 90%;">
                     <option value="">Todas</option>
                 </select>
                 <br>
                 <h6>Espécie</h6>
-                <select name="especie" class="form-select" style="width: 75%;">
+                <select name="especie" class="form-select" style="width: 90%;">
                     <option value="">Todas</option>
                     <option value="Cachorro">Cachorro</option>
                     <option value="Gato">Gato</option>
                 </select>
                 <br>
                 <h6>Sexo</h6>
-                <select name="sexo" class="form-select" style="width: 75%;">
+                <select name="sexo" class="form-select" style="width: 90%;">
                     <option value="">Ambos</option>
                     <option value="Macho">Macho</option>
                     <option value="Fêmea">Fêmea</option>
@@ -44,6 +44,9 @@
                 <br>
                 <br>
                 <button type="submit" class="btn btn-dark">Aplicar</button>
+                <br>
+                <br>
+                <br>
             </form>
         </div>
     </article>
