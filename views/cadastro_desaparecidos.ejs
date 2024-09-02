@@ -24,7 +24,7 @@
                           <h4 class="ml-2">&nbsp;&nbsp;Cadastro animal desaparecido</h4>
                       </div>
                       <br>
-                      <form method="post" action="/cadastrar_adocao" enctype="multipart/form-data">
+                      <form method="post" action="/cadastrar_desaparecido" enctype="multipart/form-data">
                           <div class="mb-3">
                             <label for="name" class="form-label"><h6>Nome</h6></label>
                             <input maxlength="40" name="nome" required type="text" class="form-control" id="name" aria-describedby="nameHelp">
@@ -41,7 +41,7 @@
                           <div class="mb-3">
                             <label for="raca" class="form-label"><h6>Raça</h6></label>
                             <select name="raca" id="raca" class="form-select" aria-label="Default select example" aria-describedby="racaHelp">
-                                
+              
                             </select>
                             <div id="racaHelp" class="form-text">Informe a raça do animal.</div>
                           </div>
@@ -64,11 +64,6 @@
                             <div id="sexoHelp" class="form-text">Informe o porte do animal.</div>
                             </div>
                           <div class="mb-3">
-                            <label for="peso" class="form-label"><h6>Peso</h6></label>
-                            <input name="peso" required type="number" class="form-control" step="0.01" min="0" id="peso" aria-describedby="pesoHelp">
-                            <div id="pesoHelp" class="form-text">Informe o peso do animal.</div>
-                          </div>
-                          <div class="mb-3">
                             <label for="estado" class="form-label"><h6>Estado</h6></label>
                             <select required name="estado" id="estado" class="form-select" aria-label="Default select example" aria-describedby="estadoHelp">
                               <option value="">Selecione o estado</option>
@@ -86,9 +81,29 @@
                             <div id="cidadeHelp" class="form-text">Informe a cidade onde o animal está localizado.</div>
                           </div>
                           <div class="mb-3">
-                            <label for="textarea" class="form-label"><h6>Personalidade</h6></label>
-                            <textarea name="personalidade" maxlength="255" class="form-control" id="textarea" rows="2"></textarea>
-                            <div id="personalidadeHelp" class="form-text">Fale sobre a personalidade do animal.</div>
+                            <label for="cep" class="form-label"><h6>CEP</h6></label>
+                            <input name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" maxlength="9">
+                            <div id="cepHelp" class="form-text">Informe o CEP da localização.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="bairro" class="form-label"><h6>Bairro</h6></label>
+                            <input name="bairro" required type="text" class="form-control" id="bairro" aria-describedby="bairroHelp" readonly>
+                            <div id="bairroHelp" class="form-text">Bairro onde o animal está desaparecido.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="rua" class="form-label"><h6>Rua</h6></label>
+                            <input name="rua" required type="text" class="form-control" id="rua" aria-describedby="ruaHelp" readonly>
+                            <div id="ruaHelp" class="form-text">Rua onde o animal está desaparecido.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="data" class="form-label"><h6>Data de desaparecimento</h6></label>
+                            <input  name="data" required type="date" class="form-control" id="data" aria-describedby="dataHelp">
+                            <div id="NameHelp" class="form-text">Informe a data de desaparecimento do animal.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="textarea" class="form-label"><h6>Características</h6></label>
+                            <textarea name="caracteristicas" maxlength="255" class="form-control" id="textarea" rows="2"></textarea>
+                            <div id="caracteristicasHelp" class="form-text">Fale as características do animal.</div>
                           </div>
                           <div class="mb-3">
                               <label for="formFile" class="form-label"><h6>Foto do animal</h6></label>
@@ -106,6 +121,7 @@
 
       <%- include("layout/footer"); %>
       <script>
+        
         const especieSelect = document.getElementById('especie');
         const racaSelect = document.getElementById('raca');
       
@@ -243,6 +259,28 @@
           }
         });
       });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const cepInput = document.getElementById('cep');
+        const ruaInput = document.getElementById('rua');
+        const bairroInput = document.getElementById('bairro');
+
+        cepInput.addEventListener('blur', function() {
+          const cep = cepInput.value.replace(/\D/g, ''); 
+          if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+              .then(response => response.json())
+              .then(data => {
+                if (!data.erro) {
+                  ruaInput.value = `${data.logradouro}`;
+                  bairroInput.value = `${data.bairro}`;
+                } 
+              })
+              .catch(error => console.error('Erro ao buscar endereço:', error));
+          }
+        });
+      });
+      
       </script>
   </body>
 </html>

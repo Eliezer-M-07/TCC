@@ -95,6 +95,8 @@ app.post('/cadastrar', usuarioController.cadastrar);
 app.get('/editar_adocao/:id', animaisController.editar)
 app.post('/alterar_adocao', animaisController.alterarAdocao)
 app.get('/deletar_animal/:id', animaisController.deletar)
-app.post('/cadastrar_adocao', animaisController.cadastrar);
-app.get('/adotar', animaisController.listagem);
-app.get('/adotar/:id',animaisController.dados)
+app.post('/cadastrar_adocao', animaisController.cadastrar_adocao);
+app.post('/cadastrar_desaparecido', animaisController.cadastrar_desaparecido);
+app.get('/adotar', animaisController.listagem_adocao);
+app.get('/desaparecidos', animaisController.listagem_desaparecidos);
+app.get('/animal/:id',animaisController.dados)

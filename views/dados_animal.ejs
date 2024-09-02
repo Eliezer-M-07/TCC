@@ -17,42 +17,80 @@
                 return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
             } %>
             <%informacoes.forEach(function(dados) { %>
-                <div>
+                <% if (dados.status == 'adocao') { %>
                     <div>
-                        <img src="/images/logo.png" width="230px" style="float: right;">  
-                        <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0; box-shadow: 0 0 2px black; border: 2px solid black; width: 250px;">ADOTAR</div>
-                        <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
-                        <div style="float: right;">
-                            </div>
-                            <div style="width: 23%; height: 10%;">
-                                <br>
-                                <h4><%= dados.nome %></h4>
-                                <hr width="90%">
-                                <span style="text-align: justify"><%= dados.caracteristicas %></span>
-                            </div>
+                        <div>
+                            <img src="/images/logo.png" width="230px" style="float: right;">  
+                            <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            <div style="float: right;">
+                                </div>
+                                <div style="width: 23%; height: 10%;">
+                                    <br>
+                                    <h4><%= dados.nome %></h4>
+                                    <hr width="90%">
+                                    <span style="text-align: justify"><%= dados.caracteristicas %></span>
+                                </div>
+                        </div>
                     </div>
-                </div>
-                <br>
-                <br>
-                <div style="display: flex; gap: 15%;">
+                    <br>
+                    <br>
+                    <div>
+                    <article style="margin-top: 2%;">
+                        <h5><i class="material-icons">description</i> Informações Básicas</h5>
+                        <hr>
+                        <strong>Estado - </strong> <%= dados.estado %>
+                        <br>
+                        <strong>Cidade - </strong> <%= dados.cidade %>
+                        <br>
+                        <strong>Nome - </strong> <%= dados.nome %>
+                        <br>
+                        <strong>Especie - </strong> <%= dados.especie %>
+                        <br>
+                        <strong>Raça - </strong> <%= dados.raca %>
+                        <br>
+                        <strong>Sexo - </strong> <%= dados.sexo %>
+                        <br>
+                    </article>
+                <% } else if (dados.status == 'desaparecido') { %>
+                    <div>
+                        <div>
+                            <img src="/images/logo.png" width="230px" style="float: right;">  
+                            <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            <div style="float: right;">
+                                </div>
+                                <div style="width: 23%; height: 10%;">
+                                    <br>
+                                    <h4><%= dados.nome %></h4>
+                                    <hr width="90%">
+                                    <span style="text-align: justify"><%= dados.caracteristicas %></span>
+                                </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div>
+                    <article style="margin-top: 2%;">
+                        <h5><i class="material-icons">description</i> Informações Básicas</h5>
+                        <hr>
+                        <strong>Estado - </strong> <%= dados.estado %>
+                        <br>
+                        <strong>Cidade - </strong> <%= dados.cidade %>
+                        <br>
+                        <strong>Local - </strong><%= dados.bairro %>, <%= dados.rua %>
+                        <br>
+                        <strong>Especie - </strong> <%= dados.especie %>
+                        <br>
+                        <strong>Raça - </strong> <%= dados.raca %>
+                        <br>
+                        <strong>Sexo - </strong> <%= dados.sexo %>
+                        <br>
+                    </article>
+                    <br>
+                <% } else if (dados.status == 'encontrado') { %>
+
+                <% } %> 
                 <article style="margin-top: 2%;">
-                    <h5><i class="material-icons">description</i> Informações Básicas</h5>
-                    <hr>
-                    <strong>Estado - </strong> <%= dados.estado %>
-                    <br>
-                    <strong>Cidade - </strong> <%= dados.cidade %>
-                    <br>
-                    <strong>Nome - </strong> <%= dados.nome %>
-                    <br>
-                    <strong>Especie - </strong> <%= dados.especie %>
-                    <br>
-                    <strong>Raça - </strong> <%= dados.raca %>
-                    <br>
-                    <strong>Sexo - </strong> <%= dados.sexo %>
-                    <br>
-                </article>
-                <article style="margin-top: 2%;">
-                    <h5><i class="material-icons">account_box</i> Informações Anunciante</h5>
+                    <h5><i class="material-icons">account_box</i> Informações do dono</h5>
                     <hr>
                     <strong>Nome - </strong> <%= dados.anunciante_nome %>
                     <br>
@@ -62,9 +100,48 @@
                     <br>
                     <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
                 </article>
+                <br>
+                <article style="margin-top: 2%;">
+                    <h5><i class="material-icons">location_on</i> Localização</h5>
+                    <hr>
+                    <div id="map" style="height: 300px; width: 100%;"></div>
+                </article>
                 </div>
-            <% }) %>
+            
         </div>
         <%- include('layout/footer'); %>
     </body>
+    <script>
+        function initMap() {
+            var map = L.map('map').setView([0, 0], 13);
+    
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+    
+            var endereco = '<%= dados.rua %>, <%= dados.cidade %>, <%= dados.estado %>, Brasil';
+    
+            var geocoder = L.Control.Geocoder.nominatim();
+    
+            geocoder.geocode(endereco, function(results) {
+                if (results.length > 0) {
+                    var result = results[0];
+                    
+                    console.log('Coordenadas encontradas:', result.center);
+    
+                    map.setView(result.center, 16);
+    
+                    L.marker(result.center).addTo(map)
+                        .bindPopup('Endereço: ' + endereco)
+                        .openPopup();
+                } else {
+                    console.log('Nenhum resultado encontrado para o endereço:', endereco);
+                }
+            });
+        }
+    
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+    <% }) %>
 </html>

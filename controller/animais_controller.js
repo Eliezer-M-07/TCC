@@ -9,14 +9,28 @@ const modelanimais = require("../model/animais");
 
 module.exports = {
 
-    listagem: function (req, res) {
+    listagem_adocao: function (req, res) {
         const { estado, cidade, especie, sexo } = req.query;
 
-        let buscaDados = modelanimais.buscaTodos({ estado, cidade, especie, sexo });
+        let buscaDados = modelanimais.buscaTodosAdocao({ estado, cidade, especie, sexo });
 
         buscaDados
             .then(results => {
                 res.render('adocao', { all: results, logado: req.session.loggedin, alerta: '' , admin: req.session.admin});
+            })
+            .catch(err => {
+                if (err) throw err;
+            });
+    },
+
+    listagem_desaparecidos: function (req, res) {
+        const { estado, cidade, especie, sexo } = req.query;
+
+        let buscaDados = modelanimais.buscaTodosDesaparecidos({ estado, cidade, especie, sexo });
+
+        buscaDados
+            .then(results => {
+                res.render('desaparecidos', { all: results, logado: req.session.loggedin, alerta: '' , admin: req.session.admin});
             })
             .catch(err => {
                 if (err) throw err;
@@ -34,7 +48,7 @@ module.exports = {
     },
 
 
-    cadastrar: function (req, res) {
+    cadastrar_adocao: function (req, res) {
         var form = new formidable.IncomingForm();
 
         form.parse(req, (err, fields, files) => {
@@ -63,6 +77,46 @@ module.exports = {
                         fields['porte'][0],
                         fields['peso'][0],
                         fields['personalidade'][0],
+                        nomefoto
+                    );
+                });
+
+        });
+
+        res.redirect('/perfil');
+    },
+
+    cadastrar_desaparecido: function (req, res) {
+        var form = new formidable.IncomingForm();
+
+        form.parse(req, (err, fields, files) => {
+
+            var oldpath = files.foto[0].filepath;
+            var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+
+            var ext = path.extname(files.foto[0].originalFilename)
+            var nomefoto = hash + ext
+            var newpath = path.join(__dirname, '../public/animais/', nomefoto);
+
+            sharp(oldpath)
+                .resize({ width: 250, height: 250, fit: 'cover' }) 
+                .toFile(newpath, (err, info) => {
+                    if (err) throw err;
+
+                    modelanimais.inserir_desaparecido(
+                        req.session.Id,
+                        'desaparecido',
+                        fields['estado'][0],
+                        fields['cidade'][0],
+                        fields['bairro'][0],
+                        fields['rua'][0],
+                        fields['nome'][0],
+                        fields['especie'][0],
+                        fields['raca'][0],
+                        fields['sexo'][0],
+                        fields['porte'][0],
+                        fields['data'][0],
+                        fields['caracteristicas'][0],
                         nomefoto
                     );
                 });

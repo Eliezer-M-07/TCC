@@ -78,6 +78,7 @@
                 <h3>Animais Cadastrados</h3>
                 <br>
                 <div id="d3">
+                  <a style="background-color: black; color: white;" href="/perfil" class="btn"><i class="material-icons">wysiwyg</i>&nbsp; Todos</a>
                   <a style="background-color: black; color: white;" id="btn-adocao" href="#" class="btn"><i class="material-icons">pets</i>&nbsp; Adoção</a>
                   <a style="background-color: black; color: white;" id="btn-desaparecidos" href="#" class="btn"><i class="material-icons">question_mark</i>&nbsp;Desaparecidos</a>
                   <a style="background-color: black; color: white;" id="btn-encontrados" href="#" class="btn"><i class="material-icons">notification_important</i>&nbsp; Encontrados</a>
@@ -93,7 +94,11 @@
                           <hr>
                           <div style="display: flex; justify-content: flex-start; align-items: flex-end; gap: 30px;">
                             <% if (dados.status == 'adocao') { %>
-                            <a style="width:7em; color: white;" href="/editar_adocao/<%= dados.id %>" class="btn btn-dark">Editar</a>
+                              <a style="width:7em; color: white;" href="/editar_adocao/<%= dados.id %>" class="btn btn-dark">Editar</a>
+                            <% } else if (dados.status == 'desaparecido') { %>
+                              <a style="width:7em; color: white;" href="" class="btn btn-dark">Editar</a>
+                            <% } else if (dados.status == 'encontrado') { %>
+                              <a style="width:7em; color: white;" href="" class="btn btn-dark">Editar</a>
                             <% } %>
                             <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
                           </div>

@@ -5,9 +5,42 @@ con = require("../config/db.js").pool;
 module.exports = {
 
 
-    buscaTodos: function (filters) {
+    buscaTodosAdocao: function (filters) {
         return new Promise((resolve, reject) => {
             let sql = "SELECT * FROM animais WHERE status = 'adocao'";
+            let queryParams = [];
+
+            if (filters.estado) {
+                sql += " AND estado = ?";
+                queryParams.push(filters.estado);
+            }
+
+            if (filters.cidade) {
+                sql += " AND cidade = ?";
+                queryParams.push(filters.cidade);
+            }
+
+            if (filters.especie) {
+                sql += " AND especie = ?";
+                queryParams.push(filters.especie);
+            }
+
+            if (filters.sexo) {
+                sql += " AND sexo = ?";
+                queryParams.push(filters.sexo);
+            }
+
+            con.query(sql, queryParams, (err, rows) => {
+                if (err) return reject(err);
+                resolve(rows);
+            });
+        });
+    },
+
+    
+    buscaTodosDesaparecidos: function (filters) {
+        return new Promise((resolve, reject) => {
+            let sql = "SELECT * FROM animais WHERE status = 'desaparecido'";
             let queryParams = [];
 
             if (filters.estado) {
@@ -102,6 +135,16 @@ module.exports = {
     inserir_adocao(fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto) {
         var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         var values = [fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto];
+    
+        con.query(sql, values, function (err, result) {
+            if (err) throw err;
+        });
+    },
+
+
+    inserir_desaparecido(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto) {
+        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;

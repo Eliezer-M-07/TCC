@@ -117,12 +117,12 @@ footer {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
-    gap: 55px;
+    gap: 70px;
 }
 
 
 #d3 a {
-    width: 395px;
+    width: 265px;
 
 }
 
