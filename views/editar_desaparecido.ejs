@@ -3,7 +3,7 @@
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Cadastrar Adoção</title>
+      <title>Editar desaparecido</title>
       <%- include('layout/head'); %>
   </head>
   <body>
@@ -19,29 +19,30 @@
               <div class="card" style="border-radius: 10px;">
                   <div class="container">
                       <br>
+                      <%dadosAnimal.forEach(function(dados) { %>
                       <div class="d-flex align-items-center">
-                          <img src="/images/missing.png" width="90px">
-                          <h4 class="ml-2">&nbsp;&nbsp;Cadastro animal desaparecido</h4>
-                      </div>
+                        <img style="border: solid 1px black;" src="/animais/<%= dados.foto %>" width="100px" class="rounded-circle" >&nbsp;&nbsp;&nbsp;<h4 class="ml-2">Editar <%= dados.nome %></h4>
+                    </div>
                       <br>
                       <form method="post" action="/cadastrar_desaparecido" enctype="multipart/form-data">
                           <div class="mb-3">
+                            <input type="hidden" name="id" value="<%= dados.id %>">
                             <label for="name" class="form-label"><h6>Nome</h6></label>
-                            <input maxlength="40" name="nome" required type="text" class="form-control" id="name" aria-describedby="nameHelp">
+                            <input value="<%= dados.nome %>" maxlength="40" name="nome" required type="text" class="form-control" id="name" aria-describedby="nameHelp">
                             <div id="NameHelp" class="form-text">Informe o nome do animal.</div>
                           </div>
                           <div class="mb-3">
                             <label for="especie" class="form-label"><h6>Espécie</h6></label>
                             <select name="especie" id="especie" class="form-select" aria-label="Default select example" aria-describedby="especieHelp">
-                              <option value="Cachorro">Cachorro</option>
-                              <option value="Gato">Gato</option>
+                                <option value="Cachorro" <%= dados.especie === 'Cachorro' ? 'selected' : '' %>>Cachorro</option>
+                                <option value="Gato" <%= dados.especie === 'Gato' ? 'selected' : '' %>>Gato</option>
                             </select>
                             <div id="especieHelp" class="form-text">Informe a espécie do animal.</div>
                           </div>
                           <div class="mb-3">
                             <label for="raca" class="form-label"><h6>Raça</h6></label>
                             <select name="raca" id="raca" class="form-select" aria-label="Default select example" aria-describedby="racaHelp">
-              
+                                
                             </select>
                             <div id="racaHelp" class="form-text">Informe a raça do animal.</div>
                           </div>
@@ -56,20 +57,19 @@
                           <div class="mb-3">
                             <label for="porte" class="form-label"><h6>Porte</h6></label>
                             <select name="porte" id="porte" class="form-select" aria-label="Default select example" aria-describedby="porteHelp">
-                              <option value="Pequeno">Pequeno</option>
-                              <option value="Médio">Médio</option>
-                              <option value="Grande">Grande</option>
-                              <option value="Gigante">Gigante</option>
+                                <option value="Pequeno" <%= dados.porte === 'Pequeno' ? 'selected' : '' %>>Pequeno</option>
+                                <option value="Médio" <%= dados.porte === 'Médio' ? 'selected' : '' %>>Médio</option>
+                                <option value="Grande" <%= dados.porte === 'Grande' ? 'selected' : '' %>>Grande</option>
+                                <option value="Gigante" <%= dados.porte === 'Gigante' ? 'selected' : '' %>>Gigante</option>
                             </select>
                             <div id="sexoHelp" class="form-text">Informe o porte do animal.</div>
                             </div>
                           <div class="mb-3">
                             <label for="estado" class="form-label"><h6>Estado</h6></label>
                             <select required name="estado" id="estado" class="form-select" aria-label="Default select example" aria-describedby="estadoHelp">
-                              <option value="">Selecione o estado</option>
-                              <option value="RS">Rio Grande do Sul</option>
-                              <option value="SC">Santa Catarina</option>
-                              <option value="PR">Paraná</option>
+                                <option value="RS" <%= dados.estado === 'RS' ? 'selected' : '' %>>Rio Grande do Sul</option>
+                                <option value="SC" <%= dados.estado === 'SC' ? 'selected' : '' %>>Santa Catarina</option>
+                                <option value="PR" <%= dados.estado === 'PR' ? 'selected' : '' %>>Paraná</option>
                             </select>
                             <div id="estadoHelp" class="form-text">Informe o estado onde o animal está localizado.</div>
                           </div>
@@ -82,27 +82,27 @@
                           </div>
                           <div class="mb-3">
                             <label for="cep" class="form-label"><h6>CEP</h6></label>
-                            <input name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" maxlength="9">
+                            <input value="" name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" maxlength="9">
                             <div id="cepHelp" class="form-text">Informe o CEP da localização.</div>
                           </div>
                           <div class="mb-3">
                             <label for="bairro" class="form-label"><h6>Bairro</h6></label>
-                            <input name="bairro" required type="text" class="form-control" id="bairro" aria-describedby="bairroHelp" readonly>
+                            <input value="<%= dados.bairro %>" name="bairro" required type="text" class="form-control" id="bairro" aria-describedby="bairroHelp" readonly>
                             <div id="bairroHelp" class="form-text">Bairro onde o animal está desaparecido.</div>
                           </div>
                           <div class="mb-3">
                             <label for="rua" class="form-label"><h6>Rua</h6></label>
-                            <input name="rua" required type="text" class="form-control" id="rua" aria-describedby="ruaHelp" readonly>
+                            <input value="<%= dados.rua %>" name="rua" required type="text" class="form-control" id="rua" aria-describedby="ruaHelp" readonly>
                             <div id="ruaHelp" class="form-text">Rua onde o animal está desaparecido.</div>
                           </div>
                           <div class="mb-3">
                             <label for="data" class="form-label"><h6>Data de desaparecimento</h6></label>
-                            <input  name="data" required type="date" class="form-control" id="data" aria-describedby="dataHelp">
+                            <input value="" name="data" required type="date" class="form-control" id="data" aria-describedby="dataHelp">
                             <div id="NameHelp" class="form-text">Informe a data de desaparecimento do animal.</div>
                           </div>
                           <div class="mb-3">
                             <label for="textarea" class="form-label"><h6>Características</h6></label>
-                            <textarea name="caracteristicas" maxlength="255" class="form-control" id="textarea" rows="2"></textarea>
+                            <textarea name="caracteristicas" maxlength="255" class="form-control" id="textarea" rows="2"><%= dados.caracteristicas %></textarea>
                             <div id="caracteristicasHelp" class="form-text">Fale as características do animal.</div>
                           </div>
                           <div class="mb-3">
@@ -112,7 +112,9 @@
                           </div>
                           <br>
                           <button type="submit" class="btn btn-dark">Cadastrar</button>
+                         
                         </form>
+                        
                         <br>
                   </div>
               </div>
@@ -122,9 +124,16 @@
       <%- include("layout/footer"); %>
       <script>
         
+        var dateControl = document.querySelector('input[type="date"]');
+        var data =  "<%= new Date(dados.data).toISOString().split('T')[0] %>";
+        dateControl.value = data;
+        
+        
         const especieSelect = document.getElementById('especie');
         const racaSelect = document.getElementById('raca');
       
+        const racaSelecionada = "<%= dados.raca %>";
+
         const racasPorEspecie = {
           Cachorro: [
             "Desconhecida",
@@ -221,8 +230,11 @@
             const option = document.createElement('option');
             option.textContent = raca;
             option.value = raca;
+            if (raca === racaSelecionada) {
+                option.selected = true;
+            }
             racaSelect.appendChild(option);
-          });
+            });
         }
       
         especieSelect.addEventListener('change', atualizarRacas);
@@ -248,7 +260,6 @@
             })
             .catch(error => console.error('Erro ao buscar cidades:', error));
         }
-
         
         estadoSelect.addEventListener('change', function() {
           const uf = this.value;
@@ -258,7 +269,15 @@
             cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
           }
         });
+    
+        const estadoSelecionado = estadoSelect.value;
+        if (estadoSelecionado) {
+            fetchCidades(estadoSelecionado);
+        }
+        
       });
+
+      
 
         document.addEventListener('DOMContentLoaded', function() {
         const cepInput = document.getElementById('cep');
@@ -282,5 +301,6 @@
       });
       
       </script>
+      <% }) %>
   </body>
 </html>

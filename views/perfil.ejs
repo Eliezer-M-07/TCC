@@ -83,7 +83,7 @@
                   <a style="background-color: black; color: white;" id="btn-desaparecidos" href="#" class="btn"><i class="material-icons">question_mark</i>&nbsp;Desaparecidos</a>
                   <a style="background-color: black; color: white;" id="btn-encontrados" href="#" class="btn"><i class="material-icons">notification_important</i>&nbsp; Encontrados</a>
               </div>
-                <hr style="width: 97%;">
+                <hr style="width: 95%;">
                 <% if (dadosAdocao.length > 0) { %>
                   <div class="row" style="gap: 30px;">
                     <% dadosAdocao.forEach(function(dados, index) { %>
@@ -96,7 +96,7 @@
                             <% if (dados.status == 'adocao') { %>
                               <a style="width:7em; color: white;" href="/editar_adocao/<%= dados.id %>" class="btn btn-dark">Editar</a>
                             <% } else if (dados.status == 'desaparecido') { %>
-                              <a style="width:7em; color: white;" href="" class="btn btn-dark">Editar</a>
+                              <a style="width:7em; color: white;" href="/editar_desaparecido/<%= dados.id %>" class="btn btn-dark">Editar</a>
                             <% } else if (dados.status == 'encontrado') { %>
                               <a style="width:7em; color: white;" href="" class="btn btn-dark">Editar</a>
                             <% } %>

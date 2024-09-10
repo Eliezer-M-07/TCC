@@ -46,9 +46,8 @@
                                     <label for="raca" class="form-label">
                                         <h6>Raça</h6>
                                     </label>
-                                    <select name="raca" id="raca" class="form-select"
-                                        aria-label="Default select example" aria-describedby="racaHelp">
-
+                                    <select name="raca" id="raca" class="form-select" aria-label="Default select example" aria-describedby="racaHelp">
+                                        
                                     </select>
                                     <div id="racaHelp" class="form-text">Informe a raça do animal.</div>
                                 </div>
@@ -84,9 +83,9 @@
                                 <div class="mb-3">
                                     <label for="estado" class="form-label"><h6>Estado</h6></label>
                                     <select required name="estado" id="estado" class="form-select" aria-label="Default select example" aria-describedby="estadoHelp">
-                                      <option value="RS">Rio Grande do Sul</option>
-                                      <option value="SC">Santa Catarina</option>
-                                      <option value="PR">Paraná</option>
+                                      <option value="RS" <%= dados.estado === 'RS' ? 'selected' : '' %>>Rio Grande do Sul</option>
+                                      <option value="SC" <%= dados.estado === 'SC' ? 'selected' : '' %>>Santa Catarina</option>
+                                      <option value="PR" <%= dados.estado === 'PR' ? 'selected' : '' %>>Paraná</option>
                                     </select>
                                     <div id="estadoHelp" class="form-text">Informe o estado onde o animal está localizado.</div>
                                   </div>
@@ -117,25 +116,18 @@
                                 <br>
                                 <button type="submit" class="btn btn-dark">Editar</button>
                             </form>
-                            <% }) %>
-                                <br>
+                            
+                            <br>
                     </div>
                 </div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
         <%- include("layout/footer"); %>
             <script>
                 const especieSelect = document.getElementById('especie');
                 const racaSelect = document.getElementById('raca');
+
+                const racaSelecionada = "<%= dados.raca %>";
 
                 const racasPorEspecie = {
                     Cachorro: [
@@ -232,8 +224,11 @@
                         const option = document.createElement('option');
                         option.textContent = raca;
                         option.value = raca;
+                        if (raca === racaSelecionada) {
+                            option.selected = true;
+                        }
                         racaSelect.appendChild(option);
-                    });
+                        });
                 }
 
                 especieSelect.addEventListener('change', atualizarRacas);
@@ -274,6 +269,6 @@
         </script>
                 
         
+<% }) %>
 </body>
-
 </html>

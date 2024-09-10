@@ -34,8 +34,9 @@
                     </div>
                     <br>
                     <br>
-                    <div>
-                    <article style="margin-top: 2%;">
+                    <br>
+                    <div style="display: flex; gap: 15%;">
+                    <article>
                         <h5><i class="material-icons">description</i> Informações Básicas</h5>
                         <hr>
                         <strong>Estado - </strong> <%= dados.estado %>
@@ -51,6 +52,18 @@
                         <strong>Sexo - </strong> <%= dados.sexo %>
                         <br>
                     </article>
+                    <article>
+                        <h5><i class="material-icons">account_box</i> Dados anunciante</h5>
+                        <hr>
+                        <strong>Nome - </strong> <%= dados.anunciante_nome %>
+                        <br>
+                        <strong>E-mail - </strong> <%= dados.anunciante_email %>
+                        <br>
+                        <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
+                        <br>
+                        <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
+                    </article>
+                </div>
                 <% } else if (dados.status == 'desaparecido') { %>
                     <div>
                         <div>
@@ -86,26 +99,27 @@
                         <br>
                     </article>
                     <br>
+                    <article style="margin-top: 2%;">
+                        <h5><i class="material-icons">account_box</i> Informações do dono</h5>
+                        <hr>
+                        <strong>Nome - </strong> <%= dados.anunciante_nome %>
+                        <br>
+                        <strong>E-mail - </strong> <%= dados.anunciante_email %>
+                        <br>
+                        <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
+                        <br>
+                        <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
+                    </article>
+                    <br>
+                    <article style="margin-top: 2%;">
+                        <h5><i class="material-icons">location_on</i> Localização</h5>
+                        <hr>
+                        <div id="map" style="height: 300px; width: 100%;"></div>
+                    </article>
                 <% } else if (dados.status == 'encontrado') { %>
 
                 <% } %> 
-                <article style="margin-top: 2%;">
-                    <h5><i class="material-icons">account_box</i> Informações do dono</h5>
-                    <hr>
-                    <strong>Nome - </strong> <%= dados.anunciante_nome %>
-                    <br>
-                    <strong>E-mail - </strong> <%= dados.anunciante_email %>
-                    <br>
-                    <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
-                    <br>
-                    <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
-                </article>
-                <br>
-                <article style="margin-top: 2%;">
-                    <h5><i class="material-icons">location_on</i> Localização</h5>
-                    <hr>
-                    <div id="map" style="height: 300px; width: 100%;"></div>
-                </article>
+                
                 </div>
             
         </div>

@@ -154,10 +154,20 @@ module.exports = {
     },
 
 
-    editar: function (req, res) {
+    editar_adocao: function (req, res) {
         if (req.session.loggedin) {
             id = req.params.id
             modelanimais.busca(id).then(result => res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
+        } else {
+            res.render('login', { alerta: 'É precisa fazer login para editar um animal.', logado: req.session.loggedin, admin: req.session.admin })
+        }
+
+    },
+
+    editar_desaparecido: function (req, res) {
+        if (req.session.loggedin) {
+            id = req.params.id
+            modelanimais.busca(id).then(result => res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
         } else {
             res.render('login', { alerta: 'É precisa fazer login para editar um animal.', logado: req.session.loggedin, admin: req.session.admin })
         }
