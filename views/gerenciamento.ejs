@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar</title>
+    <%- include('layout/head'); %>
+</head>
+<body>
+    <%- include('layout/menu'); %>
+    <% function formatarTelefone(numero) {
+        let numeroLocal = numero.substring(2);
+        let ddd = numeroLocal.substring(0, 2);
+        let telefone = numeroLocal.substring(2);
+        return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
+      } %>
+    <div class="container my-4">
+        <div class="row mb-3">
+            <div class="col-12 col-md-4">
+                <a href="/gerenciamento" class="btn btn-light w-100" style="border: solid 1px darkgray;">
+                    <i class="material-icons">check_circle</i> Validação
+                </a>
+            </div>
+            <div class="col-12 col-md-4">
+                <a id="btn-usuarios" class="btn btn-light w-100" style="border: solid 1px darkgray;">
+                    <i class="material-icons">group</i> Usuários
+                </a>
+            </div>
+            <div class="col-12 col-md-4">
+                <a id="btn-animais" class="btn btn-light w-100" style="border: solid 1px darkgray;">
+                    <i class="material-icons">pets</i> Animais
+                </a>
+            </div>
+        </div>
+        <hr>
+        <% if (tipo == "validacao") { %>
+            <h4>Validação</h4>
+            <% if (dados.length > 0 && dados.some(dado => dado.aprovado == "Pendente")) { %>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                                <th scope="col"><i class="material-icons">badge</i> Nome</th>
+                                <th scope="col"><i class="material-icons">pending</i> Situação</th>
+                                <th scope="col"><i class="material-icons">check</i> Aprovar</th>
+                                <th scope="col"><i class="material-icons">close</i> Recusar</th>
+                                <th scope="col"><i class="material-icons">delete</i> Excluir</th>
+                                <th scope="col"><i class="material-icons">info</i> Detalhar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% dados.forEach(function(dados) { %>
+                                <% if (dados.aprovado == "Pendente") { %>
+                                    <tr>
+                                        <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
+                                        <td><%= dados.nome %></td>
+                                        <td><%= dados.aprovado %></td>
+                                        <td><a href="/aprovar/<%= dados.id %>" class="btn btn-dark w-100">Aprovar</a></td>
+                                        <td><a href="/recusar/<%= dados.id %>" class="btn btn-dark w-100">Recusar</a></td>
+                                        <td><a class="btn btn-dark w-100">Excluir</a></td>
+                                        <td><a class="btn btn-dark w-100">Detalhar</a></td>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } else { %>
+                <h5>Nenhum animal pendente para aprovação.</h5>
+            <% } %>
+        <% } else if (tipo == "usuarios") { %>
+            <h4>Usuários</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                            <th scope="col"><i class="material-icons">badge</i> Nome</th>
+                            <th scope="col"><i class="material-icons">mail</i> E-mail</th>
+                            <th scope="col"><i class="material-icons">call</i> Telefone</th>
+                            <th scope="col"><i class="material-icons">delete</i> Excluir</th>
+                            <th scope="col"><i class="material-icons">info</i> Detalhar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% dados.forEach(function(dados) { %>
+                            <tr>
+                                <td><img class="rounded img-fluid" src="/usuarios/<%= dados.pfp %>" style="max-width: 120px; border: solid 1px black;"></td>
+                                <td><%= dados.nome %></td>
+                                <td><%= dados.email %></td>
+                                <td><%= formatarTelefone(dados.telefone) %></td>
+                                <td><a class="btn btn-dark w-100">Excluir</a></td>
+                                <td><a class="btn btn-dark w-100">Detalhar</a></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <h4>Animais</h4>
+            <div class="table-responsive"></div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                            <th scope="col"><i class="material-icons">badge</i> Nome</th>
+                            <th scope="col"><i class="material-icons">mail</i> E-mail</th>
+                            <th scope="col"><i class="material-icons">call</i> Telefone</th>
+                            <th scope="col"><i class="material-icons">delete</i> Excluir</th>
+                            <th scope="col"><i class="material-icons">info</i> Detalhar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% dados.forEach(function(dados) { %>
+                            <tr>
+                                <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
+                                <td><%= dados.nome %></td>
+                                <td><%= dados.email %></td>
+                                <td><%= dados.telefone %></td>
+                                <td><a class="btn btn-dark w-100">Excluir</a></td>
+                                <td><a class="btn btn-dark w-100">Detalhar</a></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </div>
+    <script>
+        document.getElementById('btn-usuarios').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "/gerenciamento?tipo=usuarios";
+        });
+        
+        document.getElementById('btn-animais').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "/gerenciamento?tipo=animais";
+        });
+    </script>
+</body>
+</html>

@@ -77,7 +77,8 @@ module.exports = {
                         fields['porte'][0],
                         fields['peso'][0],
                         fields['personalidade'][0],
-                        nomefoto
+                        nomefoto,
+                        'Pendente'
                     );
                 });
 
@@ -117,7 +118,8 @@ module.exports = {
                         fields['porte'][0],
                         fields['data'][0],
                         fields['caracteristicas'][0],
-                        nomefoto
+                        nomefoto,
+                        'Pendente'
                     );
                 });
 
@@ -233,7 +235,29 @@ module.exports = {
 
     },
 
+    aprovar:  function (req, res) {
+        if(req.session.loggedin && req.session.admin == true){
+            var id = req.params.id;
 
+            modelanimais.aprovar(id);
+
+            res.redirect('/gerenciamento')
+        }else{
+            res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome});
+        }
+    },
+
+    recusar:  function (req, res) {
+        if(req.session.loggedin && req.session.admin == true){
+            var id = req.params.id;
+
+            modelanimais.recusar(id);
+
+            res.redirect('/gerenciamento')
+        }else{
+            res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome});
+        }
+    },
 
 
 }

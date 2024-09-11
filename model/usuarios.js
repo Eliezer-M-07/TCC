@@ -3,6 +3,16 @@ con = require("../config/db.js").pool;
 module.exports = {
 
     
+async todos() {
+    var sql ="SELECT * FROM usuarios";
+    return new Promise((resolve, reject) => {
+        con.query(sql, (err, row) => {
+        if (err) return reject(err);
+            resolve(row);
+        });
+    });
+},
+
 async busca(id) {
     var sql ="SELECT * FROM usuarios where id = ?";
     return new Promise((resolve, reject) => {

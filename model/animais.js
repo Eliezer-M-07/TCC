@@ -71,6 +71,16 @@ module.exports = {
     },
 
 
+    async todos() {
+        var sql = "SELECT * FROM animais";
+        return new Promise((resolve, reject) => {
+            con.query(sql, (err, row) => {
+                if (err) return reject(err);
+                resolve(row);
+            });
+        });
+    },
+
     async busca(id) {
         var sql = "SELECT * FROM animais where id = ?";
         return new Promise((resolve, reject) => {
@@ -132,9 +142,9 @@ module.exports = {
     },
 
 
-    inserir_adocao(fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto) {
-        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var values = [fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto];
+    inserir_adocao(fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, aprovado) {
+        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, aprovado];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -142,9 +152,9 @@ module.exports = {
     },
 
 
-    inserir_desaparecido(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto) {
-        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto];
+    inserir_desaparecido(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado) {
+        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -203,6 +213,24 @@ module.exports = {
         })
     },
 
+
+    async aprovar(id) {
+        var sql = "UPDATE animais SET aprovado = ? WHERE id = ?";
+        var values = ['Aprovado', id];
+
+        con.query(sql, values, function (err, result) {
+            if (err) throw err;
+        });
+    },
+
+    async recusar(id) {
+        var sql = "UPDATE animais SET aprovado = ? WHERE id = ?";
+        var values = ['Recusado', id];
+
+        con.query(sql, values, function (err, result) {
+            if (err) throw err;
+        });
+    },
 
 
 }

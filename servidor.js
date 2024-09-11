@@ -92,6 +92,10 @@ app.post('/editar', usuarioController.alterar);
 app.get('/deletar/:id', usuarioController.deletar)
 app.post('/cadastrar', usuarioController.cadastrar);
 
+app.get('/gerenciamento', usuarioController.all)
+app.get('/aprovar/:id', animaisController.aprovar)
+app.get('/recusar/:id', animaisController.recusar)
+
 app.get('/editar_adocao/:id', animaisController.editar_adocao);
 app.post('/alterar_adocao', animaisController.alterarAdocao);
 app.get('/editar_desaparecido/:id', animaisController.editar_desaparecido);

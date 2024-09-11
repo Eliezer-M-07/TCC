@@ -221,6 +221,45 @@ module.exports = {
     },
 
 
+    all: function (req, res) {
+        if (req.session.loggedin ) {
+            if (req.session.admin == true){
+                const tipo = req.query.tipo;
+    
+                let dados;
+                let tipo2;
+        
+                if (tipo === 'usuarios') {
+                    dados = modelusuario.todos(); 
+                    tipo2 = "usuarios"
+                } else if (tipo === 'animais') {
+                    dados = modelanimal.todos();
+                    tipo2 = "animais"
+                } else {
+                    dados = modelanimal.todos();
+                    tipo2 = "validacao"
+                }
+            
+                Promise.all([
+                    dados
+                ])
+                    .then(result => {
+                        res.render('gerenciamento', { dados: result[0], tipo: tipo2, logado: req.session.loggedin, admin: req.session.admin });
+
+                    });
+
+            }else{
+                res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome })
+            }
+
+        }else{
+            res.render('login', { alerta: 'faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin }) 
+        }
+    },
+
+
+    
+
 }
 
 
