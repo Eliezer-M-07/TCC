@@ -1,29 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="border: solid 1px rgb(233, 233, 233);">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">&nbsp;
-      <img src="/images/logo.png" alt="logo" width="195px" class="d-inline-block">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">&nbsp;&nbsp;
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/" style="color: black; font-size: 17px;">Página Inicial</a>
-        </li>&nbsp;&nbsp;
-        <li class="nav-item">
-          <a class="nav-link" href="/adotar" style="color: black; font-size: 17px;">Adoção</a>
-        </li>&nbsp;&nbsp;
-        <li class="nav-item">
-          <a class="nav-link" href="/desaparecidos" style="color: black; font-size: 17px;">Desaparecidos</a>
-        </li>&nbsp;&nbsp;
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: black; font-size: 17px;">Encontrados</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto">
-        <% if (logado == true && admin == false) { %>
-          <div id="d1" class="dropdown">
+<% if (logado == true && admin == false) { %>
+  <nav class="navbar navbar-expand-lg navbar-light" style="border: solid 1px rgb(233, 233, 233);">
+    <div class="container-fluid">
+        <img src="/images/logo.png" alt="logo" width="195px" class="d-inline-block">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">&nbsp;&nbsp;
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/" style="color: black; font-size: 17px;">Página Inicial</a>
+          </li>&nbsp;&nbsp;
+          <li class="nav-item">
+            <a class="nav-link" href="/adotar" style="color: black; font-size: 17px;">Adoção</a>
+          </li>&nbsp;&nbsp;
+          <li class="nav-item">
+            <a class="nav-link" href="/desaparecidos" style="color: black; font-size: 17px;">Desaparecidos</a>
+          </li>&nbsp;&nbsp;
+          <li class="nav-item">
+            <a class="nav-link" href="#" style="color: black; font-size: 17px;">Encontrados</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <div  class="dropdown">
             <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i style="vertical-align:bottom;" class="material-icons">switch_account</i>&nbsp;Opções&nbsp;</button>
             <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" href="/perfil"><i style="vertical-align:bottom;"  class="material-icons">account_box</i>&nbsp;&nbsp;&nbsp;Perfil</a></li>
@@ -47,37 +45,70 @@
             </div>
           </div>
         <%}else if (logado == true && admin == true) { %>
-          <div id="d1" class="dropdown">
-            <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i style="vertical-align:bottom;"  class="material-icons" style="vertical-align: bottom;">apps</i>&nbsp;Opções&nbsp;</button>
-            <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="/gerenciamento"><i class="material-icons">settings</i>&nbsp;&nbsp;Gerenciar</a></li>
-              <li><a data-bs-toggle="modal" data-bs-target="#modal2" class="dropdown-item" href="/logout"><i class="material-icons">logout</i>&nbsp;&nbsp;Logout</a></li>
-            </ul>
-            <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Logout</h5>
-                  </div>
-                  <div class="modal-body">
-                    Tem certeza que deseja sair? 
-                  </div>
-                  <div class="modal-footer">
-                    <button style="width: 6rem;" type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="/logout"><button style="width: 6rem;"  type="button" class="btn btn-dark" data-bs-dismiss="modal">Sair</button></a>
+          <nav class="navbar navbar-expand-lg navbar-light" style="border: solid 1px rgb(233, 233, 233);">
+            <div class="container-fluid">
+                <img src="/images/logo.png" alt="logo" width="195px" class="d-inline-block">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                <div class="dropdown">
+                  <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i style="vertical-align:bottom;"  class="material-icons" style="vertical-align: bottom;">apps</i>&nbsp;Opções&nbsp;</button>
+                  <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="/gerenciamento"><i style="vertical-align:bottom;" class="material-icons">settings</i>&nbsp;&nbsp;Gerenciar</a></li>
+                    <li><a data-bs-toggle="modal" data-bs-target="#modal2" class="dropdown-item" href="/logout"><i style="vertical-align:bottom;" class="material-icons">logout</i>&nbsp;&nbsp;Logout</a></li>
+                  </ul>
+                  <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel2">Logout</h5>
+                        </div>
+                        <div class="modal-body">
+                          Tem certeza que deseja sair? 
+                        </div>
+                        <div class="modal-footer">
+                          <button style="width: 6rem;" type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                          <a href="/logout"><button style="width: 6rem;"  type="button" class="btn btn-dark" data-bs-dismiss="modal">Sair</button></a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
         <% }else { %>
-          <div class="dropdown">
-            <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">person</i>&nbsp;Operações</button>
-            <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="/login"><i style="vertical-align:bottom;" class="material-icons">login</i>&nbsp;&nbsp;&nbsp;Login</a></li>
-              <li><a class="dropdown-item" href="/cadastro"><i style="vertical-align:bottom;" class="material-icons"></i><i class="material-icons">person_add</i> &nbsp;&nbsp;Cadastrar-se</a></li>
-            </ul>
-          </div>
+          <nav class="navbar navbar-expand-lg navbar-light" style="border: solid 1px rgb(233, 233, 233);">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/">&nbsp;
+                <img src="/images/logo.png" alt="logo" width="195px" class="d-inline-block">
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">&nbsp;&nbsp;
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/" style="color: black; font-size: 17px;">Página Inicial</a>
+                  </li>&nbsp;&nbsp;
+                  <li class="nav-item">
+                    <a class="nav-link" href="/adotar" style="color: black; font-size: 17px;">Adoção</a>
+                  </li>&nbsp;&nbsp;
+                  <li class="nav-item">
+                    <a class="nav-link" href="/desaparecidos" style="color: black; font-size: 17px;">Desaparecidos</a>
+                  </li>&nbsp;&nbsp;
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" style="color: black; font-size: 17px;">Encontrados</a>
+                  </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                  <div  class="dropdown">
+                  <div class="dropdown">
+                    <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">person</i>&nbsp;Operações</button>
+                    <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="/login"><i style="vertical-align:bottom;" class="material-icons">login</i>&nbsp;&nbsp;&nbsp;Login</a></li>
+                      <li><a class="dropdown-item" href="/cadastro"><i style="vertical-align:bottom;" class="material-icons"></i><i class="material-icons">person_add</i> &nbsp;&nbsp;Cadastrar-se</a></li>
+                    </ul>
+                  </div>
         <% } %> 
       </ul>
         &nbsp;

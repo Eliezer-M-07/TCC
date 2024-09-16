@@ -53,31 +53,38 @@
     <article id="art5">
         <br>
         <% if (all.length > 0) { %>
-            <div id="d5">
-                <%all.forEach(function(dados) { %>
-                    <div id="cardListagem" class="card">
-                        <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0; " >ADOÇÃO</div>
-                        <img style="height: 280px;" src="/animais/<%= dados.foto %>" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                            <%= dados.nome %>
-                            </h5>
-                            <hr>
-                            <strong>Estado:</strong> <%= dados.estado %>
-                            <br>
-                            <strong>Sexo:</strong> <%= dados.sexo %>
-                            <br>
-                            <br>
-                            <a style="width: 100%; background-color: black; color: white;" href="/animal/<%=dados.id %>" class="btn">Quero adotar</a>
+          <div id="d5">
+            <%all.forEach(function(dados) { %>
+                <% if (dados.aprovado == 'Aprovado') { %>
+                
+                      <div id="cardListagem" class="card">
+                          <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0; " >ADOÇÃO</div>
+                            <img style="height: 280px;" src="/animais/<%= dados.foto %>" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">
+                              <%= dados.nome %>
+                              </h5>
+                              <hr>
+                              <strong>Estado:</strong> <%= dados.estado %>
+                              <br>
+                              <strong>Sexo:</strong> <%= dados.sexo %>
+                              <br>
+                              <br>
+                              <a style="width: 100%; background-color: black; color: white;" href="/animal/<%=dados.id %>" class="btn">Quero adotar</a>
+                            </div>
                         </div>
-                    </div>
-                    <br>
-              <% }) %>
+                        <br>
+                        
+                <% } else { %>
+                <br>
+                <h5 style="text-align: center; width: 90%;"> Nenhum animal cadastrado.</h5>
+                <% } %>
+
+            <% }) %>
           </div>
           <%} else { %>
             <br>
             <center><h5>Nenhum animal cadastrado.</h5></center>
-            
           <% } %>
     </article>
 

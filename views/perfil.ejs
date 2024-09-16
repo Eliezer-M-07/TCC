@@ -16,7 +16,15 @@
                     let telefone = numeroLocal.substring(2);
                     return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
                   } %>
+                  <% if (dadosUsuario.length == 0) { %>
+                    <script>
+                        window.location.href = "/logout";
+                        alert('Conta não encontrada, pode ter sido excluida.')
+                    </script>
+                  <% } %>
                 <%dadosUsuario.forEach(function(dados) { %>
+                    
+                    
                     <img id="pfp" class="rounded" src="/usuarios/<%= dados.pfp %>" width="280px" height="280px">
                     <br>
                     <br>
@@ -89,11 +97,11 @@
                     <% dadosAdocao.forEach(function(dados, index) { %>
                       <div id="cardPerfil" class="card">
                         <% if (dados.aprovado == 'Pendente') { %>
-                          <div style="width: 100%; text-align: center; font-size: 18px; background-color: yellow; margin-top: 10px; border-radius: 5px;"><strong>Status:</strong> <%= dados.aprovado %></div>
+                          <div style="margin-top: 10px;"  class="btn btn-warning"><strong>Status:</strong> <%= dados.aprovado %></div>
                         <% } else if (dados.aprovado == 'Aprovado') { %>
-                          <div style="width: 100%; text-align: center; font-size: 18px; background-color: green; margin-top: 10px; border-radius: 5px;"><strong>Status:</strong> <%= dados.aprovado %></div>
+                          <div style="margin-top: 10px;" class="btn btn-success"><strong>Status:</strong> <%= dados.aprovado %></div>
                         <% } else if (dados.aprovado == 'Recusado') { %>
-                          <div style="width: 100%; text-align: center; font-size: 18px; background-color: red; margin-top: 10px; border-radius: 5px;"><strong>Status:</strong> <%= dados.aprovado %></div>
+                          <div style="margin-top: 10px;" class="btn btn-listar" ><strong>Status:</strong> <%= dados.aprovado %></div>
                         <% } %>
 
                         <img class="rounded" style="width: 235px; height: 250px; margin-top: 5%;  border: solid 1px black; " src="animais/<%= dados.foto %>" class="card-img-top" alt="...">

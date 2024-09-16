@@ -161,6 +161,25 @@ module.exports = {
                 })
                 res.redirect('/');
 
+            }else if(req.session.admin == true){
+                var id = req.params.id;
+
+                modelanimal.deletarComUser(id);
+
+                modelusuario.busca(id)
+                    .then(result => {
+                        var img = path.join(__dirname, '../public/usuarios/', result[0]['pfp']);
+                        fs.unlink(img, (err) => { });
+                    })
+                    .catch(err =>
+                        console.error(err)
+                    );
+
+                modelusuario.deletar(id);
+
+                res.redirect('/gerenciamento?tipo=usuarios');
+
+
             }else{
                 res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome })
             }
@@ -257,6 +276,7 @@ module.exports = {
         }
     },
 
+    
 
     
 

@@ -21,7 +21,7 @@
                     <div>
                         <div>
                             <img src="/images/logo.png" width="230px" style="float: right;">  
-                            <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            <img class="rounded" id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
                             <div style="float: right;">
                                 </div>
                                 <div style="width: 23%; height: 10%;">
@@ -61,7 +61,11 @@
                         <br>
                         <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
                         <br>
-                        <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
+                        <% if (admin == false) { %>
+                            <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
+                        <% } else { %>
+                            
+                        <% } %>
                     </article>
                 </div>
                 <% } else if (dados.status == 'desaparecido') { %>
