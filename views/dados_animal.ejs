@@ -61,10 +61,11 @@
                         <br>
                         <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
                         <br>
-                        <% if (admin == false) { %>
-                            <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
+                        <% if (admin == true) { %>
+
                         <% } else { %>
-                            
+                            <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
+
                         <% } %>
                     </article>
                 </div>
@@ -112,8 +113,12 @@
                         <br>
                         <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
                         <br>
-                        <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
-                    </article>
+                        <% if (admin == true) { %>
+                            
+                        <% } else { %>
+                            <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
+
+                        <% } %>                    </article>
                     <br>
                     <article style="margin-top: 2%;">
                         <h5><i class="material-icons">location_on</i> Localização</h5>
