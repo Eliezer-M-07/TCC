@@ -145,6 +145,17 @@ module.exports = {
                     modelanimais.deletar(id);
 
                     res.redirect('/perfil');
+                    
+                }else if(req.session.admin == true){
+                    const img = path.join(__dirname, '../public/animais/', animal.foto);
+                    fs.unlink(img, (err) => {
+                        if (err) console.error(err);
+                    });
+
+                    modelanimais.deletar(id);
+
+                    res.redirect('/gerenciamento?tipo=animais');
+
                 }else{
                     res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome});
                 }
@@ -158,8 +169,12 @@ module.exports = {
 
     editar_adocao: function (req, res) {
         if (req.session.loggedin) {
-            id = req.params.id
-            modelanimais.busca(id).then(result => res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
+            if(req.session.admin == false){
+                id = req.params.id
+                modelanimais.busca(id).then(result => res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
+            }else{
+                res.redirect('/gerenciamento');
+            }
         } else {
             res.render('login', { alerta: 'É precisa fazer login para editar um animal.', logado: req.session.loggedin, admin: req.session.admin })
         }
@@ -168,8 +183,12 @@ module.exports = {
 
     editar_desaparecido: function (req, res) {
         if (req.session.loggedin) {
-            id = req.params.id
-            modelanimais.busca(id).then(result => res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
+            if(req.session.admin == false){
+                id = req.params.id
+                modelanimais.busca(id).then(result => res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
+            }else{
+                res.redirect('/gerenciamento');            
+            }
         } else {
             res.render('login', { alerta: 'É precisa fazer login para editar um animal.', logado: req.session.loggedin, admin: req.session.admin })
         }

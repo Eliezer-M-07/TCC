@@ -45,7 +45,6 @@
                                 <th scope="col"><i class="material-icons">pending</i> Situação</th>
                                 <th scope="col"><i class="material-icons">check</i> Aprovar</th>
                                 <th scope="col"><i class="material-icons">close</i> Recusar</th>
-                                <th scope="col"><i class="material-icons">delete</i> Excluir</th>
                                 <th scope="col"><i class="material-icons">info</i> Detalhar</th>
                             </tr>
                         </thead>
@@ -58,8 +57,7 @@
                                         <td><%= dados.aprovado %></td>
                                         <td><a href="/aprovar/<%= dados.id %>" class="btn btn-dark w-100">Aprovar</a></td>
                                         <td><a href="/recusar/<%= dados.id %>" class="btn btn-dark w-100">Recusar</a></td>
-                                        <td><a class="btn btn-dark w-100">Excluir</a></td>
-                                        <td><a class="btn btn-dark w-100">Detalhar</a></td>
+                                        <td><a href="/animal/<%= dados.id %>" class="btn btn-dark w-100">Detalhar</a></td>
                                     </tr>
                                 <% } %>
                             <% }) %>
@@ -120,53 +118,53 @@
             <% } %>
         <% } else { %>
             <h4>Animais</h4>
-            <% if (dados.length > 0 && dados.some(dado => dado.aprovado == "Aprovado")) { %>
-                <div class="table-responsive"></div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col"><i class="material-icons">photo</i> Foto</th>
-                                <th scope="col"><i class="material-icons">badge</i> Nome</th>
-                                <th scope="col"><i class="material-icons">description</i> Características</th>
-                                <th scope="col"><i class="material-icons">delete</i> Excluir</th>
-                                <th scope="col"><i class="material-icons">info</i> Detalhar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% dados.forEach(function(dados, index) { %>
-                                <tr>
-                                    <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
-                                    <td><%= dados.nome %></td>
-                                    <td><%= dados.caracteristicas %></td>
-                                    <td><a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" class="btn btn-dark w-100">Excluir</a></td>
-                                    <td><a href="/animal/<%= dados.id %>" class="btn btn-dark w-100">Detalhar</a></td>
-                                </tr>
-                                <div class="modal fade" id="excluiranimal<%= index %>" tabindex="-1" aria-labelledby="excluiranimalLabel<%= index %>" aria-hidden="true" style="color: black;">
-                                    <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
+    <% if (dados.length > 0 && dados.some(dado => dado.aprovado == "Aprovado")) { %>
+        <% dados.filter(dado => dado.aprovado === "Aprovado").forEach(function(dados, index) { %> 
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                            <th scope="col"><i class="material-icons">badge</i> Nome</th>
+                            <th scope="col"><i class="material-icons">description</i> Características</th>
+                            <th scope="col"><i class="material-icons">delete</i> Excluir</th>
+                            <th scope="col"><i class="material-icons">info</i> Detalhar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
+                            <td><%= dados.nome %></td>
+                            <td><%= dados.caracteristicas %></td>
+                            <td><a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" class="btn btn-dark w-100">Excluir</a></td>
+                            <td><a href="/animal/<%= dados.id %>" class="btn btn-dark w-100">Detalhar</a></td>
+                        </tr>
+                        <div class="modal fade" id="excluiranimal<%= index %>" tabindex="-1" aria-labelledby="excluiranimalLabel<%= index %>" aria-hidden="true" style="color: black;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
                                         <h5 class="modal-title" id="excluiranimalLabel<%= index %>">Excluir <%= dados.nome %></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
+                                    </div>
+                                    <div class="modal-body">
                                         Tem certeza que deseja excluir?
-                                        </div>
-                                        <div class="modal-footer">
+                                    </div>
+                                    <div class="modal-footer">
                                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
                                         <a href="/deletar_animal/<%= dados.id %>"><button type="button" class="btn btn-dark">Excluir</button></a>
-                                        </div>
-                                    </div>
                                     </div>
                                 </div>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-            <% } else { %>
-                <br>
-                <h5>Nenhum animal cadastrado.</h5>
-            <% } %>
-        <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <br>
+        <h5>Nenhum animal cadastrado.</h5>
+    <% } %>
+<% } %>
     </div>
     <script>
         document.getElementById('btn-usuarios').addEventListener('click', function(event) {

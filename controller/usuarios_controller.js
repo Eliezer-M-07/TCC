@@ -12,34 +12,38 @@ module.exports = {
 
     dados: function (req, res) {
         if (req.session.loggedin) {
-            const filtro = req.query.filtro;
-    
-            let buscaDados;
-    
-            if (filtro === 'adocao') {
-                buscaDados = modelanimal.buscaAdocao(req.session.Id); 
-            } else if (filtro === 'desaparecidos') {
-                buscaDados = modelanimal.buscaDesaparecidos(req.session.Id);
-            } else if (filtro === 'encontrados') {
-                buscaDados = modelanimal.buscaEncontrados(req.session.Id); 
-            } else {
-                buscaDados = modelanimal.busca2(req.session.Id); 
-            }
-    
-            Promise.all([
-                modelusuario.busca(req.session.Id),
-                buscaDados
-            ])
+            if (req.session.admin == false){
+
+                const filtro = req.query.filtro;
+        
+                let buscaDados;
+        
+                if (filtro === 'adocao') {
+                    buscaDados = modelanimal.buscaAdocao(req.session.Id); 
+                } else if (filtro === 'desaparecidos') {
+                    buscaDados = modelanimal.buscaDesaparecidos(req.session.Id);
+                } else if (filtro === 'encontrados') {
+                    buscaDados = modelanimal.buscaEncontrados(req.session.Id); 
+                } else {
+                    buscaDados = modelanimal.busca2(req.session.Id); 
+                }
+        
+                Promise.all([
+                    modelusuario.busca(req.session.Id),
+                    buscaDados
+                ])
                 .then(results => {
                     const Usuario = results[0];
                     const Adocao = results[1];
-    
+
                     res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin });
                 })
                 .catch(error => {
                     if (error) throw error;
                 });
-    
+            }else{
+                res.redirect('/gerenciamento');
+            }
         } else {
             res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin });
             return;

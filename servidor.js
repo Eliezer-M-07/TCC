@@ -30,8 +30,12 @@ app.get('/', function(req, res){
 
 app.get('/login', function(req, res){
     if (req.session.loggedin) {
-        res.render('home', {alerta:'Faça logout para realizar o login.', logado: req.session.loggedin, admin: req.session.admin});
-        return;
+        if(req.session.admin == false){
+            res.render('home', {alerta:'Faça logout para realizar o login.', logado: req.session.loggedin, admin: req.session.admin});
+            return;
+        }else{
+            res.redirect('/gerenciamento')
+        }
     }
     else{
         res.render('login', {alerta:"", logado: req.session.loggedin, admin: req.session.admin})
@@ -41,8 +45,12 @@ app.get('/login', function(req, res){
 
 app.get('/cadastro', function(req, res){
     if (req.session.loggedin) {
-        res.render('home', {alerta:'Faça logout para realizar o cadastro.', logado: req.session.loggedin, admin: req.session.admin});
-        return;
+        if(req.session.admin == false){
+            res.render('home', {alerta:'Faça logout para realizar o cadastro.', logado: req.session.loggedin, admin: req.session.admin});
+            return;
+        }else{
+            res.redirect('/gerenciamento')
+        }
     }
     else{
        res.render('cadastro',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
@@ -52,8 +60,12 @@ app.get('/cadastro', function(req, res){
 
 app.get('/cadastrar_adocao', function(req, res){
     if (req.session.loggedin) {
-        res.render('cadastro_adocao',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
-        return;
+        if(req.session.admin == false){
+            res.render('cadastro_adocao', {alerta:'', logado: req.session.loggedin, admin: req.session.admin})
+            return;
+        }else{
+            res.redirect('/gerenciamento')
+        }
     }
     else{
         res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
@@ -62,8 +74,12 @@ app.get('/cadastrar_adocao', function(req, res){
 })
 app.get('/cadastrar_desaparecido', function(req, res){
     if (req.session.loggedin) {
-        res.render('cadastro_desaparecidos',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
-        return;
+        if(req.session.admin == false){
+            res.render('cadastro_desaparecidos',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
+            return;
+        }else{
+            res.redirect('/gerenciamento')
+        }
     }
     else{
         res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
