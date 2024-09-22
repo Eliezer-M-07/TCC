@@ -55,9 +55,43 @@
                                         <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
                                         <td><%= dados.nome %></td>
                                         <td><%= dados.aprovado %></td>
-                                        <td><a href="/aprovar/<%= dados.id %>" class="btn btn-dark w-100">Aprovar</a></td>
-                                        <td><a href="/recusar/<%= dados.id %>" class="btn btn-dark w-100">Recusar</a></td>
+                                        <td><button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#aprovarModal">Aprovar</button></td>
+                                        <td><button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#recusarModal">Recusar</button></td>
                                         <td><a href="/animal/<%= dados.id %>" class="btn btn-dark w-100">Detalhar</a></td>
+                                        <div class="modal fade" id="aprovarModal" tabindex="-1" aria-labelledby="aprovarModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="aprovarModalLabel">Aprovar animal?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Ao aprovar, o animal se tornará visível na plataforma.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="/aprovar/<%= dados.id %>" class="btn btn-dark ">Sim</a>
+                                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Não</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="recusarModal" tabindex="-1" aria-labelledby="recusarModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="recusarModalLabel">Recusar animal?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Ao recusar, o animal não ficará visível na plataforma.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="/recusar/<%= dados.id %>" class="btn btn-dark ">Sim</a>
+                                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Não</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
                                 <% } %>
                             <% }) %>
