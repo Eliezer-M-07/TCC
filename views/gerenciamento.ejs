@@ -153,19 +153,19 @@
         <% } else { %>
             <h4>Animais</h4>
     <% if (dados.length > 0 && dados.some(dado => dado.aprovado == "Aprovado")) { %>
-        <% dados.filter(dado => dado.aprovado === "Aprovado").forEach(function(dados, index) { %> 
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col"><i class="material-icons">photo</i> Foto</th>
-                            <th scope="col"><i class="material-icons">badge</i> Nome</th>
-                            <th scope="col"><i class="material-icons">description</i> Características</th>
-                            <th scope="col"><i class="material-icons">delete</i> Excluir</th>
-                            <th scope="col"><i class="material-icons">info</i> Detalhar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                        <th scope="col"><i class="material-icons">badge</i> Nome</th>
+                        <th scope="col"><i class="material-icons">description</i> Características</th>
+                        <th scope="col"><i class="material-icons">delete</i> Excluir</th>
+                        <th scope="col"><i class="material-icons">info</i> Detalhar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% dados.filter(dado => dado.aprovado === "Aprovado").forEach(function(dados, index) { %> 
                         <tr>
                             <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
                             <td><%= dados.nome %></td>

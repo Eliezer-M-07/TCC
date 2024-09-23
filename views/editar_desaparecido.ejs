@@ -211,12 +211,28 @@
             "Terrier irlandês",
             "Yorkshire",
           ],
-          Gato: [
-            "Desconhecida",
-            "Siamês",
-            "Persa",
-
-          ]
+          Gato:[
+          "SRD (Sem Raça Definida)",
+          "Siamês",
+          "Persa",
+          "Maine Coon",
+          "Ragdoll",
+          "Sphynx",
+          "Angorá Turco",
+          "Burmês",
+          "British Shorthair",
+          "Abyssinian",
+          "Chartreux",
+          "Himalaio",
+          "Exótico de Pelo Curto",
+          "Bengal",
+          "Norueguês da Floresta",
+          "Rex Cornish",
+          "Bombay",
+          "Munchkin",
+          "Devon Rex",
+          "Siberiano"
+        ]
         };
       
         function atualizarRacas() {
@@ -240,13 +256,18 @@
         especieSelect.addEventListener('change', atualizarRacas);
       
         atualizarRacas();
-
+        document.addEventListener('DOMContentLoaded', function() {
+                    const estadoSelecionado = estadoSelect.value;
+                    if (estadoSelecionado) {
+                        carregarCidades(estadoSelecionado);
+                    }
+                });
         document.addEventListener('DOMContentLoaded', function() {
         const estadoSelect = document.getElementById('estado');
         const cidadeSelect = document.getElementById('cidade');
-        
+        const cidadeSelecionada = "<%= dados.cidade %>"; 
        
-        function fetchCidades(uf) {
+        function carregarCidades(uf) {
           fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos`)
             .then(response => response.json())
             .then(data => {
@@ -255,6 +276,10 @@
                 const option = document.createElement('option');
                 option.value = cidade.nome;
                 option.textContent = cidade.nome;
+
+                if (cidade.nome === cidadeSelecionada) {
+                    option.selected = true;
+                }
                 cidadeSelect.appendChild(option);
               });
             })
@@ -264,18 +289,19 @@
         estadoSelect.addEventListener('change', function() {
           const uf = this.value;
           if (uf) {
-            fetchCidades(uf);
+            carregarCidades(uf);
           } else {
             cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
           }
         });
-    
+      
         const estadoSelecionado = estadoSelect.value;
         if (estadoSelecionado) {
-            fetchCidades(estadoSelecionado);
+          carregarCidades(estadoSelecionado);
         }
         
       });
+      
 
       
 
@@ -299,6 +325,8 @@
           }
         });
       });
+
+      
       
       </script>
       <% }) %>

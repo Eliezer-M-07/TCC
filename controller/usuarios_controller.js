@@ -239,7 +239,7 @@ module.exports = {
         });
 
         res.redirect('/perfil')
-        return
+        
 
     },
 
