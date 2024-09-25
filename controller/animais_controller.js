@@ -254,6 +254,65 @@ module.exports = {
 
     },
 
+    alterarDesaparecido: function (req, res) {
+        var form = new formidable.IncomingForm();
+
+        form.parse(req, (err, fields, files) => {
+            if (files.foto) {
+                modelanimais.busca(fields['id'][0])
+                    .then(result => {
+                        var img = path.join(__dirname, '../public/animais/', result[0]['foto']);
+                        fs.unlink(img, (err) => {
+                            if (err) console.error(err);
+                        });
+                    })
+                    .catch(err => console.error(err));
+    
+                var oldpath = files.foto[0].filepath;
+                var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+                var ext = path.extname(files.foto[0].originalFilename);
+                var nomeimg = hash + ext;
+                var newpath = path.join(__dirname, '../public/animais/', nomeimg);
+    
+
+                sharp(oldpath)
+                    .resize({ width: 280, height: 280, fit: 'cover' }) 
+                    .toFile(newpath, (err, info) => {
+                        if (err) throw err;
+    
+                        modelanimais.updateAdocao(
+                            fields['nome'][0],
+                            fields['especie'][0],
+                            fields['raca'][0],
+                            fields['sexo'][0],
+                            fields['porte'][0],
+                            fields['peso'][0],
+                            fields['estado'][0],
+                            fields['cidade'][0],
+                            fields['personalidade'][0],
+                            nomeimg,
+                            fields['id'][0]
+                        );
+                    });
+            } else {
+                modelanimais.updateAdocaoSemFoto(
+                    fields['nome'][0],
+                    fields['especie'][0],
+                    fields['raca'][0],
+                    fields['sexo'][0],
+                    fields['porte'][0],
+                    fields['peso'][0],
+                    fields['estado'][0],
+                    fields['cidade'][0],
+                    fields['personalidade'][0],
+                    fields['id'][0]
+                );
+            }
+        });
+        res.redirect('/perfil')
+
+    },
+
     aprovar:  function (req, res) {
         if(req.session.loggedin && req.session.admin == true){
             var id = req.params.id;

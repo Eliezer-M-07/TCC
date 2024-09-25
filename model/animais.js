@@ -175,13 +175,27 @@ module.exports = {
 
     updateAdocaoSemFoto(nome, especie, raca, sexo, porte, peso, estado, cidade,  personalidade, id) {
         var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, estado = ?, cidade = ?, caracteristicas = ? WHERE id = ?";
-        var values = [
-            [nome], [especie], [raca], [sexo], [porte], [peso], [estado], [cidade], [personalidade], [id]];
+        var values = [[nome], [especie], [raca], [sexo], [porte], [peso], [estado], [cidade], [personalidade], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
         });
     },
 
+    updateDesaparecido(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, data, caracteristicas, foto, id) {
+        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, data = ?, caracteristicas = ?, foto = ? WHERE id = ?";
+        var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [data], [caracteristicas], [foto], [id]];
+        con.query(sql, values, function (err, result) {
+            if (err) throw err;
+        });
+    },
+
+    updateDeseparecidoSemFoto(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, data, caracteristicas, id) {
+        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, data = ?, caracteristicas = ? WHERE id = ?";
+        var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [data], [caracteristicas], [id]];
+        con.query(sql, values, function (err, result) {
+            if (err) throw err;
+        });
+    },
 
     deletar(id) {
         var sql = "DELETE FROM animais WHERE id = ?";
