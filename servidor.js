@@ -85,7 +85,22 @@ app.get('/cadastrar_desaparecido', function(req, res){
         res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
         return;
     }
-})
+});
+
+app.get('/cadastrar_encontrado', function(req, res){
+    if (req.session.loggedin) {
+        if(req.session.admin == false){
+            res.render('cadastro_encontrado',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
+            return;
+        }else{
+            res.redirect('/gerenciamento')
+        }
+    }
+    else{
+        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
+        return;
+    }
+});
 
 app.get('/logout',function(req,res){
     req.session.destroy(function(err) {
@@ -115,6 +130,7 @@ app.get('/recusar/:id', animaisController.recusar)
 
 app.get('/editar_adocao/:id', animaisController.editar_adocao);
 app.post('/alterar_adocao', animaisController.alterarAdocao);
+app.post('/alterar_desaparecido', animaisController.alterarDesaparecido);
 app.get('/editar_desaparecido/:id', animaisController.editar_desaparecido);
 app.get('/deletar_animal/:id', animaisController.deletar);
 app.post('/cadastrar_adocao', animaisController.cadastrar_adocao);

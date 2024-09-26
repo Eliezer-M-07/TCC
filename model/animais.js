@@ -189,7 +189,7 @@ module.exports = {
         });
     },
 
-    updateDeseparecidoSemFoto(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, data, caracteristicas, id) {
+    updateDesaparecidoSemFoto(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, data, caracteristicas, id) {
         var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, data = ?, caracteristicas = ? WHERE id = ?";
         var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [data], [caracteristicas], [id]];
         con.query(sql, values, function (err, result) {

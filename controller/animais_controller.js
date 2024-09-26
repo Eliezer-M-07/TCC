@@ -280,35 +280,40 @@ module.exports = {
                     .toFile(newpath, (err, info) => {
                         if (err) throw err;
     
-                        modelanimais.updateAdocao(
+                        modelanimais.updateDesaparecido(
                             fields['nome'][0],
                             fields['especie'][0],
                             fields['raca'][0],
                             fields['sexo'][0],
                             fields['porte'][0],
-                            fields['peso'][0],
                             fields['estado'][0],
                             fields['cidade'][0],
-                            fields['personalidade'][0],
+                            fields['bairro'][0],
+                            fields['rua'][0],
+                            fields['data'][0],
+                            fields['caracteristicas'][0],
                             nomeimg,
                             fields['id'][0]
                         );
                     });
             } else {
-                modelanimais.updateAdocaoSemFoto(
-                    fields['nome'][0],
-                    fields['especie'][0],
-                    fields['raca'][0],
-                    fields['sexo'][0],
-                    fields['porte'][0],
-                    fields['peso'][0],
-                    fields['estado'][0],
-                    fields['cidade'][0],
-                    fields['personalidade'][0],
-                    fields['id'][0]
+                modelanimais.updateDesaparecidoSemFoto(
+                            fields['nome'][0],
+                            fields['especie'][0],
+                            fields['raca'][0],
+                            fields['sexo'][0],
+                            fields['porte'][0],
+                            fields['estado'][0],
+                            fields['cidade'][0],
+                            fields['bairro'][0],
+                            fields['rua'][0],
+                            fields['data'][0],
+                            fields['caracteristicas'][0],
+                            fields['id'][0]
                 );
             }
         });
+        
         res.redirect('/perfil')
 
     },
