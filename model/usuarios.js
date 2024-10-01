@@ -74,9 +74,9 @@ deletar(id){
 },
 
 
-notificacao(usuario_id, tipo, mensagem){
-    var sql = "INSERT INTO notificacoes (usuario_id, tipo, mensagem) VALUES ?";
-    var values = [[usuario_id, tipo, mensagem]];
+notificacao(usuario_id, animal_id, tipo, mensagem){
+    var sql = "INSERT INTO notificacoes (usuario_id, animal_id, tipo, mensagem) VALUES ?";
+    var values = [[usuario_id, animal_id, tipo, mensagem]];
 
     con.query(sql, [values], function (err, result) {
         if (err) throw err;
@@ -86,18 +86,33 @@ notificacao(usuario_id, tipo, mensagem){
 
 buscaNotificacoes: function (userId) {
     return new Promise((resolve, reject) => {
-        const sql = `
-            SELECT notificacoes.*, animais.* 
-            FROM notificacoes 
-            INNER JOIN animais ON notificacoes.usuario_id = animais.fk_ani
-            WHERE notificacoes.usuario_id = ? 
-            AND notificacoes.lida = 0
-        `;
+        const sql = "SELECT n.*, a.* FROM notificacoes n JOIN usuarios u ON n.usuario_id = u.id JOIN animais a ON n.animal_id = a.id WHERE u.id = ? AND n.lida = FALSE;";
         con.query(sql, [userId], function (err, result) {
             if (err) return reject(err);
             resolve(result);
         });
     });
+},
+
+excluirNotificacoes: function(animal_id){
+    return new Promise((resolve, reject) => {
+        const sql = "DELETE FROM notificacoes WHERE animal_id = ?";
+        con.query(sql, [animal_id], function (err, result) {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+
+},
+excluirNotificacoes2: function(usuario_id){
+    return new Promise((resolve, reject) => {
+        const sql = "DELETE FROM notificacoes WHERE usuario_id = ?";
+        con.query(sql, [usuario_id], function (err, result) {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+
 },
    
 }

@@ -218,20 +218,39 @@ module.exports = {
                     fs.unlink(img, (err) => {
                         if (err) console.error(err);
                     });
-
-                    modelanimais.deletar(id);
-
-                    res.redirect('/perfil');
                     
+                    modelusuario.buscaNotificacoes(req.session.Id).then(result =>{
+                        if(result.length > 0){
+                            modelusuario.excluirNotificacoes(id);
+                            modelanimais.deletar(id);
+                            res.redirect('/perfil');
+                        }else{
+
+                            modelanimais.deletar(id);
+                            res.redirect('/perfil');
+                        }
+                    });
+
                 }else if(req.session.admin == true){
                     const img = path.join(__dirname, '../public/animais/', animal.foto);
                     fs.unlink(img, (err) => {
                         if (err) console.error(err);
                     });
 
-                    modelanimais.deletar(id);
+                    modelusuario.buscaNotificacoes(req.session.Id).then(result =>{
+                        if(result.length > 0){
+                            modelusuario.excluirNotificacoes(id);
+                            modelanimais.deletar(id);
+                            res.redirect('/gerenciamento?tipo=animais');
+                        }else{
 
-                    res.redirect('/gerenciamento?tipo=animais');
+                            modelanimais.deletar(id);
+                            res.redirect('/gerenciamento?tipo=animais');
+                        }
+                    });
+                    
+
+                    
 
                 }else{
                     res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome});
@@ -422,7 +441,7 @@ module.exports = {
             var id = req.params.id;
             var id_usuario = req.query.id_usuario;
 
-            modelusuario.notificacao(id_usuario, 'Aprovado', 'Seu animal foi aceito na plataforma! :D');
+            modelusuario.notificacao(id_usuario, id, 'Aprovado', 'Seu animal foi aceito na plataforma!');
             modelanimais.aprovar(id);
 
             res.redirect('/gerenciamento')
@@ -436,7 +455,7 @@ module.exports = {
             var id = req.params.id;
             var id_usuario = req.query.id_usuario;
 
-            modelusuario.notificacao(id_usuario, 'Recusado', 'Seu animal foi recusado.');
+            modelusuario.notificacao(id_usuario, id,  'Recusado', 'Seu animal foi recusado.');
             modelanimais.recusar(id);
 
             res.redirect('/gerenciamento')

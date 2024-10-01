@@ -38,7 +38,6 @@ module.exports = {
                     const Usuario = results[0];
                     const Adocao = results[1];
                     const notificacoes = results[2];
-                    console.log(notificacoes);
                     res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes});
                 })
                 .catch(error => {
@@ -160,8 +159,13 @@ module.exports = {
             if (req.params.id == req.session.Id) {
                 var id = req.params.id;
 
+                modelusuario.buscaNotificacoes(id).then(result =>{
+                    if(result){
+                        modelusuario.excluirNotificacoes2(id);
+                    }
+                });
                 modelanimal.deletarComUser(id);
-
+                
                 modelusuario.busca(id)
                     .then(result => {
                         var img = path.join(__dirname, '../public/usuarios/', result[0]['pfp']);
