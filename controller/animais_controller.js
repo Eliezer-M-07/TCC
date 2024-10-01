@@ -6,41 +6,79 @@ const bcrypt = require('bcrypt');
 var formidable = require('formidable');
 
 const modelanimais = require("../model/animais");
+const modelusuario = require("../model/usuarios");
 
 module.exports = {
 
     listagem_adocao: function (req, res) {
         const { estado, cidade, especie, sexo } = req.query;
 
-        let buscaDados = modelanimais.buscaTodosAdocao({ estado, cidade, especie, sexo });
+        Promise.all([
+            modelanimais.buscaTodosAdocao({ estado, cidade, especie, sexo }),
+            modelusuario.buscaNotificacoes(req.session.Id),
 
-        buscaDados
-            .then(results => {
-                res.render('adocao', { all: results, logado: req.session.loggedin, alerta: '' , admin: req.session.admin});
-            })
-            .catch(err => {
-                if (err) throw err;
-            });
+        ]).then(results => {
+            const buscaDados = results[0];
+            const notificacoes = results[1];
+
+            res.render('adocao', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes});
+        })
+        .catch(error => {
+            if (error) throw error;
+        });
+        
     },
 
     listagem_desaparecidos: function (req, res) {
         const { estado, cidade, especie, sexo } = req.query;
 
-        let buscaDados = modelanimais.buscaTodosDesaparecidos({ estado, cidade, especie, sexo });
+        Promise.all([
+            modelanimais.buscaTodosDesaparecidos({ estado, cidade, especie, sexo }),
+            modelusuario.buscaNotificacoes(req.session.Id),
 
-        buscaDados
-            .then(results => {
-                res.render('desaparecidos', { all: results, logado: req.session.loggedin, alerta: '' , admin: req.session.admin});
-            })
-            .catch(err => {
-                if (err) throw err;
-            });
+        ]).then(results => {
+            const buscaDados = results[0];
+            const notificacoes = results[1];
+            
+            res.render('desaparecidos', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes});
+        })
+        .catch(error => {
+            if (error) throw error;
+        });
+
+    },
+
+    listagem_encontrados: function (req, res) {
+        const { estado, cidade, especie, sexo } = req.query;
+
+        Promise.all([
+            modelanimais.buscaTodosEncontrados({ estado, cidade, especie, sexo }),
+            modelusuario.buscaNotificacoes(req.session.Id),
+
+        ]).then(results => {
+            const buscaDados = results[0];
+            const notificacoes = results[1];
+            res.render('encontrados', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes});
+
+        })
+        .catch(error => {
+            if (error) throw error;
+        });
+
+
     },
 
     dados: function(req, res){
         var id = req.params.id;
-        modelanimais.buscaDados(id).then(result=> {''
-            res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' , admin: req.session.admin})
+        Promise.all([
+            modelanimais.buscaDados(id),
+            modelusuario.buscaNotificacoes(req.session.Id),
+
+        ]).then(results => {
+            const result = results[0];
+            const notificacoes = results[1];
+
+            res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes})
         })
         .catch(err => {
             if (err) throw err;
@@ -128,6 +166,45 @@ module.exports = {
         res.redirect('/perfil');
     },
 
+    cadastrar_encontrado: function (req, res) {
+        var form = new formidable.IncomingForm();
+
+        form.parse(req, (err, fields, files) => {
+
+            var oldpath = files.foto[0].filepath;
+            var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+
+            var ext = path.extname(files.foto[0].originalFilename)
+            var nomefoto = hash + ext
+            var newpath = path.join(__dirname, '../public/animais/', nomefoto);
+
+            sharp(oldpath)
+                .resize({ width: 250, height: 250, fit: 'cover' }) 
+                .toFile(newpath, (err, info) => {
+                    if (err) throw err;
+
+                    modelanimais.inserir_encontrado(
+                        req.session.Id,
+                        'encontrado',
+                        fields['estado'][0],
+                        fields['cidade'][0],
+                        fields['bairro'][0],
+                        fields['rua'][0],
+                        fields['nome'][0],
+                        fields['especie'][0],
+                        fields['raca'][0],
+                        fields['sexo'][0],
+                        fields['porte'][0],
+                        nomefoto,
+                        'Pendente'
+                    );
+                });
+
+        });
+
+        res.redirect('/perfil');
+    },
+
 
     deletar: function (req, res) {
         if (req.session.loggedin) {
@@ -171,7 +248,18 @@ module.exports = {
         if (req.session.loggedin) {
             if(req.session.admin == false){
                 id = req.params.id
-                modelanimais.busca(id).then(result => res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
+                Promise.all([
+                    modelanimais.buscaDados(id),
+                    modelusuario.buscaNotificacoes(req.session.Id),
+        
+                ]).then(results => {
+                    const result = results[0];
+                    const notificacoes = results[1];
+                
+                    res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes});
+                }).catch(err => {
+                    if (err) throw err;
+                });
             }else{
                 res.redirect('/gerenciamento');
             }
@@ -185,7 +273,18 @@ module.exports = {
         if (req.session.loggedin) {
             if(req.session.admin == false){
                 id = req.params.id
-                modelanimais.busca(id).then(result => res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin})).catch(err => console.error(err));
+                Promise.all([
+                    modelanimais.buscaDados(id),
+                    modelusuario.buscaNotificacoes(req.session.Id),
+        
+                ]).then(results => {
+                    const result = results[0];
+                    const notificacoes = results[1];
+                    res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes});
+
+                }).catch(err => {
+                    if (err) throw err;
+                });
             }else{
                 res.redirect('/gerenciamento');            
             }
@@ -321,7 +420,9 @@ module.exports = {
     aprovar:  function (req, res) {
         if(req.session.loggedin && req.session.admin == true){
             var id = req.params.id;
+            var id_usuario = req.query.id_usuario;
 
+            modelusuario.notificacao(id_usuario, 'Aprovado', 'Seu animal foi aceito na plataforma! :D');
             modelanimais.aprovar(id);
 
             res.redirect('/gerenciamento')
@@ -333,7 +434,9 @@ module.exports = {
     recusar:  function (req, res) {
         if(req.session.loggedin && req.session.admin == true){
             var id = req.params.id;
+            var id_usuario = req.query.id_usuario;
 
+            modelusuario.notificacao(id_usuario, 'Recusado', 'Seu animal foi recusado.');
             modelanimais.recusar(id);
 
             res.redirect('/gerenciamento')

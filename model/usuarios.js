@@ -72,5 +72,32 @@ deletar(id){
     if (err) throw err;
     });
 },
+
+
+notificacao(usuario_id, tipo, mensagem){
+    var sql = "INSERT INTO notificacoes (usuario_id, tipo, mensagem) VALUES ?";
+    var values = [[usuario_id, tipo, mensagem]];
+
+    con.query(sql, [values], function (err, result) {
+        if (err) throw err;
+    });
+    
+},
+
+buscaNotificacoes: function (userId) {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT notificacoes.*, animais.* 
+            FROM notificacoes 
+            INNER JOIN animais ON notificacoes.usuario_id = animais.fk_ani
+            WHERE notificacoes.usuario_id = ? 
+            AND notificacoes.lida = 0
+        `;
+        con.query(sql, [userId], function (err, result) {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+},
    
 }

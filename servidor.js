@@ -15,12 +15,26 @@ app.use(session({
 
 const usuarioController = require("./controller/usuarios_controller");
 const animaisController = require("./controller/animais_controller");
+const modelusuario = require("./model/usuarios.js");
 
 
 app.get('/', function(req, res){
     if (req.session.loggedin) {
-        res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin, nome: req.session.nome})
-        return;
+        if(req.session.admin == false){
+            Promise.all([
+                modelusuario.buscaNotificacoes(req.session.Id),
+            ]).then(results => {
+                const notificacoes = results[0];
+            
+                res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin, nome: req.session.nome,  Notificacoes: notificacoes})
+                return;
+            })
+            .catch(error => {
+                if (error) throw error;
+            });
+        }else{
+            res.redirect('/gerenciamento')
+        }
     }
     else{
         res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin})
@@ -31,8 +45,17 @@ app.get('/', function(req, res){
 app.get('/login', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
-            res.render('home', {alerta:'Faça logout para realizar o login.', logado: req.session.loggedin, admin: req.session.admin});
-            return;
+            Promise.all([
+                modelusuario.buscaNotificacoes(req.session.Id),
+            ]).then(results => {
+                const notificacoes = results[0];
+                res.render('home', {alerta:'Faça logout para realizar o login.', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes});
+                return;
+            })
+            .catch(error => {
+                if (error) throw error;
+            });
+            
         }else{
             res.redirect('/gerenciamento')
         }
@@ -46,8 +69,17 @@ app.get('/login', function(req, res){
 app.get('/cadastro', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
-            res.render('home', {alerta:'Faça logout para realizar o cadastro.', logado: req.session.loggedin, admin: req.session.admin});
-            return;
+            Promise.all([
+                modelusuario.buscaNotificacoes(req.session.Id),
+            ]).then(results => {
+                const notificacoes = results[0];
+                res.render('home', {alerta:'Faça logout para realizar o cadastro.', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes});
+                return;
+            })
+            .catch(error => {
+                if (error) throw error;
+            });    
+            
         }else{
             res.redirect('/gerenciamento')
         }
@@ -61,8 +93,17 @@ app.get('/cadastro', function(req, res){
 app.get('/cadastrar_adocao', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
-            res.render('cadastro_adocao', {alerta:'', logado: req.session.loggedin, admin: req.session.admin})
-            return;
+            Promise.all([
+                modelusuario.buscaNotificacoes(req.session.Id),
+            ]).then(results => {
+                const notificacoes = results[0];
+                res.render('cadastro_adocao', {alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes})
+                return;
+            })
+            .catch(error => {
+                if (error) throw error;
+            });
+            
         }else{
             res.redirect('/gerenciamento')
         }
@@ -75,8 +116,17 @@ app.get('/cadastrar_adocao', function(req, res){
 app.get('/cadastrar_desaparecido', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
-            res.render('cadastro_desaparecidos',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
-            return;
+            Promise.all([
+                modelusuario.buscaNotificacoes(req.session.Id),
+            ]).then(results => {
+                const notificacoes = results[0];
+                res.render('cadastro_desaparecidos',{alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes})
+                return;
+            })
+            .catch(error => {
+                if (error) throw error;
+            });
+            
         }else{
             res.redirect('/gerenciamento')
         }
@@ -90,8 +140,17 @@ app.get('/cadastrar_desaparecido', function(req, res){
 app.get('/cadastrar_encontrado', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
-            res.render('cadastro_encontrado',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
-            return;
+            Promise.all([
+                modelusuario.buscaNotificacoes(req.session.Id),
+            ]).then(results => {
+                const notificacoes = results[0];
+                res.render('cadastro_encontrado',{alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes})
+                return;
+            })
+            .catch(error => {
+                if (error) throw error;
+            });
+            
         }else{
             res.redirect('/gerenciamento')
         }
@@ -135,6 +194,8 @@ app.get('/editar_desaparecido/:id', animaisController.editar_desaparecido);
 app.get('/deletar_animal/:id', animaisController.deletar);
 app.post('/cadastrar_adocao', animaisController.cadastrar_adocao);
 app.post('/cadastrar_desaparecido', animaisController.cadastrar_desaparecido);
+app.post('/cadastrar_encontrado', animaisController.cadastrar_encontrado);
 app.get('/adotar', animaisController.listagem_adocao);
 app.get('/desaparecidos', animaisController.listagem_desaparecidos);
+app.get('/encontrados', animaisController.listagem_encontrados);
 app.get('/animal/:id',animaisController.dados)

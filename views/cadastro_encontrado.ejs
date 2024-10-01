@@ -24,13 +24,13 @@
                           <h4 class="ml-2">&nbsp;Cadastro animal encontrado</h4>
                       </div>
                       <br>
-                      <form method="post" action="/cadastrar_adocao" enctype="multipart/form-data">
+                      <form method="post" action="/cadastrar_encontrado" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="name" class="form-label">
                               <h6>Nome</h6>
                             </label>
                             <input maxlength="40" name="nome" type="text" class="form-control" id="name" aria-describedby="nameHelp">
-                            <div id="NameHelp" class="form-text">Informe o nome do animal ou marque a opção "Sem Nome".</div>
+                            <div id="NameHelp" class="form-text">Informe o nome do animal ou marque a opção "Não tem Nome".</div>
                             <div class="form-check">
                                 <br>
                                 <input class="form-check-input" type="checkbox" id="noNameCheck">
@@ -89,9 +89,19 @@
                             <div id="cidadeHelp" class="form-text">Informe a cidade onde o animal está localizado.</div>
                           </div>
                           <div class="mb-3">
-                            <label for="textarea" class="form-label"><h6>Personalidade</h6></label>
-                            <textarea name="personalidade" maxlength="255" class="form-control" id="textarea" rows="2"></textarea>
-                            <div id="personalidadeHelp" class="form-text">Fale sobre a personalidade do animal.</div>
+                            <label for="cep" class="form-label"><h6>CEP</h6></label>
+                            <input name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" maxlength="9">
+                            <div id="cepHelp" class="form-text">Informe o CEP da localização que encontrou o animal.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="bairro" class="form-label"><h6>Bairro</h6></label>
+                            <input name="bairro" required type="text" class="form-control" id="bairro" aria-describedby="bairroHelp" readonly>
+                            <div id="bairroHelp" class="form-text">Bairro onde o animal foi encontrado.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="rua" class="form-label"><h6>Rua</h6></label>
+                            <input name="rua" required type="text" class="form-control" id="rua" aria-describedby="ruaHelp" readonly>
+                            <div id="ruaHelp" class="form-text">Rua onde o animal foi encontrado.</div>
                           </div>
                           <div class="mb-3">
                               <label for="formFile" class="form-label"><h6>Foto do animal</h6></label>
@@ -262,6 +272,27 @@
           }
         });
         });
+        document.addEventListener('DOMContentLoaded', function() {
+        const cepInput = document.getElementById('cep');
+        const ruaInput = document.getElementById('rua');
+        const bairroInput = document.getElementById('bairro');
+
+        cepInput.addEventListener('blur', function() {
+          const cep = cepInput.value.replace(/\D/g, ''); 
+          if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+              .then(response => response.json())
+              .then(data => {
+                if (!data.erro) {
+                  ruaInput.value = `${data.logradouro}`;
+                  bairroInput.value = `${data.bairro}`;
+                } 
+              })
+              .catch(error => console.error('Erro ao buscar endereço:', error));
+          }
+        });
+      });
+
         const nameInput = document.getElementById('name');
         const noNameCheck = document.getElementById('noNameCheck');
     

@@ -17,6 +17,7 @@ module.exports = {
                 const filtro = req.query.filtro;
         
                 let buscaDados;
+
         
                 if (filtro === 'adocao') {
                     buscaDados = modelanimal.buscaAdocao(req.session.Id); 
@@ -30,13 +31,15 @@ module.exports = {
         
                 Promise.all([
                     modelusuario.busca(req.session.Id),
-                    buscaDados
+                    buscaDados,
+                    modelusuario.buscaNotificacoes(req.session.Id)
                 ])
                 .then(results => {
                     const Usuario = results[0];
                     const Adocao = results[1];
-
-                    res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin });
+                    const notificacoes = results[2];
+                    console.log(notificacoes);
+                    res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes});
                 })
                 .catch(error => {
                     if (error) throw error;
@@ -68,8 +71,18 @@ module.exports = {
                         req.session.nome = result[0]['nome'];
                         req.session.loggedin = true;
                         req.session.admin = false;
-    
-                        res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome});
+
+                        Promise.all([
+                            modelusuario.buscaNotificacoes(req.session.Id),
+                        ]).then(results => {
+                            const notificacoes = results[0];
+                            res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes});
+
+                        })
+                        .catch(error => {
+                            if (error) throw error;
+                        });
+
                     } else {
                         res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
                     }
@@ -84,7 +97,7 @@ module.exports = {
                             req.session.loggedin = true;
                             req.session.admin = true;
     
-                            res.render('home', { alerta: "Administrador logado com sucesso.", logado: req.session.loggedin, admin: req.session.admin});
+                           res.redirect('/gerenciamento');
                         } else {
                             res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
                         }
@@ -195,11 +208,20 @@ module.exports = {
 
     editar: function (req, res) {
         if (req.session.loggedin) {
-            modelusuario.busca(req.session.Id).then(result => res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin, admin: req.session.admin})).catch(err => console.error(err));
+            Promise.all([
+                modelusuario.busca(req.session.Id),
+                modelusuario.buscaNotificacoes(req.session.Id),
+            ]).then(results => {
+                const result = results[0];
+                const notificacoes = results[1];
+                res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes});
+            })
+            .catch(error => {
+                if (error) throw error;
+            });
         } else {
             res.render('login', { alerta: 'É precisa fazer login para editar.', logado: req.session.loggedin, admin: req.session.admin })
         }
-
 
     },
 
@@ -272,7 +294,16 @@ module.exports = {
                     });
 
             }else{
-                res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome })
+                Promise.all([
+                    modelusuario.buscaNotificacoes(req.session.Id),
+        
+                ]).then(results => {
+                    const notificacoes = results[0];
+                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes })
+                })
+                .catch(error => {
+                    if (error) throw error;
+                });
             }
 
         }else{
@@ -281,9 +312,6 @@ module.exports = {
     },
 
     
-
-    
-
 }
 
 

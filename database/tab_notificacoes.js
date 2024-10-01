@@ -1,0 +1,21 @@
+var mysql = require('mysql');
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "safepet"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Conectado!");
+  
+  var sql = "CREATE TABLE notificacoes (id INT AUTO_INCREMENT PRIMARY KEY, usuario_id INT NOT NULL, tipo VARCHAR(50), mensagem TEXT, lida BOOLEAN DEFAULT FALSE, data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (usuario_id) REFERENCES usuarios(id))";
+  
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Tabela notificacoes criada");
+  });
+  
+  con.end();
+});

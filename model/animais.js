@@ -70,6 +70,38 @@ module.exports = {
         });
     },
 
+    buscaTodosEncontrados: function (filters) {
+        return new Promise((resolve, reject) => {
+            let sql = "SELECT * FROM animais WHERE status = 'encontrado'";
+            let queryParams = [];
+
+            if (filters.estado) {
+                sql += " AND estado = ?";
+                queryParams.push(filters.estado);
+            }
+
+            if (filters.cidade) {
+                sql += " AND cidade = ?";
+                queryParams.push(filters.cidade);
+            }
+
+            if (filters.especie) {
+                sql += " AND especie = ?";
+                queryParams.push(filters.especie);
+            }
+
+            if (filters.sexo) {
+                sql += " AND sexo = ?";
+                queryParams.push(filters.sexo);
+            }
+
+            con.query(sql, queryParams, (err, rows) => {
+                if (err) return reject(err);
+                resolve(rows);
+            });
+        });
+    },
+
 
     async todos() {
         var sql = "SELECT * FROM animais";
@@ -155,6 +187,15 @@ module.exports = {
     inserir_desaparecido(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado) {
         var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado];
+    
+        con.query(sql, values, function (err, result) {
+            if (err) throw err;
+        });
+    },
+
+    inserir_encontrado(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, foto, aprovado) {
+        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, foto, aprovado];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;

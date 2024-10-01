@@ -69,7 +69,7 @@
                                                     Ao aprovar, o animal se tornará visível na plataforma.
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="/aprovar/<%= dados.id %>" class="btn btn-dark ">Sim</a>
+                                                    <a href="/aprovar/<%= dados.id %>?id_usuario=<%= dados.fk_ani %>" class="btn btn-dark">Sim</a>
                                                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Não</button>
                                                 </div>
                                                 </div>
@@ -86,7 +86,7 @@
                                                     Ao recusar, o animal não ficará visível na plataforma.
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="/recusar/<%= dados.id %>" class="btn btn-dark ">Sim</a>
+                                                    <a href="/recusar/<%= dados.id %>?id_usuario=<%= dados.fk_ani %>" class="btn btn-dark">Sim</a>
                                                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Não</button>
                                                 </div>
                                                 </div>
