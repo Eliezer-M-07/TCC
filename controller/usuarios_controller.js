@@ -32,13 +32,15 @@ module.exports = {
                 Promise.all([
                     modelusuario.busca(req.session.Id),
                     buscaDados,
-                    modelusuario.buscaNotificacoes(req.session.Id)
+                    modelusuario.buscaNotificacoes(req.session.Id),
+                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
                 ])
                 .then(results => {
                     const Usuario = results[0];
                     const Adocao = results[1];
                     const notificacoes = results[2];
-                    res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes});
+                    const notificacoesEx = results[3];
+                    res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
                 })
                 .catch(error => {
                     if (error) throw error;
@@ -73,9 +75,12 @@ module.exports = {
 
                         Promise.all([
                             modelusuario.buscaNotificacoes(req.session.Id),
+                            modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+
                         ]).then(results => {
                             const notificacoes = results[0];
-                            res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes});
+                            const notificacoesEx = results[1];
+                            res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes,  NotificacoesEx: notificacoesEx});
 
                         })
                         .catch(error => {
@@ -154,16 +159,18 @@ module.exports = {
     },
 
     deletar: function (req, res) {
+        var id = req.params.id;
         if (req.session.loggedin) {
 
             if (req.params.id == req.session.Id) {
-                var id = req.params.id;
+               
 
                 modelusuario.buscaNotificacoes(id).then(result =>{
-                    if(result){
+                    if(result.length > 0){
                         modelusuario.excluirNotificacoes2(id);
                     }
                 });
+
                 modelanimal.deletarComUser(id);
                 
                 modelusuario.busca(id)
@@ -183,7 +190,12 @@ module.exports = {
                 res.redirect('/');
 
             }else if(req.session.admin == true){
-                var id = req.params.id;
+                
+                modelusuario.buscaNotificacoes(id).then(result => {
+                    if(result.length > 0){
+                        modelusuario.excluirNotificacoes2(id);
+                    }
+                });
 
                 modelanimal.deletarComUser(id);
 
@@ -215,10 +227,12 @@ module.exports = {
             Promise.all([
                 modelusuario.busca(req.session.Id),
                 modelusuario.buscaNotificacoes(req.session.Id),
+                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
             ]).then(results => {
                 const result = results[0];
                 const notificacoes = results[1];
-                res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes});
+                const notificacoesEx = results[2];
+                res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
             })
             .catch(error => {
                 if (error) throw error;
@@ -300,10 +314,12 @@ module.exports = {
             }else{
                 Promise.all([
                     modelusuario.buscaNotificacoes(req.session.Id),
+                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
         
                 ]).then(results => {
                     const notificacoes = results[0];
-                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes })
+                    const notificacoesEx = results[1];
+                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx })
                 })
                 .catch(error => {
                     if (error) throw error;

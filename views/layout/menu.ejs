@@ -1,9 +1,9 @@
 <% if (logado == true && admin == false) { %>
 <head>
-  <% if (Notificacoes.length > 0) { %>
+  <% if (Notificacoes.length > 0 || NotificacoesEx.length > 0) { %>
     <style>
       .notification::before {
-      content: "1";
+      content: "";
       color: white;
       font-size: 10px;
       width: 12px;
@@ -48,24 +48,76 @@
           <div class="bell-container " id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="bell"></div>
           </div>
-          <% if (Notificacoes.length > 0) { %>
-            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 300px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px;">
+          <% if (Notificacoes.length > 0 && NotificacoesEx.length > 0) { %>
+            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 310px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px;">
               <% Notificacoes.forEach(function(dados) { %>
-                <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">
-                  <img src="/animais/<%= dados.foto %>" alt="Animal" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-                  <div style="flex: 1; white-space: normal;">
-                    <p style="margin: 0; font-size: 12px; color: #888;">
-                      <%= new Date(dados.data_criacao).toLocaleDateString('pt-BR') %> às 
-                      <%= new Date(dados.data_criacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %>
-                    </p>
-                    <p style="margin: 0; font-weight: bold; color: #333;"><%= dados.mensagem %><hr></p>
-                    
-                    <a href="" style="color: #007bff; text-decoration: none; font-size: 12px;">Marcar como lida</a>
-                  </div>
-                </li>
+                <% if (dados.tipo === 'Aprovado' || dados.tipo === 'Recusado') { %>
+                  <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">
+                    <img src="/animais/<%= dados.foto %>" alt="Animal" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                    <div style="flex: 1; white-space: normal;">
+                      <p style="margin: 0; font-size: 12px; color: #888;">
+                        <%= new Date(dados.data_criacao).toLocaleDateString('pt-BR') %> às 
+                        <%= new Date(dados.data_criacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %>
+                      </p>
+                      <p style="margin: 0; font-weight: bold; color: #333;"><%= dados.mensagem %><hr></p>
+                      
+                      <a class="btn btn-dark" href="" style="text-decoration: none; font-size: 12px; width: 100%;">Marcar como lida</a>
+                    </div>
+                  </li>
+                <% } %>
+              <% }); %>
+              <% NotificacoesEx.forEach(function(dados) { %>
+                <% if (dados.tipo === 'Excluido') { %>
+                  <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">
+                    <i style="vertical-align:bottom;"  class="material-icons">report</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="flex: 1; white-space: normal;">
+                      <p style="margin: 0; font-size: 12px; color: #888;">
+                        <%= new Date(dados.data_criacao).toLocaleDateString('pt-BR') %> às 
+                        <%= new Date(dados.data_criacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %>
+                      </p>
+                      <p style="margin: 0; font-weight: bold; color: #333;"><%= dados.mensagem %><hr></p>
+                      
+                      <a href="" class="btn btn-dark" style="text-decoration: none; font-size: 12px; width: 100%;">Marcar como lida</a>
+                    </div>
+                  </li>
+                <% } %>
               <% }); %>
             </ul> 
-          <% } else { %> 
+          <% } else if (Notificacoes.length > 0 && NotificacoesEx.length == 0) { %> 
+            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 310px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px;">
+              <% Notificacoes.forEach(function(dados) { %>
+                  <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">
+                    <img src="/animais/<%= dados.foto %>" alt="Animal" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                    <div style="flex: 1; white-space: normal;">
+                      <p style="margin: 0; font-size: 12px; color: #888;">
+                        <%= new Date(dados.data_criacao).toLocaleDateString('pt-BR') %> às 
+                        <%= new Date(dados.data_criacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %>
+                      </p>
+                      <p style="margin: 0; font-weight: bold; color: #333;"><%= dados.mensagem %><hr></p>
+                      
+                      <a class="btn btn-dark" href="" style="text-decoration: none; font-size: 12px; width: 100%;">Marcar como lida</a>
+                    </div>
+                  </li>
+              <% }); %>
+            </ul>
+          <% } else if (Notificacoes.length == 0 && NotificacoesEx.length > 0) { %> 
+            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 310px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px;">
+              <% NotificacoesEx.forEach(function(dados) { %>
+                  <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">
+                    <i style="vertical-align:bottom;"  class="material-icons">report</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="flex: 1; white-space: normal;">
+                      <p style="margin: 0; font-size: 12px; color: #888;">
+                        <%= new Date(dados.data_criacao).toLocaleDateString('pt-BR') %> às 
+                        <%= new Date(dados.data_criacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %>
+                      </p>
+                      <p style="margin: 0; font-weight: bold; color: #333;"><%= dados.mensagem %><hr></p>
+                      
+                      <a href="" class="btn btn-dark" style="text-decoration: none; font-size: 12px; width: 100%;">Marcar como lida</a>
+                    </div>
+                  </li>
+              <% }); %>
+            </ul>
+          <% } else  { %> 
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 300px; max-height: 400px; overflow-y: auto;">
               <li class="dropdown-item d-flex align-items-center">
                 <div>

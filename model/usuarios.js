@@ -84,9 +84,29 @@ notificacao(usuario_id, animal_id, tipo, mensagem){
     
 },
 
+notificacao_exclusao(usuario_id, tipo, mensagem){
+    var sql = "INSERT INTO notificacoes (usuario_id, tipo, mensagem) VALUES ?";
+    var values = [[usuario_id, tipo, mensagem]];
+
+    con.query(sql, [values], function (err, result) {
+        if (err) throw err;
+    });
+    
+},
+
 buscaNotificacoes: function (userId) {
     return new Promise((resolve, reject) => {
         const sql = "SELECT n.*, a.* FROM notificacoes n JOIN usuarios u ON n.usuario_id = u.id JOIN animais a ON n.animal_id = a.id WHERE u.id = ? AND n.lida = FALSE;";
+        con.query(sql, [userId], function (err, result) {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+},
+
+buscaNotificacoesExcluidas: function (userId) {
+    return new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM notificacoes WHERE usuario_id = ?";
         con.query(sql, [userId], function (err, result) {
             if (err) return reject(err);
             resolve(result);
