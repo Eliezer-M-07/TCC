@@ -252,11 +252,11 @@ module.exports = {
                     modelusuario.buscaNotificacoes(id_usuario).then(result =>{
                         if(result.length > 0){
                             modelusuario.excluirNotificacoes(id);
-                            modelusuario.notificacao_exclusao(id_usuario, "Excluido", "Seu animal " + animal.nome + " foi excluido pelo admnistrador.");
+                            modelusuario.notificacao_exclusao(id_usuario, "Excluido", "Seu animal " + animal.nome + " foi excluido pelo administrador.");
                             modelanimais.deletar(id);
                             
                         }else{
-                            modelusuario.notificacao_exclusao(id_usuario, "Excluido", "Seu animal " + animal.nome + " foi excluido pelo admnistrador.");
+                            modelusuario.notificacao_exclusao(id_usuario, "Excluido", "Seu animal " + animal.nome + " foi excluido pelo administrador.");
                             modelanimais.deletar(id);
                         }
                     });

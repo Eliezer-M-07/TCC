@@ -124,6 +124,7 @@ excluirNotificacoes: function(animal_id){
     });
 
 },
+
 excluirNotificacoes2: function(usuario_id){
     return new Promise((resolve, reject) => {
         const sql = "DELETE FROM notificacoes WHERE usuario_id = ?";

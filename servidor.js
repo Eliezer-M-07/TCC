@@ -193,7 +193,7 @@ app.get('/editar_perfil', usuarioController.editar);
 app.post('/editar', usuarioController.alterar);
 app.get('/deletar/:id', usuarioController.deletar)
 app.post('/cadastrar', usuarioController.cadastrar);
-
+app.get('/marcarlidas', usuarioController.marcarLidas);
 
 app.get('/gerenciamento', usuarioController.all)
 app.get('/aprovar/:id', animaisController.aprovar)

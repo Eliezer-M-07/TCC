@@ -331,6 +331,17 @@ module.exports = {
         }
     },
 
+
+    marcarLidas: function(req, res){
+        if(req.session.loggedin){
+            modelusuario.excluirNotificacoes2(req.session.Id);
+            const previousPage = req.get('Referer');
+            res.redirect(previousPage);
+        }else{
+            res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome})
+        }
+
+    },
     
 }
 
