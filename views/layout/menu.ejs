@@ -50,9 +50,9 @@
             <div class="bell"></div>
           </div>
           <% if (Notificacoes.length > 0 && NotificacoesEx.length > 0) { %>
-            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 315px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px;">
-              <a  href="/marcarlidas" title="Marcar todas como lida" style="float: right; margin-right: 10px; text-decoration: none; color: inherit;" ><i style="vertical-align:bottom;" class="material-icons">done_all</i></a><br>
-              
+            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 315px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px; cursor: default;">
+              <strong style="float: left;">Notificações</strong><a  href="/marcarlidas" title="Marcar todas como lida" style="float: right; margin-right: 10px; text-decoration: none; color: inherit;" ><i style="vertical-align:bottom;" class="material-icons">done_all</i></a><br>
+              <hr>
               <% Notificacoes.forEach(function(dados) { %>
                 <% if (dados.tipo === 'Aprovado' || dados.tipo === 'Recusado') { %>
                   <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">

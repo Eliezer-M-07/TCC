@@ -201,8 +201,9 @@ app.get('/recusar/:id', animaisController.recusar)
 
 app.get('/editar_adocao/:id', animaisController.editar_adocao);
 app.post('/alterar_adocao', animaisController.alterarAdocao);
-app.post('/alterar_desaparecido', animaisController.alterarDesaparecido);
 app.get('/editar_desaparecido/:id', animaisController.editar_desaparecido);
+app.post('/alterar_desaparecido', animaisController.alterarDesaparecido);
+app.get('/editar_encontrado/:id', animaisController.editar_encontrado);
 app.get('/deletar_animal/:id', animaisController.deletar);
 app.post('/cadastrar_adocao', animaisController.cadastrar_adocao);
 app.post('/cadastrar_desaparecido', animaisController.cadastrar_desaparecido);

@@ -330,6 +330,33 @@ module.exports = {
 
     },
 
+    editar_encontrado: function (req, res) {
+        if (req.session.loggedin) {
+            if(req.session.admin == false){
+                id = req.params.id
+                Promise.all([
+                    modelanimais.buscaDados(id),
+                    modelusuario.buscaNotificacoes(req.session.Id),
+                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+        
+                ]).then(results => {
+                    const result = results[0];
+                    const notificacoes = results[1];
+                    const notificacoesEx = results[2];
+                    res.render('editar_encontrado', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+
+                }).catch(err => {
+                    if (err) throw err;
+                });
+            }else{
+                res.redirect('/gerenciamento');            
+            }
+        } else {
+            res.render('login', { alerta: 'É precisa fazer login para editar um animal.', logado: req.session.loggedin, admin: req.session.admin })
+        }
+
+    },
+
     alterarAdocao: function (req, res) {
         var form = new formidable.IncomingForm();
 

@@ -178,8 +178,6 @@ footer {
 
 }
 
-
-
 body::-webkit-scrollbar {
     width: 10px;
 }
@@ -194,6 +192,11 @@ body::-webkit-scrollbar-thumb {
 
 .dropdown-item:active {
     background-color: rgb(26, 26, 26) !important;
+    border-radius: 10px !important;
+}
+
+.dropdown-item:hover {
+    border-radius: 10px !important;
 }
 
 .btn-black:focus,
@@ -244,9 +247,6 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     justify-content: center;
   }
-  
-  
-  
   
   
   .notification:hover > .bell-container {

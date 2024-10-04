@@ -1,4 +1,6 @@
 var mysql = require('mysql');
+const bcrypt = require('bcrypt');
+
 var con = mysql.createConnection({
  host: "localhost",
  user: "root",
@@ -15,12 +17,19 @@ con.connect(function(err) {
     console.log("Tabela admin criada");
     });
     
+    const senha = "adminsafepet@24";
+    const saltRounds = 10;
 
-    var sql2 = "INSERT INTO admin (nome, email, senha) VALUES ('Admin', 'safepetadmin@gmail.com', 'adminsafepet@24')";
-    con.query(sql2, function(err, result){
+    bcrypt.hash(senha, saltRounds, function (err, hash) {
         if (err) throw err;
-        console.log("Admin inserido.");
-    })
+        var sql2 = "INSERT INTO admin (nome, email, senha) VALUES (?, ?, ?)";
+        con.query(sql2, ['Admin', 'safepetadmin@gmail.com', hash], function(err, result){
+            if (err) throw err;
+            console.log("Admin inserido.");
+            
+            con.end();
+        });
+    });
 
-    con.end();
+    
 });

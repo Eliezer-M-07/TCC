@@ -80,7 +80,7 @@ module.exports = {
                         ]).then(results => {
                             const notificacoes = results[0];
                             const notificacoesEx = results[1];
-                            res.render('home', { alerta: "Login realizado com sucesso.", logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes,  NotificacoesEx: notificacoesEx});
+                            res.render('home', {logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes,  NotificacoesEx: notificacoesEx});
 
                         })
                         .catch(error => {
@@ -96,16 +96,20 @@ module.exports = {
                     if (err) throw err;
     
                     if (result.length) {
-                        if (err) throw err;
-                        if (senha == result[0]['senha']) {
-                            req.session.loggedin = true;
-                            req.session.admin = true;
-    
-                           res.redirect('/gerenciamento');
-                        } else {
-                            res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
-                        }
+                        bcrypt.compare(senha, result[0]['senha'], function (err, resultado) {
+                            if (err) throw err;
+                            
+                            if (resultado) {
+                                req.session.loggedin = true;
+                                req.session.admin = true;
+
+                                res.redirect('/gerenciamento');
+                            
+                            } else {
+                                res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
+                            }
                         
+                        });
                     } else {
                         res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin, admin: req.session.admin });
                     }

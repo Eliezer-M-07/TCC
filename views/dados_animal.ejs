@@ -35,40 +35,60 @@
                     <br>
                     <br>
                     <br>
-                    <div style="display: flex; gap: 15%;">
-                    <article>
-                        <h5><i class="material-icons">description</i> Informações Básicas</h5>
-                        <hr>
-                        <strong>Estado - </strong> <%= dados.estado %>
-                        <br>
-                        <strong>Cidade - </strong> <%= dados.cidade %>
-                        <br>
-                        <strong>Nome - </strong> <%= dados.nome %>
-                        <br>
-                        <strong>Especie - </strong> <%= dados.especie %>
-                        <br>
-                        <strong>Raça - </strong> <%= dados.raca %>
-                        <br>
-                        <strong>Sexo - </strong> <%= dados.sexo %>
-                        <br>
-                    </article>
-                    <article>
-                        <h5><i class="material-icons">account_box</i> Dados anunciante</h5>
-                        <hr>
-                        <strong>Nome - </strong> <%= dados.anunciante_nome %>
-                        <br>
-                        <strong>E-mail - </strong> <%= dados.anunciante_email %>
-                        <br>
-                        <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
-                        <br>
-                        <% if (admin == true) { %>
-
-                        <% } else { %>
-                            <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
-
-                        <% } %>
-                    </article>
-                </div>
+                    <div style="display: flex; gap: 15%; flex-wrap: wrap;">
+                        <article class="card p-3 mb-3 flex-grow-1" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1);">
+                          <h5 ><i class="material-icons">description</i> Informações Básicas</h5>
+                          <hr>
+                          <div class="row">
+                            <div class="col-md-6 mb-2">
+                              <strong>Nome: </strong> <span><%= dados.nome %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Estado: </strong> <span><%= dados.estado %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Cidade: </strong> <span><%= dados.cidade %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Espécie: </strong> <span><%= dados.especie %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Raça: </strong> <span><%= dados.raca %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Sexo: </strong> <span><%= dados.sexo %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Peso: </strong> <span><%= dados.peso %> Kg</span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Porte: </strong> <span><%= dados.porte %></span>
+                            </div>
+                          </div>
+                        </article>
+                      
+                        <article class="card p-3 mb-3 flex-grow-1" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1);">
+                          <h5><i class="material-icons">account_box</i> Dados Anunciante</h5>
+                          <hr>
+                          <div>
+                            <strong>Nome: </strong> <span><%= dados.anunciante_nome %></span>
+                            <br>
+                            <strong>E-mail: </strong> <span><%= dados.anunciante_email %></span>
+                            <br>
+                            <strong>Telefone: </strong> <span><%= formatarTelefone(dados.anunciante_tel) %></span>
+                            <br>
+                            <% if (admin == true) { %>
+                              
+                            <% } else { %>
+                              <br>
+                              <a style="box-shadow: 0 0 2px rgb(51, 50, 50);" href="https://api.whatsapp.com/send?phone=<%= dados.anunciante_tel %>" class="btn btn-white">
+                                <img src="/images/message.png" width="30px" class="">&nbsp;&nbsp;Entrar em contato
+                              </a>
+                            <% } %>
+                          </div>
+                        </article>
+                      </div>
+                      
                 <% } else if (dados.status == 'desaparecido') { %>
                     <div>
                         <div>
@@ -86,46 +106,71 @@
                     </div>
                     <br>
                     <br>
-                    <div>
-                    <article style="margin-top: 2%;">
-                        <h5><i class="material-icons">description</i> Informações Básicas</h5>
-                        <hr>
-                        <strong>Estado - </strong> <%= dados.estado %>
-                        <br>
-                        <strong>Cidade - </strong> <%= dados.cidade %>
-                        <br>
-                        <strong>Local - </strong><%= dados.bairro %>, <%= dados.rua %>
-                        <br>
-                        <strong>Especie - </strong> <%= dados.especie %>
-                        <br>
-                        <strong>Raça - </strong> <%= dados.raca %>
-                        <br>
-                        <strong>Sexo - </strong> <%= dados.sexo %>
-                        <br>
-                    </article>
-                    <br>
-                    <article style="margin-top: 2%;">
-                        <h5><i class="material-icons">account_box</i> Informações do dono</h5>
-                        <hr>
-                        <strong>Nome - </strong> <%= dados.anunciante_nome %>
-                        <br>
-                        <strong>E-mail - </strong> <%= dados.anunciante_email %>
-                        <br>
-                        <strong>Telefone - </strong> <%= formatarTelefone(dados.anunciante_tel) %>
-                        <br>
-                        <% if (admin == true) { %>
-                            
-                        <% } else { %>
-                            <a href="https://api.whatsapp.com/send?phone=<%=dados.anunciante_tel %>" class="btn"><div style="box-shadow: 0 0 2px rgb(221, 221, 221); border: solid 1px rgb(221, 221, 221); width: 195px; border-radius: 7px; vertical-align: text-bottom;"><img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato</a></div>
-
-                        <% } %>                    
-                    </article>
-                    <br>
-                    <article style="margin-top: 2%;">
-                        <h5><i class="material-icons">location_on</i> Localização</h5>
-                        <hr>
-                        <div id="map" style="height: 300px; width: 100%;"></div>
-                    </article>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15%;">
+                        <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 45%;">
+                          <h5><i class="material-icons">description</i> Informações Básicas</h5>
+                          <hr>
+                          <div class="row">
+                            <div class="col-md-6 mb-2">
+                              <strong>Nome: </strong> <span><%= dados.nome %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Estado: </strong> <span><%= dados.estado %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Espécie: </strong> <span><%= dados.especie %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Cidade: </strong> <span><%= dados.cidade %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Raça: </strong> <span><%= dados.raca %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Bairro: </strong> <span><%= dados.bairro %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Sexo: </strong> <span><%= dados.sexo %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Rua: </strong> <span><%= dados.rua %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <strong>Porte: </strong> <span><%= dados.porte %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Desaparecimento: </strong> <span><%= new Date(dados.data).toLocaleDateString('pt-BR') %></span>
+                            </div>
+                          </div>
+                        </article>
+                        <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 45%;">
+                          <h5><i class="material-icons">account_box</i> Dados Anunciante</h5>
+                          <hr>
+                          <div>
+                            <strong>Nome: </strong> <span><%= dados.anunciante_nome %></span>
+                            <br>
+                            <strong>E-mail: </strong> <span><%= dados.anunciante_email %></span>
+                            <br>
+                            <strong>Telefone: </strong> <span><%= formatarTelefone(dados.anunciante_tel) %></span>
+                            <br>
+                            <% if (admin == true) { %>
+                              
+                            <% } else { %>
+                              <br>
+                              <a style="box-shadow: 0 0 2px rgb(51, 50, 50);" href="https://api.whatsapp.com/send?phone=<%= dados.anunciante_tel %>" class="btn btn-white">
+                                <img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato
+                              </a>
+                            <% } %>
+                          </div>
+                        </article>
+                        <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 100%;">
+                          <h5><i class="material-icons">location_on</i> Localização</h5>
+                          <hr>
+                          <div id="map" style="height: 300px; width: 100%;"></div>
+                        </article>
+                      </div>
+                      
+                      
                 <% } else if (dados.status == 'encontrado') { %>
                     <div>
                         <div>

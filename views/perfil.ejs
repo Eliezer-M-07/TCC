@@ -125,7 +125,7 @@
                               <% }%>
                             <% } else if (dados.status == 'encontrado') { %>
                               <% if (dados.aprovado != 'Recusado') { %>
-                                <a style="width:7em; color: white;" href="" class="btn btn-dark">Editar</a>
+                                <a style="width:7em; color: white;" href="/editar_encontrado/<%= dados.id%>" class="btn btn-dark">Editar</a>
                                 <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
                               <% } else { %>
                                 <a href="/deletar_animal/<%= dados.id %>" style="width:100%; color: white;" class="btn btn-dark">Excluir</a>
