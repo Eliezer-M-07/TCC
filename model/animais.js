@@ -193,9 +193,9 @@ module.exports = {
         });
     },
 
-    inserir_encontrado(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, foto, aprovado) {
+    inserir_encontrado(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, foto, aprovado) {
         var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, foto, aprovado];
+        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, foto, aprovado];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -237,6 +237,23 @@ module.exports = {
             if (err) throw err;
         });
     },
+
+    updateEncontrado(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, foto, id) {
+        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, foto = ? WHERE id = ?";
+        var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [foto], [id]];
+        con.query(sql, values, function (err, result) {
+            if (err) throw err;
+        });
+    },
+
+    updateEncontradoSemFoto(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, id) {
+        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ? WHERE id = ?";
+        var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [id]];
+        con.query(sql, values, function (err, result) {
+            if (err) throw err;
+        });
+    },
+
 
     deletar(id) {
         var sql = "DELETE FROM animais WHERE id = ?";

@@ -57,8 +57,8 @@
                                     </label>
                                     <select name="sexo" id="sexo" class="form-select"
                                         aria-label="Default select example" aria-describedby="sexoHelp">
-                                        <option value="Macho">Macho</option>
-                                        <option value="Fêmea">Fêmea</option>
+                                        <option value="Macho" <%= dados.sexo === 'Macho' ? 'selected' : '' %>>Macho</option>
+                                        <option value="Fêmea" <%= dados.sexo === 'Fêmea' ? 'selected' : '' %>>Fêmea</option>
                                     </select>
                                     <div id="sexoHelp" class="form-text">Informe o sexo do animal.</div>
                                 </div>

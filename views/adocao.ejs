@@ -16,7 +16,7 @@
               <h4>Filtros</h4>
               <br>
                 <h6>Estado</h6>
-                <select name="estado" id="estado" class="form-select" style="width: 90%;">
+                <select name="estado" id="estado" class="form-select" style="width: 85%;">
                     <option value="">Todos</option>
                     <option value="RS">Rio Grande do Sul</option>
                     <option value="SC">Santa Catarina</option>
@@ -24,29 +24,26 @@
                 </select>
                 <br>
                 <h6>Cidade</h6>
-                <select name="cidade" id="cidade" class="form-select" style="width: 90%;">
+                <select name="cidade" id="cidade" class="form-select" style="width: 85%;">
                     <option value="">Todas</option>
                 </select>
                 <br>
                 <h6>Espécie</h6>
-                <select name="especie" class="form-select" style="width: 90%;">
+                <select name="especie" class="form-select" style="width: 85%;">
                     <option value="">Todas</option>
                     <option value="Cachorro">Cachorro</option>
                     <option value="Gato">Gato</option>
                 </select>
                 <br>
                 <h6>Sexo</h6>
-                <select name="sexo" class="form-select" style="width: 90%;">
+                <select name="sexo" class="form-select" style="width: 85%;">
                     <option value="">Ambos</option>
                     <option value="Macho">Macho</option>
                     <option value="Fêmea">Fêmea</option>
                 </select>
                 <br>
                 <br>
-                <button type="submit" class="btn btn-dark">Aplicar</button>
-                <br>
-                <br>
-                <br>
+                <button type="submit" class="btn btn-dark" style="width: 85%;">Aplicar</button>
             </form>
         </div>
     </article>
@@ -65,6 +62,8 @@
                     <strong>Estado:</strong> <%= dados.estado %>
                     <br>
                     <strong>Sexo:</strong> <%= dados.sexo %>
+                    <br>
+                    <strong>Porte:</strong> <%= dados.porte %>
                     <br>
                     <br>
                     <a style="width: 100%; background-color: black; color: white;" href="/animal/<%=dados.id %>" class="btn">Quero adotar</a>

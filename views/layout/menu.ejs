@@ -83,8 +83,9 @@
               <% }); %>
             </ul> 
           <% } else if (Notificacoes.length > 0 && NotificacoesEx.length == 0) { %> 
-            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 310px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px;">
-              <a  href="/marcarlidas" title="Marcar todas como lida" style="float: right; margin-right: 10px; text-decoration: none; color: inherit;" ><i style="vertical-align:bottom;" class="material-icons">done_all</i></a><br>
+            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 310px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px; cursor: default;">
+              <strong style="float: left;">Notificações</strong><a  href="/marcarlidas" title="Marcar todas como lida" style="float: right; margin-right: 10px; text-decoration: none; color: inherit;" ><i style="vertical-align:bottom;" class="material-icons">done_all</i></a><br>
+              <hr>
               <% Notificacoes.forEach(function(dados) { %>
                   <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">
                     <img src="/animais/<%= dados.foto %>" alt="Animal" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
@@ -99,8 +100,9 @@
               <% }); %>
             </ul>
           <% } else if (Notificacoes.length == 0 && NotificacoesEx.length > 0) { %> 
-            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 310px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px;">
-              <a  href="/marcarlidas" title="Marcar todas como lida" style="float: right; margin-right: 10px; text-decoration: none; color: inherit;" ><i style="vertical-align:bottom;" class="material-icons">done_all</i></a><br>
+            <ul id="notificationDropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 310px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px; cursor: default;">
+              <strong style="float: left;">Notificações</strong><a  href="/marcarlidas" title="Marcar todas como lida" style="float: right; margin-right: 10px; text-decoration: none; color: inherit;" ><i style="vertical-align:bottom;" class="material-icons">done_all</i></a><br>
+              <hr>
               <% NotificacoesEx.forEach(function(dados) { %>
                   <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">
                     <i style="vertical-align:bottom;"  class="material-icons">report</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -182,13 +184,11 @@
         <% }else { %>
           <nav class="navbar navbar-expand-lg navbar-light" style="border: solid 1px rgb(233, 233, 233);">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/">&nbsp;
                 <img src="/images/logo.png" alt="logo" width="195px" class="d-inline-block">
-              </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <div class="collapse navbar-collapse" id="navbarNavDropdown" >
                 <ul class="navbar-nav">&nbsp;&nbsp;
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/" style="color: black; font-size: 17px;">Página Inicial</a>
@@ -204,8 +204,7 @@
                   </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                  <div  class="dropdown">
-                  <div class="dropdown">
+                  <div class="dropdown" >
                     <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">person</i>&nbsp;Operações</button>
                     <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
                       <li><a class="dropdown-item" href="/login"><i style="vertical-align:bottom;" class="material-icons">login</i>&nbsp;&nbsp;&nbsp;Login</a></li>

@@ -79,7 +79,7 @@ app.get('/cadastro', function(req, res){
             ]).then(results => {
                 const notificacoes = results[0];
                 const notificacoesEx = results[1];
-                res.render('home', {alerta:'Faça logout para realizar o cadastro.', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                res.render('home', {alerta:'Faça logout para realizar o cadastro.', nome:req.session.nome, logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
                 return;
             })
             .catch(error => {
@@ -91,7 +91,7 @@ app.get('/cadastro', function(req, res){
         }
     }
     else{
-       res.render('cadastro',{alerta:'', logado: req.session.loggedin, admin: req.session.admin})
+       res.render('cadastro', {alerta:'', nome:req.session.nome, logado: req.session.loggedin, admin: req.session.admin})
        return;
     }
 })
@@ -204,6 +204,7 @@ app.post('/alterar_adocao', animaisController.alterarAdocao);
 app.get('/editar_desaparecido/:id', animaisController.editar_desaparecido);
 app.post('/alterar_desaparecido', animaisController.alterarDesaparecido);
 app.get('/editar_encontrado/:id', animaisController.editar_encontrado);
+app.post('/alterar_encontrado', animaisController.alterarEncontrado);
 app.get('/deletar_animal/:id', animaisController.deletar);
 app.post('/cadastrar_adocao', animaisController.cadastrar_adocao);
 app.post('/cadastrar_desaparecido', animaisController.cadastrar_desaparecido);

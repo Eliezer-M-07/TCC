@@ -63,7 +63,7 @@ module.exports = {
     
         con.query(sql, [email], function (err, result) {
             if (err) throw err;
-    
+            
             if (result.length) {
                 bcrypt.compare(senha, result[0]['senha'], function (err, resultado) {
                     if (err) throw err;
@@ -73,19 +73,7 @@ module.exports = {
                         req.session.loggedin = true;
                         req.session.admin = false;
 
-                        Promise.all([
-                            modelusuario.buscaNotificacoes(req.session.Id),
-                            modelusuario.buscaNotificacoesExcluidas(req.session.Id)
-
-                        ]).then(results => {
-                            const notificacoes = results[0];
-                            const notificacoesEx = results[1];
-                            res.render('home', {logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes,  NotificacoesEx: notificacoesEx});
-
-                        })
-                        .catch(error => {
-                            if (error) throw error;
-                        });
+                        res.redirect('/')
 
                     } else {
                         res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });

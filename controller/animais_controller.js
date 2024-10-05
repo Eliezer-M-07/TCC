@@ -78,21 +78,27 @@ module.exports = {
 
     dados: function(req, res){
         var id = req.params.id;
-        Promise.all([
-            modelanimais.buscaDados(id),
-            modelusuario.buscaNotificacoes(req.session.Id),
-            modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+        modelanimais.busca(id).then(result => {
+            if(result.length > 0 ){
+                Promise.all([
+                    modelanimais.buscaDados(id),
+                    modelusuario.buscaNotificacoes(req.session.Id),
+                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
 
-        ]).then(results => {
-            const result = results[0];
-            const notificacoes = results[1];
-            const notificacoesEx = results[2];
+                ]).then(results => {
+                    const result = results[0];
+                    const notificacoes = results[1];
+                    const notificacoesEx = results[2];
 
-            res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx})
+                    res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx})
+                })
+                .catch(err => {
+                    if (err) throw err;
+                });
+            }else{
+                res.redirect('/')
+            }
         })
-        .catch(err => {
-            if (err) throw err;
-        });
     },
 
 
@@ -471,6 +477,66 @@ module.exports = {
                             fields['rua'][0],
                             fields['data'][0],
                             fields['caracteristicas'][0],
+                            fields['id'][0]
+                );
+            }
+        });
+        
+        res.redirect('/perfil')
+
+    },
+
+    alterarEncontrado: function (req, res) {
+        var form = new formidable.IncomingForm();
+
+        form.parse(req, (err, fields, files) => {
+            if (files.foto) {
+                modelanimais.busca(fields['id'][0])
+                    .then(result => {
+                        var img = path.join(__dirname, '../public/animais/', result[0]['foto']);
+                        fs.unlink(img, (err) => {
+                            if (err) console.error(err);
+                        });
+                    })
+                    .catch(err => console.error(err));
+    
+                var oldpath = files.foto[0].filepath;
+                var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+                var ext = path.extname(files.foto[0].originalFilename);
+                var nomeimg = hash + ext;
+                var newpath = path.join(__dirname, '../public/animais/', nomeimg);
+    
+
+                sharp(oldpath)
+                    .resize({ width: 280, height: 280, fit: 'cover' }) 
+                    .toFile(newpath, (err, info) => {
+                        if (err) throw err;
+    
+                        modelanimais.updateEncontrado(
+                            fields['nome'][0],
+                            fields['especie'][0],
+                            fields['raca'][0],
+                            fields['sexo'][0],
+                            fields['porte'][0],
+                            fields['estado'][0],
+                            fields['cidade'][0],
+                            fields['bairro'][0],
+                            fields['rua'][0],
+                            nomeimg,
+                            fields['id'][0]
+                        );
+                    });
+            } else {
+                modelanimais.updateEncontradoSemFoto(
+                            fields['nome'][0],
+                            fields['especie'][0],
+                            fields['raca'][0],
+                            fields['sexo'][0],
+                            fields['porte'][0],
+                            fields['estado'][0],
+                            fields['cidade'][0],
+                            fields['bairro'][0],
+                            fields['rua'][0],
                             fields['id'][0]
                 );
             }

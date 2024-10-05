@@ -12,15 +12,11 @@
       <br>
       <div class="container">
           <div class="container">
-            <% if (alerta) { %>
-              <div class="alert alert-dark" role="alert"><%= alerta %></div>
-            <%} else { %>
-            <% } %>
               <div class="card" style="border-radius: 10px;">
                   <div class="container">
                       <br>
                       <%dadosAnimal.forEach(function(dados) { %>
-                      <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
                         <img style="border: solid 1px black;" src="/animais/<%= dados.foto %>" width="100px" class="rounded-circle" >&nbsp;&nbsp;&nbsp;<h4 class="ml-2">Editar <%= dados.nome %></h4>
                     </div>
                       <br>
@@ -49,8 +45,8 @@
                           <div class="mb-3">
                             <label for="sexo" class="form-label"><h6>Sexo</h6></label>
                             <select name="sexo" id="sexo" class="form-select" aria-label="Default select example" aria-describedby="sexoHelp">
-                              <option value="Macho">Macho</option>
-                              <option value="Fêmea">Fêmea</option>
+                              <option value="Macho" <%= dados.sexo === 'Macho' ? 'selected' : '' %>>Macho</option>
+                              <option value="Fêmea" <%= dados.sexo === 'Fêmea' ? 'selected' : '' %>>Fêmea</option>
                             </select>
                             <div id="sexoHelp" class="form-text">Informe o sexo do animal.</div>
                           </div>
