@@ -158,12 +158,9 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                <div class="dropdown">
-                  <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i style="vertical-align:bottom;"  class="material-icons" style="vertical-align: bottom;">apps</i>&nbsp;Opções&nbsp;</button>
-                  <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="/gerenciamento"><i style="vertical-align:bottom;" class="material-icons">settings</i>&nbsp;&nbsp;Gerenciar</a></li>
-                    <li><a data-bs-toggle="modal" data-bs-target="#modal2" class="dropdown-item" href="/logout"><i style="vertical-align:bottom;" class="material-icons">logout</i>&nbsp;&nbsp;Logout</a></li>
-                  </ul>
+                <div id="log">
+                  <a style="text-decoration: none; color: inherit;" data-bs-toggle="modal" data-bs-target="#modal2"  href="/logout"><i style="vertical-align:bottom;" class="material-icons">logout</i>&nbsp;&nbsp;Logout</a>
+                </div>
                   <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">

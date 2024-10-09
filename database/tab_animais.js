@@ -10,7 +10,7 @@ var con = mysql.createConnection({
 con.connect(function(err) {
     if (err) throw err;
     console.log("Conectado!");
-    var sql = "CREATE TABLE notificacoes (id INT AUTO_INCREMENT PRIMARY KEY, usuario_id INT NOT NULL, animal_id INT, tipo VARCHAR(50), mensagem TEXT, lida BOOLEAN DEFAULT FALSE, data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (usuario_id) REFERENCES usuarios(id), FOREIGN KEY (animal_id) REFERENCES animais(id));";    
+    var sql = "CREATE TABLE animais (id INT AUTO_INCREMENT PRIMARY KEY, fk_ani INT, status VARCHAR(30) NOT NULL, estado VARCHAR(50), cidade VARCHAR(50), data DATE, bairro VARCHAR(50) , rua VARCHAR(255), nome VARCHAR(255), especie VARCHAR(255), raca VARCHAR(255), sexo VARCHAR(255), porte VARCHAR(255), peso DECIMAL(10,2), caracteristicas VARCHAR(255), foto VARCHAR(255), aprovado VARCHAR(10), FOREIGN KEY (fk_ani) REFERENCES usuarios(id))";
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Tabela animais criada");

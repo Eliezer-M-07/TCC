@@ -96,7 +96,7 @@ notificacao_exclusao(usuario_id, tipo, mensagem){
 
 buscaNotificacoes: function (userId) {
     return new Promise((resolve, reject) => {
-        const sql = "SELECT n.*, a.* FROM notificacoes n JOIN usuarios u ON n.usuario_id = u.id JOIN animais a ON n.animal_id = a.id WHERE u.id = ? AND n.lida = FALSE;";
+        const sql = "SELECT n.*, a.*, u.nome AS usuario_nome, u.email AS usuario_email FROM notificacoes n JOIN usuarios u ON n.usuario_id = u.id LEFT JOIN animais a ON n.animal_id = a.id WHERE u.id = ?";
         con.query(sql, [userId], function (err, result) {
             if (err) return reject(err);
             resolve(result);
