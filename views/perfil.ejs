@@ -120,6 +120,7 @@
                               <% if (dados.aprovado != 'Recusado') { %>
                                 <a style="width:7em; color: white;" href="/editar_desaparecido/<%= dados.id %>" class="btn btn-dark">Editar</a>
                                 <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
+                                
                               <% } else { %>
                                 <a href="/deletar_animal/<%= dados.id %>" style="width:100%; color: white;" class="btn btn-dark">Excluir</a>
                               <% }%>
@@ -132,6 +133,15 @@
                               <% }%>
                             <% } %>
                           </div>
+                          <% if (dados.status == 'desaparecido' && dados.aprovado != 'Recusado') { %>
+                            <br>
+                            <a href="/dowloadcartaz/<%= dados.id %>">
+                              <button id="download-button"  class="btn btn-light" style="width: 100%; border: outset 1px black;">
+                                  <span id="button-icon"><i style="vertical-align:bottom;" class="material-icons">download</i></span>
+                                  <span id="button-text" style="display: none; opacity: 0;">Baixar Cartaz</span>
+                              </button>
+                          </a>
+                          <% } %>
                           <div class="modal fade" id="excluiranimal<%= index %>" tabindex="-1" aria-labelledby="excluiranimalLabel<%= index %>" aria-hidden="true" style="color: black;">
                             <div class="modal-dialog">
                               <div class="modal-content">
@@ -179,7 +189,31 @@
               event.preventDefault();
               window.location.href = "/perfil?filtro=encontrados";
           });
+
+          const button = document.getElementById('download-button');
+          const icon = document.getElementById('button-icon');
+          const text = document.getElementById('button-text');
+
+          button.addEventListener('mouseover', () => {
+              icon.style.display = 'none';
+              text.style.display = 'inline'; 
+              setTimeout(() => {
+                  text.style.opacity = 1;r
+              }, 10);
+          });
+
+          button.addEventListener('mouseout', (event) => {
+            
+              if (!button.contains(event.relatedTarget)) {
+                  text.style.opacity = 0; 
+                  text.addEventListener('transitionend', () => {
+                      text.style.display = 'none'; 
+                      icon.style.display = 'inline';
+                  }, { once: true });
+              }
+          });
+
+
           </script>
-          
     </body>
 </html>

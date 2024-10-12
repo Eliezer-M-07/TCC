@@ -213,3 +213,4 @@ app.get('/adotar', animaisController.listagem_adocao);
 app.get('/desaparecidos', animaisController.listagem_desaparecidos);
 app.get('/encontrados', animaisController.listagem_encontrados);
 app.get('/animal/:id',animaisController.dados)
+app.get('/dowloadcartaz/:id', animaisController.gerarCartaz);

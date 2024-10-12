@@ -280,4 +280,6 @@ body::-webkit-scrollbar-thumb {
     display: none !important;
 }
 
-
+#button-text {
+    transition: opacity 0.5s ease-in-out;
+}
