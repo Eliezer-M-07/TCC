@@ -104,6 +104,11 @@
                             <div id="ruaHelp" class="form-text">Rua onde o animal foi encontrado.</div>
                           </div>
                           <div class="mb-3">
+                            <label for="textarea" class="form-label"><h6>Características</h6></label>
+                            <textarea name="caracteristicas" maxlength="255" class="form-control" id="textarea" rows="2"></textarea>
+                            <div id="caracteristicasHelp" class="form-text">Fale as características do animal.</div>
+                          </div>
+                          <div class="mb-3">
                               <label for="formFile" class="form-label"><h6>Foto do animal</h6></label>
                               <input  name="foto" required class="form-control" type="file" id="formFile">
                               <div id="fotoHelp" class="form-text">Envie uma foto.</div>
@@ -248,7 +253,7 @@
         
        
         function fetchCidades(uf) {
-          fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos`)
+          fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos?orderBy=nome`)
             .then(response => response.json())
             .then(data => {
               cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>'; 

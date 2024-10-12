@@ -211,6 +211,7 @@ module.exports = {
                         fields['raca'][0],
                         fields['sexo'][0],
                         fields['porte'][0],
+                        fields['caracteristicas'],
                         nomefoto,
                         'Pendente'
                     );

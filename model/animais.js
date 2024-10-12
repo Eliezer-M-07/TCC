@@ -193,9 +193,9 @@ module.exports = {
         });
     },
 
-    inserir_encontrado(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, foto, aprovado) {
-        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, foto, aprovado];
+    inserir_encontrado(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, aprovado) {
+        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, aprovado];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;

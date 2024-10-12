@@ -235,7 +235,7 @@
         
        
         function fetchCidades(uf) {
-          fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos`)
+          fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos?orderBy=nome`)
             .then(response => response.json())
             .then(data => {
               cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>'; 
