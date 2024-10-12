@@ -158,6 +158,7 @@
                 <thead>
                     <tr>
                         <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                        <th scope="col"><i class="material-icons">pets</i> Tipo</th>
                         <th scope="col"><i class="material-icons">badge</i> Nome</th>
                         <th scope="col"><i class="material-icons">description</i> Características</th>
                         <th scope="col"><i class="material-icons">delete</i> Excluir</th>
@@ -168,6 +169,7 @@
                 <% dados.filter(dado => dado.aprovado === "Aprovado").forEach(function(dados, index) { %> 
                         <tr>
                             <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
+                            <td><%= dados.status %></td>
                             <td><%= dados.nome %></td>
                             <td><%= dados.caracteristicas %></td>
                             <td><a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" class="btn btn-dark w-100">Excluir</a></td>
