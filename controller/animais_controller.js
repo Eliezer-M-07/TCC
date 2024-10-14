@@ -14,24 +14,33 @@ module.exports = {
 
     listagem_adocao: function (req, res) {
         const { estado, cidade, especie, sexo } = req.query;
-
+    
         Promise.all([
             modelanimais.buscaTodosAdocao({ estado, cidade, especie, sexo }),
             modelusuario.buscaNotificacoes(req.session.Id),
-            modelusuario.buscaNotificacoesExcluidas(req.session.Id)
-
+            modelusuario.buscaNotificacoesExcluidas(req.session.Id),
+            modelusuario.buscaFavoritos(req.session.Id) 
         ]).then(results => {
+            
             const buscaDados = results[0];
             const notificacoes = results[1];
             const notificacoesEx = results[2];
-
-            res.render('adocao', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+            const favoritos = results[3] || []; 
+    
+            buscaDados.forEach(animal => {
+                animal.favoritado = favoritos.includes(animal.id);
+            });
+    
+            res.render('adocao', { all: buscaDados, logado: req.session.loggedin, alerta: '', admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx, id: req.session.Id });
         })
         .catch(error => {
-            if (error) throw error;
+            console.error("Erro:", error);
+            throw error;
         });
-        
     },
+    
+    
+    
 
     listagem_desaparecidos: function (req, res) {
         const { estado, cidade, especie, sexo } = req.query;
@@ -667,8 +676,25 @@ module.exports = {
         } else {
             res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome });
         }
-    }
+    },
+
+    favoritar: function(req, res){
+        const animalId = req.params.id;
+        const userId = req.session.Id;
+        modelanimais.adicionarFavorito(userId, animalId);
+        const previousPage = req.get('Referer');
+        res.redirect(previousPage);
+        
+    },
     
+    desfavoritar: function(req, res){
+        const animalId = req.params.id;
+        const userId = req.session.Id;
+        modelanimais.removerFavorito(userId, animalId);
+        const previousPage = req.get('Referer');
+        res.redirect(previousPage);
+        
+    },
     
     
 

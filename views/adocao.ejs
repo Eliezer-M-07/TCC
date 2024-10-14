@@ -18,9 +18,33 @@
                 <h6>Estado</h6>
                 <select name="estado" id="estado" class="form-select" style="width: 85%;">
                     <option value="">Todos</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="SC">Santa Catarina</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
                     <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
                 </select>
                 <br>
                 <h6>Cidade</h6>
@@ -57,7 +81,21 @@
                 <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0;" >ADOÇÃO</div>
                   <img style="height: 280px;" src="/animais/<%= dados.foto %>" alt="...">
                   <div class="card-body">
-                    <h5 class="card-title"><%= dados.nome %></h5>
+                    <h5 class="card-title"><%= dados.nome %>
+                      <% if (logado == true && dados.fk_ani != id) { %>
+                        <% if (dados.favoritado) { %>
+                            <a title="Desfavoritar" id="fav" href="/removerFavorito/<%= dados.id %>" style="float: right; color: inherit;">
+                                <i style="vertical-align:bottom; color: red;" class="material-icons">favorite</i>
+                            </a>
+                        <% } else { %>
+                            <a title="Favoritar" id="fav" href="/favoritar/<%= dados.id %>" style="float: right; color: inherit;">
+                                <i style="vertical-align:bottom;" class="material-icons">favorite_border</i>
+                            </a>
+                        <% } %>
+                    <% } %>
+                    
+                    </h5>
+                    
                     <hr>
                     <strong>Estado:</strong> <%= dados.estado %>
                     <br>

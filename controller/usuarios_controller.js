@@ -334,6 +334,35 @@ module.exports = {
         }
 
     },
+
+    favoritos: function (req, res) {
+        if (req.session.loggedin) {
+            if (req.session.admin == false){
+                
+                Promise.all([
+                    modelusuario.busca(req.session.Id),
+                    modelusuario.buscaFav(req.session.Id),
+                    modelusuario.buscaNotificacoes(req.session.Id),
+                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                ])
+                .then(results => {
+                    const Usuario = results[0];
+                    const favoritos = results[1];
+                    const notificacoes = results[2];
+                    const notificacoesEx = results[3];
+                    res.render('favoritos', { dadosUsuario: Usuario, animaisFav: favoritos, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                })
+                .catch(error => {
+                    if (error) throw error;
+                });
+            }else{
+                res.redirect('/gerenciamento');
+            }
+        } else {
+            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin });
+            return;
+        }
+    },
     
 }
 

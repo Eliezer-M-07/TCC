@@ -305,4 +305,18 @@ module.exports = {
     },
 
 
+    adicionarFavorito: (userId, animalId) => {
+        const sql = 'INSERT INTO favoritos (fk_usuario, fk_animal) VALUES (?, ?)';
+        con.query(sql, [userId, animalId], (err, result) => {
+            if (err) throw err;
+        });
+    },
+
+    removerFavorito: (userId, animalId, callback) => {
+        const sql = 'DELETE FROM favoritos WHERE fk_usuario = ? AND fk_animal = ?';
+        con.query(sql, [userId, animalId], (err, result) => {
+            if (err) throw err;
+        });
+    }
+
 }

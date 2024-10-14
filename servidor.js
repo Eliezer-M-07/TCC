@@ -193,6 +193,7 @@ app.get('/editar_perfil', usuarioController.editar);
 app.post('/editar', usuarioController.alterar);
 app.get('/deletar/:id', usuarioController.deletar)
 app.post('/cadastrar', usuarioController.cadastrar);
+app.get('/perfil/favoritos', usuarioController.favoritos);
 app.get('/marcarlidas', usuarioController.marcarLidas);
 
 app.get('/gerenciamento', usuarioController.all)
@@ -214,3 +215,6 @@ app.get('/desaparecidos', animaisController.listagem_desaparecidos);
 app.get('/encontrados', animaisController.listagem_encontrados);
 app.get('/animal/:id',animaisController.dados)
 app.get('/dowloadcartaz/:id', animaisController.gerarCartaz);
+
+app.get('/favoritar/:id', animaisController.favoritar);
+app.get('/removerFavorito/:id', animaisController.desfavoritar);

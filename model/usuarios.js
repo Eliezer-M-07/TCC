@@ -133,7 +133,45 @@ excluirNotificacoes2: function(usuario_id){
             resolve(result);
         });
     });
-
 },
    
+buscafav: function(usuario_id){
+    return new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM favoritos WHERE ";
+        con.query(sql, [usuario_id], function (err, result) {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+},
+
+buscaFavoritos: function (userId) {
+    return new Promise((resolve, reject) => {
+        const sql = "SELECT fk_animal FROM favoritos WHERE fk_usuario = ?";
+        
+        con.query(sql, [userId], (err, rows) => {
+            if (err) return reject(err);
+            
+            const favoriteIds = rows.map(row => row.fk_animal); 
+            resolve(favoriteIds);
+        });
+    });
+},
+
+buscaFav: function (userId) {
+    return new Promise((resolve, reject) => {
+        
+        const sql = "SELECT a.* FROM animais a JOIN favoritos f ON a.id = f.fk_animal WHERE f.fk_usuario = ?";
+
+        con.query(sql, [userId], (err, rows) => {
+            if (err) return reject(err);
+            
+            
+            resolve(rows);
+        });
+    });
+},
+
+
+
 }
