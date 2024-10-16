@@ -83,7 +83,7 @@
                   <div class="card-body">
                     <h5 class="card-title"><%= dados.nome %>
                       <% if (logado == true && dados.fk_ani != id) { %>
-                        <% if (dados.favoritado) { %>
+                        <% if (dados.favoritado == true) { %>
                             <a title="Desfavoritar" id="fav" href="/removerFavorito/<%= dados.id %>" style="float: right; color: inherit;">
                                 <i style="vertical-align:bottom; color: red;" class="material-icons">favorite</i>
                             </a>

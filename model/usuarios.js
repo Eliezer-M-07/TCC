@@ -135,16 +135,6 @@ excluirNotificacoes2: function(usuario_id){
     });
 },
    
-buscafav: function(usuario_id){
-    return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM favoritos WHERE ";
-        con.query(sql, [usuario_id], function (err, result) {
-            if (err) return reject(err);
-            resolve(result);
-        });
-    });
-},
-
 buscaFavoritos: function (userId) {
     return new Promise((resolve, reject) => {
         const sql = "SELECT fk_animal FROM favoritos WHERE fk_usuario = ?";
