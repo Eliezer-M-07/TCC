@@ -24,7 +24,7 @@
                           <h4 class="ml-2">Cadastre-se</h4>
                       </div>
                       <br>
-                      <form method="post" action="/cadastrar" enctype="multipart/form-data">
+                      <form id="Formu" method="post" action="/cadastrar" enctype="multipart/form-data">
                           <div class="mb-3">
                             <label for="name" class="form-label"><h6>Nome</h6></label>
                             <input maxlength="40" name="nome" required type="text" class="form-control" id="name" aria-describedby="nameHelp">
@@ -37,8 +37,9 @@
                           </div>
                           <div class="mb-3">
                             <label for="password" class="form-label"><h6>Senha</h6></label>
-                            <input name="senha" required type="password" class="form-control" id="password">
+                            <input minlength="8" name="senha" required type="password" class="form-control" id="password">
                             <div id="passwordHelp" class="form-text">Informe sua senha.</div>
+                            <div id="passwordError" class="form-text text-danger" style="display:none;"><strong>A senha deve conter pelo menos 8 caracteres.</strong> </div>
                           </div>
                           <div class="mb-3">
                             <label for="telefone" class="form-label"><h6>Telefone</h6></label>
@@ -73,5 +74,18 @@
         var x = e.target.value.replace(/\D/g, '');
         e.target.value = x;
     });
+
+    document.getElementById("Formu").addEventListener("submit", function(event) {
+    const passwordInput = document.getElementById("password");
+    const passwordError = document.getElementById("passwordError");
+    
+   
+    if (passwordInput.value.length < 8) {
+      event.preventDefault(); 
+      passwordError.style.display = 'block';
+    } else {
+      passwordError.style.display = 'none'; 
+    }
+  });
     </script>
 </html>

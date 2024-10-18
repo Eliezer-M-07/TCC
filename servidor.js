@@ -53,7 +53,7 @@ app.get('/login', function(req, res){
             ]).then(results => {
                 const notificacoes = results[0];
                 const notificacoesEx = results[1];
-                res.render('home', {alerta:'Faça logout para realizar o login.', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                res.render('home', {alerta:'Faça logout para realizar o login.', nome: req.session.nome, logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
                 return;
             })
             .catch(error => {
@@ -193,7 +193,7 @@ app.get('/editar_perfil', usuarioController.editar);
 app.post('/editar', usuarioController.alterar);
 app.get('/deletar/:id', usuarioController.deletar)
 app.post('/cadastrar', usuarioController.cadastrar);
-app.get('/perfil/favoritos', usuarioController.favoritos);
+app.get('/favoritos', usuarioController.favoritos);
 app.get('/marcarlidas', usuarioController.marcarLidas);
 
 app.get('/gerenciamento', usuarioController.all)

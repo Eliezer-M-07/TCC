@@ -21,7 +21,10 @@
                     <div>
                         <div>
                             <img src="/images/logo.png" width="230px" style="float: right;">  
-                            <img class="rounded" id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            <div>
+                              <div style="width: 250px; background-color: black; color: white; text-align: center; border-radius: 15px 15px 0 0; box-shadow: 0 0 2px black;">ADOÇÃO</div>
+                              <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            </div>
                             <div style="float: right;">
                                 </div>
                                 <div style="width: 23%; height: 10%;">
@@ -93,7 +96,16 @@
                     <div>
                         <div>
                             <img src="/images/logo.png" width="230px" style="float: right;">  
-                            <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            <div>
+                              <div style="width: 250px; background-color: black; color: white; text-align: center; border-radius: 15px 15px 0 0; box-shadow: 0 0 2px black;">
+                                <% if (dados.sexo == 'Macho') { %>
+                                  DESAPARECIDO
+                                <% } else { %>
+                                  DESAPARECIDA
+                                <% } %>
+                              </div>
+                              <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            </div>
                             <div style="float: right;">
                                 </div>
                                 <div style="width: 23%; height: 10%;">
@@ -164,7 +176,7 @@
                           </div>
                         </article>
                         <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 100%;">
-                          <h5><i class="material-icons">location_on</i> Localização</h5>
+                          <h5><i class="material-icons">location_on</i> Local de Desaparecimento</h5>
                           <hr>
                           <div id="map" style="height: 300px; width: 100%;"></div>
                         </article>
@@ -175,7 +187,16 @@
                     <div>
                         <div>
                             <img src="/images/logo.png" width="230px" style="float: right;">
-                            <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            <div>
+                              <div  style="width: 250px; background-color: black; color: white; text-align: center; border-radius: 15px 15px 0 0; box-shadow: 0 0 2px black;">
+                                <% if (dados.sexo == 'Macho') { %>
+                                  ENCONTRADO
+                                <% } else { %>
+                                  ENCONTRADA
+                                <% } %>
+                              </div>
+                              <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            </div>
                             <div style="float: right;">
                             </div>
                             <div style="width: 23%; height: 10%;">
@@ -243,7 +264,7 @@
                         </div>
                       </article>
                       <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 100%;">
-                        <h5><i class="material-icons">location_on</i> Localização</h5>
+                        <h5><i class="material-icons">location_on</i> Localização Onde Foi Encontrado</h5>
                         <hr>
                         <div id="map" style="height: 300px; width: 100%;"></div>
                       </article>

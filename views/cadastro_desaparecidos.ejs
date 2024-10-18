@@ -106,7 +106,7 @@
                           </div>
                           <div class="mb-3">
                             <label for="cep" class="form-label"><h6>CEP</h6></label>
-                            <input name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" maxlength="9">
+                            <input name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" maxlength="8">
                             <div id="cepHelp" class="form-text">Informe o CEP da localização.</div>
                           </div>
                           <div class="mb-3">
@@ -126,7 +126,7 @@
                           </div>
                           <div class="mb-3">
                             <label for="textarea" class="form-label"><h6>Características</h6></label>
-                            <textarea name="caracteristicas" maxlength="255" class="form-control" id="textarea" rows="2"></textarea>
+                            <textarea required name="caracteristicas" maxlength="255" class="form-control" id="textarea" rows="2"></textarea>
                             <div id="caracteristicasHelp" class="form-text">Fale as características do animal.</div>
                           </div>
                           <div class="mb-3">
@@ -145,6 +145,10 @@
 
       <%- include("layout/footer"); %>
       <script>
+        document.getElementById('cep').addEventListener('input', function (e) {
+        var x = e.target.value.replace(/\D/g, '');
+        e.target.value = x;
+         });
         
         const especieSelect = document.getElementById('especie');
         const racaSelect = document.getElementById('raca');
@@ -300,23 +304,34 @@
         });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
         const cepInput = document.getElementById('cep');
         const ruaInput = document.getElementById('rua');
         const bairroInput = document.getElementById('bairro');
 
-        cepInput.addEventListener('blur', function() {
+        cepInput.addEventListener('blur', function () {
           const cep = cepInput.value.replace(/\D/g, ''); 
+
           if (cep.length === 8) {
             fetch(`https://viacep.com.br/ws/${cep}/json/`)
-              .then(response => response.json())
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`Erro ao buscar o CEP: ${response.status}`);
+                }
+                return response.json();
+              })
               .then(data => {
                 if (!data.erro) {
-                  ruaInput.value = `${data.logradouro}`;
-                  bairroInput.value = `${data.bairro}`;
-                } 
+                  ruaInput.value = data.logradouro || "Rua não disponível";
+                  bairroInput.value = data.bairro || "Bairro não disponível";
+                } else {
+                  alert('Endereço não encontrado para este CEP.');
+                }
               })
-              .catch(error => console.error('Erro ao buscar endereço:', error));
+              .catch(error => {
+                console.error('Erro na requisição:', error);
+                alert(`Erro ao buscar endereço: ${error.message}`);
+              });
           }
         });
       });

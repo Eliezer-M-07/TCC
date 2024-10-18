@@ -154,6 +154,15 @@ module.exports = {
         var id = req.params.id;
         if (req.session.loggedin) {
 
+            Promise.all([
+                modelusuario.buscaNotificacoes(req.session.Id),
+                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+            ])
+            .then(results => {
+                const notificacoes = results[0];
+                const notificacoesEx = results[1];
+            })
+
             if (req.params.id == req.session.Id) {
                
 

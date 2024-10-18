@@ -307,8 +307,13 @@ module.exports = {
                     const result = results[0];
                     const notificacoes = results[1];
                     const notificacoesEx = results[2];
-                
-                    res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+
+                    if (result[0]['fk_ani'] === req.session.Id) {
+                        res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    }else{
+                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    }
+                    
                 }).catch(err => {
                     if (err) throw err;
                 });
