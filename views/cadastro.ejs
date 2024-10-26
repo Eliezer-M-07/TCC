@@ -39,7 +39,7 @@
                             <label for="password" class="form-label"><h6>Senha</h6></label>
                             <input minlength="8" name="senha" required type="password" class="form-control" id="password">
                             <div id="passwordHelp" class="form-text">Informe sua senha.</div>
-                            <div id="passwordError" class="form-text text-danger" style="display:none;"><strong>A senha deve conter pelo menos 8 caracteres.</strong> </div>
+                            <div id="passwordError" class="form-text text-danger" style="display:none;"><strong>A senha deve conter pelo menos 8 caracteres.</strong></div>
                           </div>
                           <div class="mb-3">
                             <label for="telefone" class="form-label"><h6>Telefone</h6></label>
@@ -80,12 +80,12 @@
     const passwordError = document.getElementById("passwordError");
     
    
-    if (passwordInput.value.length < 8) {
-      event.preventDefault(); 
-      passwordError.style.display = 'block';
-    } else {
-      passwordError.style.display = 'none'; 
-    }
-  });
+      if (passwordInput.value.length < 8) {
+        event.preventDefault(); 
+        passwordError.style.display = 'block';
+      } else {
+        passwordError.style.display = 'none'; 
+      }
+   });
     </script>
 </html>

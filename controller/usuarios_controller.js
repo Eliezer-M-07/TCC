@@ -153,16 +153,6 @@ module.exports = {
     deletar: function (req, res) {
         var id = req.params.id;
         if (req.session.loggedin) {
-
-            Promise.all([
-                modelusuario.buscaNotificacoes(req.session.Id),
-                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
-            ])
-            .then(results => {
-                const notificacoes = results[0];
-                const notificacoesEx = results[1];
-            })
-
             if (req.params.id == req.session.Id) {
                
 
@@ -215,11 +205,19 @@ module.exports = {
 
 
             }else{
-                res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome })
+                Promise.all([
+                    modelusuario.buscaNotificacoes(req.session.Id),
+                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                ])
+                .then(results => {
+                    const notificacoes = results[0];
+                    const notificacoesEx = results[1];
+                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx })
+                });
             }
 
         } else {
-            res.render('login', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin })
+            res.render('login', { alerta: 'Faça login para deletar.', logado: req.session.loggedin, admin: req.session.admin })
         }
     },
 
@@ -239,7 +237,7 @@ module.exports = {
                 if (error) throw error;
             });
         } else {
-            res.render('login', { alerta: 'É precisa fazer login para editar.', logado: req.session.loggedin, admin: req.session.admin })
+            res.render('login', { alerta: 'É preciso fazer login para editar.', logado: req.session.loggedin, admin: req.session.admin })
         }
 
     },
@@ -328,7 +326,7 @@ module.exports = {
             }
 
         }else{
-            res.render('login', { alerta: 'faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin }) 
+            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin }) 
         }
     },
 

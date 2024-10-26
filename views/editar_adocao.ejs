@@ -76,8 +76,7 @@
                                     <label for="peso" class="form-label">
                                         <h6>Peso</h6>
                                     </label>
-                                    <input value="<%= dados.peso %>" name="peso" required type="number"
-                                        class="form-control" step="0.01" min="0" id="peso" aria-describedby="pesoHelp">
+                                    <input value="<%= dados.peso %>" name="peso" required type="number" class="form-control" step="0.001" min="0.100" max="150" id="peso" aria-describedby="pesoHelp">
                                     <div id="pesoHelp" class="form-text">Informe o peso do animal.</div>
                                 </div>
                                 <div class="mb-3">
@@ -311,8 +310,6 @@
                 if (estadoSelecionado) {
                     carregarCidades(estadoSelecionado);
                 }
-                
-
         </script>
                 
         

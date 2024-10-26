@@ -106,8 +106,9 @@
                           </div>
                           <div class="mb-3">
                             <label for="cep" class="form-label"><h6>CEP</h6></label>
-                            <input name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" maxlength="8">
+                            <input name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" minlength="8" maxlength="8">
                             <div id="cepHelp" class="form-text">Informe o CEP da localização.</div>
+                            <div id="cepError" class="form-text" style="color: red; display: none;">O CEP deve ter 8 dígitos.</div>
                           </div>
                           <div class="mb-3">
                             <label for="bairro" class="form-label"><h6>Bairro</h6></label>
@@ -306,11 +307,16 @@
 
         document.addEventListener('DOMContentLoaded', function () {
         const cepInput = document.getElementById('cep');
-        const ruaInput = document.getElementById('rua');
-        const bairroInput = document.getElementById('bairro');
+        const cepError = document.getElementById('cepError');
 
         cepInput.addEventListener('blur', function () {
           const cep = cepInput.value.replace(/\D/g, ''); 
+
+          if (cep.length !== 8) {
+            cepError.style.display = 'block';
+          } else {
+            cepError.style.display = 'none';
+          }
 
           if (cep.length === 8) {
             fetch(`https://viacep.com.br/ws/${cep}/json/`)

@@ -308,7 +308,7 @@ module.exports = {
                     const notificacoes = results[1];
                     const notificacoesEx = results[2];
 
-                    if (result[0]['fk_ani'] === req.session.Id) {
+                    if (result.length > 0 && result[0]['fk_ani'] === req.session.Id) {
                         res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
                     }else{
                         res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
@@ -339,8 +339,12 @@ module.exports = {
                     const result = results[0];
                     const notificacoes = results[1];
                     const notificacoesEx = results[2];
-                    res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
 
+                    if (result.length > 0 && result[0]['fk_ani'] === req.session.Id) {
+                        res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    }else{
+                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    }
                 }).catch(err => {
                     if (err) throw err;
                 });
@@ -366,8 +370,12 @@ module.exports = {
                     const result = results[0];
                     const notificacoes = results[1];
                     const notificacoesEx = results[2];
-                    res.render('editar_encontrado', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
 
+                    if (result.length > 0 && result[0]['fk_ani'] === req.session.Id) {
+                        res.render('editar_encontrado', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    }else{
+                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    }
                 }).catch(err => {
                     if (err) throw err;
                 });
@@ -607,7 +615,7 @@ module.exports = {
     
                     const doc = new pdf({ size: 'A4' });
                     const arquivo = `public/cartaz${randomNum}.pdf`;
-                    const caminhoArquivo = path.join(__dirname, '../', arquivo); // Caminho absoluto do arquivo
+                    const caminhoArquivo = path.join(__dirname, '../', arquivo); 
                     const stream = fs.createWriteStream(caminhoArquivo);
     
                     doc.pipe(stream);
