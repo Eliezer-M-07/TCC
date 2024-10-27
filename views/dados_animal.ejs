@@ -17,7 +17,7 @@
                 return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
             } %>
             <%informacoes.forEach(function(dados) { %>
-                <% if (dados.status == 'adocao') { %>
+                <% if (dados.tipo == 'adocao') { %>
                     <div>
                         <div>
                             <img src="/images/logo.png" width="230px" style="float: right;">  
@@ -92,7 +92,7 @@
                         </article>
                       </div>
                       
-                <% } else if (dados.status == 'desaparecido') { %>
+                <% } else if (dados.tipo == 'desaparecido') { %>
                     <div>
                         <div>
                             <img src="/images/logo.png" width="230px" style="float: right;">  
@@ -183,7 +183,7 @@
                       </div>
                       
                       
-                <% } else if (dados.status == 'encontrado') { %>
+                <% } else if (dados.tipo == 'encontrado') { %>
                     <div>
                         <div>
                             <img src="/images/logo.png" width="230px" style="float: right;">

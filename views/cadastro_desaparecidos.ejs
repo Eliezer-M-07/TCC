@@ -108,8 +108,8 @@
                             <label for="cep" class="form-label"><h6>CEP</h6></label>
                             <input name="cep" required type="text" class="form-control" id="cep" aria-describedby="cepHelp" minlength="8" maxlength="8">
                             <div id="cepHelp" class="form-text">Informe o CEP da localização.</div>
-                            <div id="cepError" class="form-text" style="color: red; display: none;">O CEP deve ter 8 dígitos.</div>
-                          </div>
+                            <div id="cepError" class="form-text text-danger" style="display: none;">O CEP deve ter 8 caracteres.</div> <!-- Novo elemento -->
+                          </div>                          
                           <div class="mb-3">
                             <label for="bairro" class="form-label"><h6>Bairro</h6></label>
                             <input name="bairro" required type="text" class="form-control" id="bairro" aria-describedby="bairroHelp" readonly>
@@ -305,42 +305,55 @@
         });
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
-        const cepInput = document.getElementById('cep');
-        const cepError = document.getElementById('cepError');
-
-        cepInput.addEventListener('blur', function () {
-          const cep = cepInput.value.replace(/\D/g, ''); 
-
-          if (cep.length !== 8) {
-            cepError.style.display = 'block';
-          } else {
-            cepError.style.display = 'none';
-          }
-
-          if (cep.length === 8) {
-            fetch(`https://viacep.com.br/ws/${cep}/json/`)
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error(`Erro ao buscar o CEP: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then(data => {
-                if (!data.erro) {
-                  ruaInput.value = data.logradouro || "Rua não disponível";
-                  bairroInput.value = data.bairro || "Bairro não disponível";
-                } else {
-                  alert('Endereço não encontrado para este CEP.');
-                }
-              })
-              .catch(error => {
-                console.error('Erro na requisição:', error);
-                alert(`Erro ao buscar endereço: ${error.message}`);
-              });
-          }
+        document.getElementById('cep').addEventListener('input', function (e) {
+          var x = e.target.value.replace(/\D/g, '');
+          e.target.value = x;
         });
-      });
+        document.addEventListener('DOMContentLoaded', function() {
+            const cepInput = document.getElementById('cep');
+            const ruaInput = document.getElementById('rua');
+            const bairroInput = document.getElementById('bairro');
+            const cepError = document.getElementById('cepError');
+            const form = document.querySelector('form');
+
+            cepInput.addEventListener('blur', function() {
+                const cep = cepInput.value.replace(/\D/g, '');
+                cepError.style.display = 'none'; 
+
+                if (cep.length < 8) {
+                    cepError.style.display = 'block'; 
+                } else {
+                    
+                    ruaInput.value = '';
+                    bairroInput.value = '';
+
+                    
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                ruaInput.value = data.logradouro; 
+                                bairroInput.value = data.bairro;   
+                            } else {
+                                alert("CEP não encontrado.")
+                            }
+                        })
+                        .catch(error => console.error('Erro ao buscar endereço:', error));
+                }
+            });
+
+            form.addEventListener('submit', function(event) {
+                const cep = cepInput.value.replace(/\D/g, '');
+                if (cep.length < 8) {
+                    cepError.style.display = 'block'; 
+                    event.preventDefault(); 
+                } else {
+                    cepError.style.display = 'none'; 
+                }
+            });
+        });
+
+
 
       function calcularDataMinima() {
         let dataAtual = new Date();

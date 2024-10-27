@@ -7,7 +7,7 @@ module.exports = {
 
     buscaTodosAdocao: function (filters) {
         return new Promise((resolve, reject) => {
-            let sql = "SELECT * FROM animais WHERE status = 'adocao'";
+            let sql = "SELECT * FROM tb_animal WHERE tipo = 'adocao'";
             let queryParams = [];
 
             if (filters.estado) {
@@ -40,7 +40,7 @@ module.exports = {
     
     buscaTodosDesaparecidos: function (filters) {
         return new Promise((resolve, reject) => {
-            let sql = "SELECT * FROM animais WHERE status = 'desaparecido'";
+            let sql = "SELECT * FROM tb_animal WHERE tipo = 'desaparecido'";
             let queryParams = [];
 
             if (filters.estado) {
@@ -72,7 +72,7 @@ module.exports = {
 
     buscaTodosEncontrados: function (filters) {
         return new Promise((resolve, reject) => {
-            let sql = "SELECT * FROM animais WHERE status = 'encontrado'";
+            let sql = "SELECT * FROM tb_animal WHERE tipo = 'encontrado'";
             let queryParams = [];
 
             if (filters.estado) {
@@ -104,7 +104,7 @@ module.exports = {
 
 
     async todos() {
-        var sql = "SELECT * FROM animais";
+        var sql = "SELECT * FROM tb_animal";
         return new Promise((resolve, reject) => {
             con.query(sql, (err, row) => {
                 if (err) return reject(err);
@@ -114,7 +114,7 @@ module.exports = {
     },
 
     async busca(id) {
-        var sql = "SELECT * FROM animais where id = ?";
+        var sql = "SELECT * FROM tb_animal where id = ?";
         return new Promise((resolve, reject) => {
             con.query(sql, id, (err, row) => {
                 if (err) return reject(err);
@@ -124,7 +124,7 @@ module.exports = {
     },
 
     async busca2(id) {
-        var sql = "SELECT * FROM animais where fk_ani = ?";
+        var sql = "SELECT * FROM tb_animal where fk_usuario = ?";
         return new Promise((resolve, reject) => {
             con.query(sql, id, (err, row) => {
                 if (err) return reject(err);
@@ -134,7 +134,7 @@ module.exports = {
     },
 
     async buscaDados(id) {
-        var sql = "SELECT animais.*, usuarios.nome AS anunciante_nome, usuarios.email AS anunciante_email, usuarios.telefone AS anunciante_tel FROM animais JOIN usuarios ON animais.fk_ani = usuarios.id WHERE animais.id = ?";
+        var sql = "SELECT tb_animal.*, tb_usuario.nome AS anunciante_nome, tb_usuario.email AS anunciante_email, tb_usuario.telefone AS anunciante_tel FROM tb_animal JOIN tb_usuario ON tb_animal.fk_usuario = tb_usuario.id WHERE tb_animal.id = ?";
         return new Promise((resolve, reject) => {
             con.query(sql, id, (err, row) => {
                 if (err) return reject(err);
@@ -147,7 +147,7 @@ module.exports = {
 
     buscaAdocao: function (userId) {
         return new Promise((resolve, reject) => {
-            const sql = "SELECT * FROM animais WHERE fk_ani = ? AND status = 'adocao'";
+            const sql = "SELECT * FROM tb_animal WHERE fk_usuario = ? AND tipo = 'adocao'";
             con.query(sql, [userId], (err, rows) => {
                 if (err) return reject(err);
                 resolve(rows);
@@ -156,7 +156,7 @@ module.exports = {
     },
     buscaDesaparecidos: function (userId) {
         return new Promise((resolve, reject) => {
-            const sql = "SELECT * FROM animais WHERE fk_ani = ? AND status = 'desaparecido'";
+            const sql = "SELECT * FROM tb_animal WHERE fk_usuario = ? AND tipo = 'desaparecido'";
             con.query(sql, [userId], (err, rows) => {
                 if (err) return reject(err);
                 resolve(rows);
@@ -165,7 +165,7 @@ module.exports = {
     },
     buscaEncontrados: function (userId) {
         return new Promise((resolve, reject) => {
-            const sql = "SELECT * FROM animais WHERE fk_ani = ? AND status = 'encontrado'";
+            const sql = "SELECT * FROM tb_animal WHERE fk_usuario = ? AND tipo = 'encontrado'";
             con.query(sql, [userId], (err, rows) => {
                 if (err) return reject(err);
                 resolve(rows);
@@ -174,9 +174,9 @@ module.exports = {
     },
 
 
-    inserir_adocao(fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, aprovado) {
-        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var values = [fk_ani, status, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, aprovado];
+    inserir_adocao(fk_usuario, tipo, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, status) {
+        var sql = "INSERT INTO tb_animal (fk_usuario, tipo, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_usuario, tipo, estado, cidade, nome, especie, raca, sexo, porte, peso, caracteristicas, foto, status];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -184,18 +184,18 @@ module.exports = {
     },
 
 
-    inserir_desaparecido(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado) {
-        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, aprovado];
+    inserir_desaparecido(fk_usuario, tipo, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, status) {
+        var sql = "INSERT INTO tb_animal (fk_usuario, tipo, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_usuario, tipo, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, data, caracteristicas, foto, status];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;
         });
     },
 
-    inserir_encontrado(fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, aprovado) {
-        var sql = "INSERT INTO animais (fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, aprovado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var values = [fk_ani, status, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, aprovado];
+    inserir_encontrado(fk_usuario, tipo, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, status) {
+        var sql = "INSERT INTO tb_animal (fk_usuario, tipo, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var values = [fk_usuario, tipo, estado, cidade, bairro, rua, nome, especie, raca, sexo, porte, caracteristicas, foto, status];
     
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -206,7 +206,7 @@ module.exports = {
 
 
     updateAdocao(nome, especie, raca, sexo, porte, peso, estado, cidade, personalidade, foto, id) {
-        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, estado = ?, cidade = ?, caracteristicas = ?, foto = ? WHERE id = ?";
+        var sql = "UPDATE tb_animal SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, estado = ?, cidade = ?, caracteristicas = ?, foto = ? WHERE id = ?";
         var values = [[nome], [especie], [raca], [sexo], [porte], [peso], [estado], [cidade], [personalidade], [foto], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -215,7 +215,7 @@ module.exports = {
 
 
     updateAdocaoSemFoto(nome, especie, raca, sexo, porte, peso, estado, cidade,  personalidade, id) {
-        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, estado = ?, cidade = ?, caracteristicas = ? WHERE id = ?";
+        var sql = "UPDATE tb_animal SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, peso = ?, estado = ?, cidade = ?, caracteristicas = ? WHERE id = ?";
         var values = [[nome], [especie], [raca], [sexo], [porte], [peso], [estado], [cidade], [personalidade], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -223,7 +223,7 @@ module.exports = {
     },
 
     updateDesaparecido(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, data, caracteristicas, foto, id) {
-        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, data = ?, caracteristicas = ?, foto = ? WHERE id = ?";
+        var sql = "UPDATE tb_animal SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, data = ?, caracteristicas = ?, foto = ? WHERE id = ?";
         var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [data], [caracteristicas], [foto], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -231,7 +231,7 @@ module.exports = {
     },
 
     updateDesaparecidoSemFoto(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, data, caracteristicas, id) {
-        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, data = ?, caracteristicas = ? WHERE id = ?";
+        var sql = "UPDATE tb_animal SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, data = ?, caracteristicas = ? WHERE id = ?";
         var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [data], [caracteristicas], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -239,7 +239,7 @@ module.exports = {
     },
 
     updateEncontrado(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, foto, id) {
-        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, foto = ? WHERE id = ?";
+        var sql = "UPDATE tb_animal SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, foto = ? WHERE id = ?";
         var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [foto], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -247,7 +247,7 @@ module.exports = {
     },
 
     updateEncontradoSemFoto(nome, especie, raca, sexo, porte, estado, cidade, bairro, rua, id) {
-        var sql = "UPDATE animais SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ? WHERE id = ?";
+        var sql = "UPDATE tb_animal SET nome = ?, especie = ?, raca = ?, sexo = ?, porte = ?, estado = ?, cidade = ?, bairro = ?, rua = ? WHERE id = ?";
         var values = [[nome], [especie], [raca], [sexo], [porte], [estado], [cidade], [bairro], [rua], [id]];
         con.query(sql, values, function (err, result) {
             if (err) throw err;
@@ -256,38 +256,14 @@ module.exports = {
 
 
     deletar(id) {
-        var sql = "DELETE FROM animais WHERE id = ?";
+        var sql = "DELETE FROM tb_animal WHERE id = ?";
         con.query(sql, id, function (err, result) {
             if (err) throw err;
         });
     },
 
-    deletarComUser(id){
-        var sql = "SELECT foto FROM animais WHERE fk_ani = ?"
-
-        con.query(sql, id, (err, result) => {
-
-            if (err) throw(err);
-
-            result.forEach(animal => {
-                const imgPath = path.join(__dirname, '../public/animais/', animal.foto);
-                fs.unlink(imgPath, (err) => {
-                   if (err) throw err;
-                });
-            });
-
-            var sql2 = "DELETE FROM animais WHERE fk_ani = ?";
-
-            con.query(sql2, id, function (err, result) {
-                if (err) throw err;
-            });
-
-        })
-    },
-
-
     async aprovar(id) {
-        var sql = "UPDATE animais SET aprovado = ? WHERE id = ?";
+        var sql = "UPDATE tb_animal SET status = ? WHERE id = ?";
         var values = ['Aprovado', id];
 
         con.query(sql, values, function (err, result) {
@@ -296,7 +272,7 @@ module.exports = {
     },
 
     async recusar(id) {
-        var sql = "UPDATE animais SET aprovado = ? WHERE id = ?";
+        var sql = "UPDATE tb_animal SET status = ? WHERE id = ?";
         var values = ['Recusado', id];
 
         con.query(sql, values, function (err, result) {
@@ -306,15 +282,22 @@ module.exports = {
 
 
     adicionarFavorito: (userId, animalId) => {
-        const sql = 'INSERT INTO favoritos (fk_usuario, fk_animal) VALUES (?, ?)';
+        const sql = 'INSERT INTO tb_favorito (fk_usuario, fk_animal) VALUES (?, ?)';
         con.query(sql, [userId, animalId], (err, result) => {
             if (err) throw err;
         });
     },
 
-    removerFavorito: (userId, animalId, callback) => {
-        const sql = 'DELETE FROM favoritos WHERE fk_usuario = ? AND fk_animal = ?';
+    removerFavorito: (userId, animalId) => {
+        const sql = 'DELETE FROM tb_favorito WHERE fk_usuario = ? AND fk_animal = ?';
         con.query(sql, [userId, animalId], (err, result) => {
+            if (err) throw err;
+        });
+    },
+
+    removerTodosFavorito: (userId) => {
+        const sql = 'DELETE FROM tb_favorito WHERE fk_usuario = ?';
+        con.query(sql, [userId], (err, result) => {
             if (err) throw err;
         });
     }

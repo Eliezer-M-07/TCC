@@ -18,20 +18,19 @@ module.exports = {
         Promise.all([
             modelanimais.buscaTodosAdocao({ estado, cidade, especie, sexo }),
             modelusuario.buscaNotificacoes(req.session.Id),
-            modelusuario.buscaNotificacoesExcluidas(req.session.Id),
             modelusuario.buscaFavoritos(req.session.Id) 
         ]).then(results => {
             
             const buscaDados = results[0];
             const notificacoes = results[1];
-            const notificacoesEx = results[2];
-            const favoritos = results[3] || []; 
+            const favoritos = results[2] || []; 
     
             buscaDados.forEach(animal => {
                 animal.favoritado = favoritos.includes(animal.id);
             });
-    
-            res.render('adocao', { all: buscaDados, logado: req.session.loggedin, alerta: '', admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx, id: req.session.Id });
+            
+            
+            res.render('adocao', { all: buscaDados, logado: req.session.loggedin, alerta: '', admin: req.session.admin, Notificacoes: notificacoes, id: req.session.Id });
         })
         .catch(error => {
             console.error("Erro:", error);
@@ -48,14 +47,13 @@ module.exports = {
         Promise.all([
             modelanimais.buscaTodosDesaparecidos({ estado, cidade, especie, sexo }),
             modelusuario.buscaNotificacoes(req.session.Id),
-            modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+            
 
         ]).then(results => {
             const buscaDados = results[0];
             const notificacoes = results[1];
-            const notificacoesEx = results[2];
             
-            res.render('desaparecidos', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+            res.render('desaparecidos', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes});
         })
         .catch(error => {
             if (error) throw error;
@@ -69,15 +67,14 @@ module.exports = {
         Promise.all([
             modelanimais.buscaTodosEncontrados({ estado, cidade, especie, sexo }),
             modelusuario.buscaNotificacoes(req.session.Id),
-            modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+            
 
 
         ]).then(results => {
             const buscaDados = results[0];
             const notificacoes = results[1];
-            const notificacoesEx = results[2];
 
-            res.render('encontrados', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+            res.render('encontrados', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes});
 
         })
         .catch(error => {
@@ -94,14 +91,14 @@ module.exports = {
                 Promise.all([
                     modelanimais.buscaDados(id),
                     modelusuario.buscaNotificacoes(req.session.Id),
-                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                    
 
                 ]).then(results => {
                     const result = results[0];
                     const notificacoes = results[1];
-                    const notificacoesEx = results[2];
+    
 
-                    res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx})
+                    res.render('dados_animal', {informacoes: result, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes})
                 })
                 .catch(err => {
                     if (err) throw err;
@@ -243,7 +240,7 @@ module.exports = {
             modelanimais.busca(id).then(result => {
                 const animal = result[0];
 
-                if (animal.fk_ani === req.session.Id) {
+                if (animal.fk_usuario === req.session.Id) {
                     const img = path.join(__dirname, '../public/animais/', animal.foto);
                     fs.unlink(img, (err) => {
                         if (err) console.error(err);
@@ -301,17 +298,17 @@ module.exports = {
                 Promise.all([
                     modelanimais.buscaDados(id),
                     modelusuario.buscaNotificacoes(req.session.Id),
-                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
-        
+                    
+
                 ]).then(results => {
                     const result = results[0];
                     const notificacoes = results[1];
-                    const notificacoesEx = results[2];
+    
 
-                    if (result.length > 0 && result[0]['fk_ani'] === req.session.Id) {
-                        res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    if (result.length > 0 && result[0]['fk_usuario'] === req.session.Id) {
+                        res.render('editar_adocao', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes});
                     }else{
-                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes});
                     }
                     
                 }).catch(err => {
@@ -333,17 +330,17 @@ module.exports = {
                 Promise.all([
                     modelanimais.buscaDados(id),
                     modelusuario.buscaNotificacoes(req.session.Id),
-                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                    
         
                 ]).then(results => {
                     const result = results[0];
                     const notificacoes = results[1];
-                    const notificacoesEx = results[2];
+    
 
-                    if (result.length > 0 && result[0]['fk_ani'] === req.session.Id) {
-                        res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    if (result.length > 0 && result[0]['fk_usuario'] === req.session.Id) {
+                        res.render('editar_desaparecido', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes});
                     }else{
-                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes});
                     }
                 }).catch(err => {
                     if (err) throw err;
@@ -364,17 +361,17 @@ module.exports = {
                 Promise.all([
                     modelanimais.buscaDados(id),
                     modelusuario.buscaNotificacoes(req.session.Id),
-                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                    
         
                 ]).then(results => {
                     const result = results[0];
                     const notificacoes = results[1];
-                    const notificacoesEx = results[2];
+    
 
-                    if (result.length > 0 && result[0]['fk_ani'] === req.session.Id) {
-                        res.render('editar_encontrado', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    if (result.length > 0 && result[0]['fk_usuario'] === req.session.Id) {
+                        res.render('editar_encontrado', { dadosAnimal: result, alerta: '', logado: req.session.loggedin , admin: req.session.admin, Notificacoes: notificacoes});
                     }else{
-                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                        res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin , admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes});
                     }
                 }).catch(err => {
                     if (err) throw err;
@@ -590,7 +587,7 @@ module.exports = {
             var id = req.params.id;
             var id_usuario = req.query.id_usuario;
 
-            modelusuario.notificacao(id_usuario, id,  'Recusado', 'Seu animal foi recusado.');
+            modelusuario.notificacao(id_usuario, id,  'Recusado', 'Seu animal não foi aceito na plataforma.');
             modelanimais.recusar(id);
 
             res.redirect('/gerenciamento')

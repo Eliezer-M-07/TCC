@@ -22,13 +22,11 @@ app.get('/', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
             Promise.all([
-                modelusuario.buscaNotificacoes(req.session.Id),
-                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                modelusuario.buscaNotificacoes(req.session.Id)
             ]).then(results => {
                 const notificacoes = results[0];
-                const notificacoesEx = results[1];
-            
-                res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin, nome: req.session.nome,  Notificacoes: notificacoes, NotificacoesEx: notificacoesEx})
+                
+                res.render('home', {alerta: '', logado:req.session.loggedin, admin: req.session.admin, nome: req.session.nome,  Notificacoes: notificacoes})
                 return;
             })
             .catch(error => {
@@ -48,12 +46,11 @@ app.get('/login', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
             Promise.all([
-                modelusuario.buscaNotificacoes(req.session.Id),
-                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                modelusuario.buscaNotificacoes(req.session.Id)
             ]).then(results => {
                 const notificacoes = results[0];
-                const notificacoesEx = results[1];
-                res.render('home', {alerta:'Faça logout para realizar o login.', nome: req.session.nome, logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                
+                res.render('home', {alerta:'Faça logout para realizar o login.', nome: req.session.nome, logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes});
                 return;
             })
             .catch(error => {
@@ -74,12 +71,11 @@ app.get('/cadastro', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
             Promise.all([
-                modelusuario.buscaNotificacoes(req.session.Id),
-                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                modelusuario.buscaNotificacoes(req.session.Id)
             ]).then(results => {
                 const notificacoes = results[0];
-                const notificacoesEx = results[1];
-                res.render('home', {alerta:'Faça logout para realizar o cadastro.', nome:req.session.nome, logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                
+                res.render('home', {alerta:'Faça logout para realizar o cadastro.', nome:req.session.nome, logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes});
                 return;
             })
             .catch(error => {
@@ -100,12 +96,11 @@ app.get('/cadastrar_adocao', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
             Promise.all([
-                modelusuario.buscaNotificacoes(req.session.Id),
-                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                modelusuario.buscaNotificacoes(req.session.Id)
             ]).then(results => {
                 const notificacoes = results[0];
-                const notificacoesEx = results[1];
-                res.render('cadastro_adocao', {alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx})
+                
+                res.render('cadastro_adocao', {alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes})
                 return;
             })
             .catch(error => {
@@ -125,12 +120,11 @@ app.get('/cadastrar_desaparecido', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
             Promise.all([
-                modelusuario.buscaNotificacoes(req.session.Id),
-                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                modelusuario.buscaNotificacoes(req.session.Id)
             ]).then(results => {
                 const notificacoes = results[0];
-                const notificacoesEx = results[1];
-                res.render('cadastro_desaparecidos',{alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx})
+                
+                res.render('cadastro_desaparecidos',{alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes})
                 return;
             })
             .catch(error => {
@@ -151,12 +145,11 @@ app.get('/cadastrar_encontrado', function(req, res){
     if (req.session.loggedin) {
         if(req.session.admin == false){
             Promise.all([
-                modelusuario.buscaNotificacoes(req.session.Id),
-                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                modelusuario.buscaNotificacoes(req.session.Id)
             ]).then(results => {
                 const notificacoes = results[0];
-                const notificacoesEx = results[1];
-                res.render('cadastro_encontrado',{alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx})
+                
+                res.render('cadastro_encontrado',{alerta:'', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes})
                 return;
             })
             .catch(error => {

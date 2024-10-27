@@ -73,7 +73,7 @@
     </article>
     <article id="art5">
       <br>
-      <% let aprovados = all.filter(dados => dados.aprovado === 'Aprovado'); %>
+      <% let aprovados = all.filter(dados => dados.status === 'Aprovado'); %>
       <% if (aprovados.length > 0) { %>
         <div id="d5">
           <% aprovados.forEach(function(dados) { %>
@@ -82,10 +82,10 @@
                   <img style="height: 280px;" src="/animais/<%= dados.foto %>" alt="...">
                   <div class="card-body">
                     <h5 class="card-title"><%= dados.nome %>
-                      <% if (logado == true && dados.fk_ani != id) { %>
+                      <% if (logado == true && dados.fk_usuario != id) { %>
                         <% if (dados.favoritado == true) { %>
                             <a title="Desfavoritar" id="fav" href="/removerFavorito/<%= dados.id %>" style="float: right; color: inherit;">
-                                <i style="vertical-align:bottom; color: red;" class="material-icons">favorite</i>
+                                <i style="vertical-align:bottom; color: rgb(249, 34, 34);" class="material-icons">favorite</i>
                             </a>
                         <% } else { %>
                             <a title="Favoritar" id="fav" href="/favoritar/<%= dados.id %>" style="float: right; color: inherit;">
@@ -93,9 +93,7 @@
                             </a>
                         <% } %>
                     <% } %>
-                    
                     </h5>
-                    
                     <hr>
                     <strong>Estado:</strong> <%= dados.estado %>
                     <br>

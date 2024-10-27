@@ -32,15 +32,14 @@ module.exports = {
                 Promise.all([
                     modelusuario.busca(req.session.Id),
                     buscaDados,
-                    modelusuario.buscaNotificacoes(req.session.Id),
-                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                    modelusuario.buscaNotificacoes(req.session.Id)
                 ])
                 .then(results => {
                     const Usuario = results[0];
                     const Adocao = results[1];
                     const notificacoes = results[2];
-                    const notificacoesEx = results[3];
-                    res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    
+                    res.render('perfil', { dadosUsuario: Usuario, dadosAdocao: Adocao, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes});
                 })
                 .catch(error => {
                     if (error) throw error;
@@ -58,8 +57,8 @@ module.exports = {
     logar: function (req, res) {
         var senha = req.body['senha'];
         var email = req.body['email'];
-        var sql = "SELECT * FROM usuarios WHERE email = ?";
-        var sql2 = "SELECT * FROM admin WHERE email = ?";
+        var sql = "SELECT * FROM tb_usuario WHERE email = ?";
+        var sql2 = "SELECT * FROM tb_admin WHERE email = ?";
     
         con.query(sql, [email], function (err, result) {
             if (err) throw err;
@@ -114,7 +113,7 @@ module.exports = {
         form.parse(req, (err, fields, files) => {
             if (err) throw err;
     
-            var sql = "SELECT * FROM usuarios where email = ?";
+            var sql = "SELECT * FROM tb_usuario where email = ?";
     
             con.query(sql, fields['email'][0], function (err, result) {
                 if (err) throw err;
@@ -153,43 +152,26 @@ module.exports = {
     deletar: function (req, res) {
         var id = req.params.id;
         if (req.session.loggedin) {
-            if (req.params.id == req.session.Id) {
-               
+            if (id == req.session.Id) {
 
-                modelusuario.buscaNotificacoes(id).then(result =>{
-                    if(result.length > 0){
-                        modelusuario.excluirNotificacoes2(id);
-                    }
-                });
-
-                modelanimal.deletarComUser(id);
-                
                 modelusuario.busca(id)
                     .then(result => {
                         var img = path.join(__dirname, '../public/usuarios/', result[0]['pfp']);
                         fs.unlink(img, (err) => { });
+                        
                     })
                     .catch(err =>
                         console.error(err)
                     );
-
                 
                 modelusuario.deletar(id);
 
                 req.session.destroy(function (err) {
                 })
                 res.redirect('/');
-
+                
             }else if(req.session.admin == true){
                 
-                modelusuario.buscaNotificacoes(id).then(result => {
-                    if(result.length > 0){
-                        modelusuario.excluirNotificacoes2(id);
-                    }
-                });
-
-                modelanimal.deletarComUser(id);
-
                 modelusuario.busca(id)
                     .then(result => {
                         var img = path.join(__dirname, '../public/usuarios/', result[0]['pfp']);
@@ -198,7 +180,6 @@ module.exports = {
                     .catch(err =>
                         console.error(err)
                     );
-
                 modelusuario.deletar(id);
 
                 res.redirect('/gerenciamento?tipo=usuarios');
@@ -207,12 +188,10 @@ module.exports = {
             }else{
                 Promise.all([
                     modelusuario.buscaNotificacoes(req.session.Id),
-                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
                 ])
                 .then(results => {
                     const notificacoes = results[0];
-                    const notificacoesEx = results[1];
-                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx })
+                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes })
                 });
             }
 
@@ -226,12 +205,11 @@ module.exports = {
             Promise.all([
                 modelusuario.busca(req.session.Id),
                 modelusuario.buscaNotificacoes(req.session.Id),
-                modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+
             ]).then(results => {
                 const result = results[0];
                 const notificacoes = results[1];
-                const notificacoesEx = results[2];
-                res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                res.render('editar_perfil', { dadosUsuario: result, alerta: '', logado: req.session.loggedin, admin: req.session.admin, Notificacoes: notificacoes});
             })
             .catch(error => {
                 if (error) throw error;
@@ -312,13 +290,10 @@ module.exports = {
 
             }else{
                 Promise.all([
-                    modelusuario.buscaNotificacoes(req.session.Id),
-                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
-        
+                    modelusuario.buscaNotificacoes(req.session.Id)
                 ]).then(results => {
                     const notificacoes = results[0];
-                    const notificacoesEx = results[1];
-                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes, NotificacoesEx: notificacoesEx })
+                    res.render('home', { alerta: 'Esta ação não é possivel.', logado: req.session.loggedin, admin: req.session.admin, nome: req.session.nome, Notificacoes: notificacoes })
                 })
                 .catch(error => {
                     if (error) throw error;
@@ -349,15 +324,15 @@ module.exports = {
                 Promise.all([
                     modelusuario.busca(req.session.Id),
                     modelusuario.buscaFav(req.session.Id),
-                    modelusuario.buscaNotificacoes(req.session.Id),
-                    modelusuario.buscaNotificacoesExcluidas(req.session.Id)
+                    modelusuario.buscaNotificacoes(req.session.Id)
+    
                 ])
                 .then(results => {
                     const Usuario = results[0];
                     const favoritos = results[1];
                     const notificacoes = results[2];
-                    const notificacoesEx = results[3];
-                    res.render('favoritos', { dadosUsuario: Usuario, animaisFav: favoritos, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes, NotificacoesEx: notificacoesEx});
+                    
+                    res.render('favoritos', { dadosUsuario: Usuario, animaisFav: favoritos, alerta: '', logado: req.session.loggedin, admin: req.session.admin , Notificacoes: notificacoes});
                 })
                 .catch(error => {
                     if (error) throw error;

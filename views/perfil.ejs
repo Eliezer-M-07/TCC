@@ -100,12 +100,12 @@
                   <div class="row" style="gap: 30px;">
                     <% dadosAdocao.forEach(function(dados, index) { %>
                       <div id="cardPerfil" class="card">
-                        <% if (dados.aprovado == 'Pendente') { %>
-                          <div style="margin-top: 10px;"  class="btn btn-warning"><strong>Status:</strong> <%= dados.aprovado %></div>
-                        <% } else if (dados.aprovado == 'Aprovado') { %>
-                          <div style="margin-top: 10px;" class="btn btn-success"><strong>Status:</strong> <%= dados.aprovado %></div>
-                        <% } else if (dados.aprovado == 'Recusado') { %>
-                          <div style="margin-top: 10px;" class="btn btn-danger" ><strong>Status:</strong> <%= dados.aprovado %></div>
+                        <% if (dados.status == 'Pendente') { %>
+                          <div style="margin-top: 10px;"  class="btn btn-warning"><strong>Status:</strong> <%= dados.status %></div>
+                        <% } else if (dados.status == 'Aprovado') { %>
+                          <div style="margin-top: 10px;" class="btn btn-success"><strong>Status:</strong> <%= dados.status %></div>
+                        <% } else if (dados.status == 'Recusado') { %>
+                          <div style="margin-top: 10px;" class="btn btn-danger" ><strong>Status:</strong> <%= dados.status %></div>
                         <% } %>
 
                         <img class="rounded" style="width: 235px; height: 235px; margin-top: 5%;  border: solid 1px black; " src="/animais/<%= dados.foto %>" class="card-img-top" alt="...">
@@ -113,23 +113,23 @@
                           <h5 class="card-title"><%= dados.nome %></h5>
                           <hr>
                           <div style="display: flex; justify-content: flex-start; align-items: flex-end; gap: 30px;">
-                            <% if (dados.status == 'adocao') { %>
-                              <% if (dados.aprovado != 'Recusado') { %>
+                            <% if (dados.tipo == 'adocao') { %>
+                              <% if (dados.status != 'Recusado') { %>
                                 <a style="width:7em; color: white;" href="/editar_adocao/<%= dados.id %>" class="btn btn-dark">Editar</a>
                                 <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
                               <% } else { %>
                                 <a href="/deletar_animal/<%= dados.id %>" style="width:100%; color: white;" class="btn btn-dark">Excluir</a>
                               <% }%>
-                            <% } else if (dados.status == 'desaparecido') { %>
-                              <% if (dados.aprovado != 'Recusado') { %>
+                            <% } else if (dados.tipo == 'desaparecido') { %>
+                              <% if (dados.status != 'Recusado') { %>
                                 <a style="width:7em; color: white;" href="/editar_desaparecido/<%= dados.id %>" class="btn btn-dark">Editar</a>
                                 <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
                                 
                               <% } else { %>
                                 <a href="/deletar_animal/<%= dados.id %>" style="width:100%; color: white;" class="btn btn-dark">Excluir</a>
                               <% }%>
-                            <% } else if (dados.status == 'encontrado') { %>
-                              <% if (dados.aprovado != 'Recusado') { %>
+                            <% } else if (dados.tipo == 'encontrado') { %>
+                              <% if (dados.status != 'Recusado') { %>
                                 <a style="width:7em; color: white;" href="/editar_encontrado/<%= dados.id%>" class="btn btn-dark">Editar</a>
                                 <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
                               <% } else { %>
@@ -137,7 +137,7 @@
                               <% }%>
                             <% } %>
                           </div>
-                          <% if (dados.status == 'desaparecido' && dados.aprovado != 'Recusado') { %>
+                          <% if (dados.tipo == 'desaparecido' && dados.status != 'Recusado') { %>
                             <br>
                             <a href="/dowloadcartaz/<%= dados.id %>">
                               <button id="download-button"  class="btn btn-light" style="width: 100%; border: outset 1px black;">

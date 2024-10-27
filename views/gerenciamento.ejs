@@ -35,7 +35,7 @@
         <hr>
         <% if (tipo == "validacao") { %>
             <h4>Validação</h4>
-            <% if (dados.length > 0 && dados.some(dado => dado.aprovado == "Pendente")) { %>
+            <% if (dados.length > 0 && dados.some(dado => dado.status == "Pendente")) { %>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -50,11 +50,11 @@
                         </thead>
                         <tbody>
                             <% dados.forEach(function(dados) { %>
-                                <% if (dados.aprovado == "Pendente") { %>
+                                <% if (dados.status == "Pendente") { %>
                                     <tr>
                                         <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
                                         <td><%= dados.nome %></td>
-                                        <td><%= dados.aprovado %></td>
+                                        <td><%= dados.status %></td>
                                         <td><button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#aprovarModal">Aprovar</button></td>
                                         <td><button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#recusarModal">Recusar</button></td>
                                         <td><a href="/animal/<%= dados.id %>" class="btn btn-dark w-100">Detalhar</a></td>
@@ -69,7 +69,7 @@
                                                     Ao aprovar, o animal se tornará visível na plataforma.
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="/aprovar/<%= dados.id %>?id_usuario=<%= dados.fk_ani %>" class="btn btn-dark">Sim</a>
+                                                    <a href="/aprovar/<%= dados.id %>?id_usuario=<%= dados.fk_usuario %>" class="btn btn-dark">Sim</a>
                                                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
                                                 </div>
                                                 </div>
@@ -86,7 +86,7 @@
                                                     Ao recusar, o animal não ficará visível na plataforma.
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="/recusar/<%= dados.id %>?id_usuario=<%= dados.fk_ani %>" class="btn btn-dark">Sim</a>
+                                                    <a href="/recusar/<%= dados.id %>?id_usuario=<%= dados.fk_usuario %>" class="btn btn-dark">Sim</a>
                                                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
                                                 </div>
                                                 </div>
@@ -152,7 +152,7 @@
             <% } %>
         <% } else { %>
             <h4>Animais</h4>
-    <% if (dados.length > 0 && dados.some(dado => dado.aprovado == "Aprovado")) { %>
+    <% if (dados.length > 0 && dados.some(dado => dado.status == "Aprovado")) { %>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -166,10 +166,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                <% dados.filter(dado => dado.aprovado === "Aprovado").forEach(function(dados, index) { %> 
+                <% dados.filter(dado => dado.status === "Aprovado").forEach(function(dados, index) { %> 
                         <tr>
                             <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
-                            <td><%= dados.status %></td>
+                            <td><%= dados.tipo %></td>
                             <td><%= dados.nome %></td>
                             <td><%= dados.caracteristicas %></td>
                             <td><a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" class="btn btn-dark w-100">Excluir</a></td>
@@ -187,7 +187,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-                                        <a href="/deletar_animal/<%= dados.id %>?id_usuario=<%= dados.fk_ani %>"><button type="button" class="btn btn-dark">Excluir</button></a>
+                                        <a href="/deletar_animal/<%= dados.id %>?id_usuario=<%= dados.fk_usuario %>"><button type="button" class="btn btn-dark">Excluir</button></a>
                                     </div>
                                 </div>
                             </div>
