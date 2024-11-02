@@ -11,6 +11,7 @@
     <br>
     <article id="art4">
         <div class="container" >
+          <img src="/images/desaparecidos.jpg" width="340px">
           <form action="/desaparecidos" method="GET" style="margin-left: 20px;">
               <br>
               <h4>Filtros</h4>
@@ -76,9 +77,10 @@
     </article>
     <article id="art5">
         <br>
-        <% if (all.length > 0) { %>
+        <% let aprovados = all.filter(dados => dados.status === 'Aprovado'); %>
+        <% if (aprovados.length > 0) { %>
             <div id="d5">
-                <%all.forEach(function(dados) { %>
+                <%aprovados.forEach(function(dados) { %>
                     <div id="cardListagem" class="card">
                         <% if (dados.sexo == "Macho") { %>
                           <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0; " >PERDIDO</div>

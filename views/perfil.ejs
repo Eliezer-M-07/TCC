@@ -97,7 +97,7 @@
               </div>
                 <hr style="width: 95%;">
                 <% if (dadosAdocao.length > 0) { %>
-                  <div class="row" style="gap: 30px;">
+                  <div id="listPerf" class="row">
                     <% dadosAdocao.forEach(function(dados, index) { %>
                       <div id="cardPerfil" class="card">
                         <% if (dados.status == 'Pendente') { %>
