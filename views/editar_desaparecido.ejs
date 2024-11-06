@@ -374,6 +374,11 @@
                 } else {
                     cepError.style.display = 'none'; 
                 }
+
+                if (!ruaInput.value || !bairroInput.value) {
+                  alert("Por favor, informe o endereço completo preenchendo o CEP corretamente para obter Rua e Bairro.");
+                  event.preventDefault(); 
+                }
             });
         });
       

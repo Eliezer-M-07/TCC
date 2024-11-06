@@ -62,7 +62,7 @@ app.get('/login', function(req, res){
         }
     }
     else{
-        res.render('login', {alerta:"", logado: req.session.loggedin, admin: req.session.admin})
+        res.render('login', {alerta:"", logado: req.session.loggedin, admin: req.session.admin, email: ""})
         return;
     }
 });
@@ -112,7 +112,7 @@ app.get('/cadastrar_adocao', function(req, res){
         }
     }
     else{
-        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
+        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin, email: ""});
         return;
     }
 })
@@ -136,7 +136,7 @@ app.get('/cadastrar_desaparecido', function(req, res){
         }
     }
     else{
-        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
+        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin, email: ""});
         return;
     }
 });
@@ -161,7 +161,7 @@ app.get('/cadastrar_encontrado', function(req, res){
         }
     }
     else{
-        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin});
+        res.render('login', {alerta:'Faça login para cadastrar algum animal.', logado: req.session.loggedin, admin: req.session.admin, email: ""});
         return;
     }
 });

@@ -14,9 +14,12 @@
         <div class="container">
             <div class="container">
                 <% if (alerta) { %>
-                    <div class="alert alert-dark" role="alert"><%= alerta %></div>
+                    <div class="alert alert-dark alert-dismissible fade show" role="alert" >
+                        <%= alerta %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 <%} else { %>
-        
+
                 <% } %>
                 <div class="card" style="border-radius: 10px;">
                     <div class="container">
@@ -29,7 +32,11 @@
                         <form method="post" action="/login">
                             <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label"><h6>E-mail</h6></label>
-                            <input name="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <% if (email != "") { %>
+                                <input value="<%= email %>" name="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <% } else { %>
+                                <input name="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <% } %>
                             <div id="emailHelp" class="form-text">Informe seu e-mail.</div>
                             </div>
                             <div class="mb-3">

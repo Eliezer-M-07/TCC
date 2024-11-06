@@ -91,6 +91,17 @@
                         <div class="card-body">
                             <h5 class="card-title">
                             <%= dados.nome %>
+                            <% if (logado == true && dados.fk_usuario != id) { %>
+                              <% if (dados.favoritado == true) { %>
+                                  <a title="Desfavoritar" id="fav" href="/removerFavorito/<%= dados.id %>" style="float: right; color: inherit;">
+                                      <i style="vertical-align:bottom; color: rgb(249, 34, 34);" class="material-icons">favorite</i>
+                                  </a>
+                              <% } else { %>
+                                  <a title="Favoritar" id="fav" href="/favoritar/<%= dados.id %>" style="float: right; color: inherit;">
+                                      <i style="vertical-align:bottom;" class="material-icons">favorite_border</i>
+                                  </a>
+                              <% } %>
+                          <% } %>
                             </h5>
                             <hr>
                             <strong>Estado:</strong> <%= dados.estado %>

@@ -47,13 +47,19 @@ module.exports = {
         Promise.all([
             modelanimais.buscaTodosDesaparecidos({ estado, cidade, especie, sexo }),
             modelusuario.buscaNotificacoes(req.session.Id),
-            
+            modelusuario.buscaFavoritos(req.session.Id)
 
         ]).then(results => {
             const buscaDados = results[0];
             const notificacoes = results[1];
+            const favoritos = results[2] || [];
+
+            buscaDados.forEach(animal => {
+                animal.favoritado = favoritos.includes(animal.id);
+            });
             
-            res.render('desaparecidos', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes});
+            
+            res.render('desaparecidos', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes, id: req.session.Id});
         })
         .catch(error => {
             if (error) throw error;
@@ -67,14 +73,19 @@ module.exports = {
         Promise.all([
             modelanimais.buscaTodosEncontrados({ estado, cidade, especie, sexo }),
             modelusuario.buscaNotificacoes(req.session.Id),
-            
+            modelusuario.buscaFavoritos(req.session.Id)
 
 
         ]).then(results => {
             const buscaDados = results[0];
             const notificacoes = results[1];
+            const favoritos = results[2] || [];
 
-            res.render('encontrados', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes});
+            buscaDados.forEach(animal => {
+                animal.favoritado = favoritos.includes(animal.id);
+            });
+
+            res.render('encontrados', { all: buscaDados, logado: req.session.loggedin, alerta: '' , admin: req.session.admin, Notificacoes: notificacoes, id: req.session.Id});
 
         })
         .catch(error => {

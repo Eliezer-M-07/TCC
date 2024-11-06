@@ -48,7 +48,7 @@ module.exports = {
                 res.redirect('/gerenciamento');
             }
         } else {
-            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin });
+            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin, email: "" });
             return;
         }
     },
@@ -75,7 +75,7 @@ module.exports = {
                         res.redirect('/')
 
                     } else {
-                        res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
+                        res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin, email: email });
                     }
                 });
             } else {
@@ -93,12 +93,12 @@ module.exports = {
                                 res.redirect('/gerenciamento');
                             
                             } else {
-                                res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin });
+                                res.render('login', { alerta: "Senha inválida", logado: req.session.loggedin, admin: req.session.admin, email: email});
                             }
                         
                         });
                     } else {
-                        res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin, admin: req.session.admin });
+                        res.render('login', { alerta: "E-mail não cadastrado ou foi digitado incorretamente.", logado: req.session.loggedin, admin: req.session.admin , email: email});
                     }
                 });
             }
@@ -140,7 +140,7 @@ module.exports = {
                             bcrypt.hash(senha, saltRounds, function (err, hash) {
                                 if (err) throw err;
                                 modelusuario.inserir(fields['nome'][0], fields['email'][0], hash, 55 + fields['telefone'][0], nomeimg);
-                                res.render('login', { alerta: 'Usuário cadastrado com sucesso, faça login.', logado: req.session.loggedin, admin: req.session.admin });
+                                res.render('login', { alerta: 'Usuário cadastrado com sucesso, faça login.', logado: req.session.loggedin, admin: req.session.admin, email: fields['email'][0] });
                             });
                         });
                 }
@@ -196,7 +196,7 @@ module.exports = {
             }
 
         } else {
-            res.render('login', { alerta: 'Faça login para deletar.', logado: req.session.loggedin, admin: req.session.admin })
+            res.render('login', { alerta: 'Faça login para deletar.', logado: req.session.loggedin, admin: req.session.admin, email: ""})
         }
     },
 
@@ -215,7 +215,7 @@ module.exports = {
                 if (error) throw error;
             });
         } else {
-            res.render('login', { alerta: 'É preciso fazer login para editar.', logado: req.session.loggedin, admin: req.session.admin })
+            res.render('login', { alerta: 'É preciso fazer login para editar.', logado: req.session.loggedin, admin: req.session.admin, email: ""})
         }
 
     },
@@ -224,7 +224,8 @@ module.exports = {
         var form = new formidable.IncomingForm();
 
         form.parse(req, (err, fields, files) => {
-            
+            const novoNome = fields['nome'][0];
+
             if (files.pfp) {
                 modelusuario.busca(req.session.Id)
                     .then(result => {
@@ -253,11 +254,12 @@ module.exports = {
             } else {
                 modelusuario.updateSempfp(fields['nome'][0], 55 + fields['telefone'][0], req.session.Id);
             }
+
+            req.session.nome = novoNome;
+            res.redirect('/perfil')
         });
 
-        res.redirect('/perfil')
         
-
     },
 
 
@@ -301,7 +303,7 @@ module.exports = {
             }
 
         }else{
-            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin }) 
+            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin, email: ""}) 
         }
     },
 
@@ -341,7 +343,7 @@ module.exports = {
                 res.redirect('/gerenciamento');
             }
         } else {
-            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin });
+            res.render('login', { alerta: 'Faça login para acessar a página.', logado: req.session.loggedin, admin: req.session.admin, email: "" });
             return;
         }
     },

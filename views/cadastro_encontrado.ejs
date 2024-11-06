@@ -13,7 +13,10 @@
       <div class="container">
           <div class="container">
             <% if (alerta) { %>
-              <div class="alert alert-dark" role="alert"><%= alerta %></div>
+              <div class="alert alert-dark alert-dismissible fade show" role="alert" >
+                <%= alerta %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <%} else { %>
             <% } %>
               <div class="card" style="border-radius: 10px;">
@@ -309,48 +312,58 @@
         });
         
         document.addEventListener('DOMContentLoaded', function() {
-            const cepInput = document.getElementById('cep');
-            const ruaInput = document.getElementById('rua');
-            const bairroInput = document.getElementById('bairro');
-            const cepError = document.getElementById('cepError');
-            const form = document.querySelector('form');
+        const cepInput = document.getElementById('cep');
+        const ruaInput = document.getElementById('rua');
+        const bairroInput = document.getElementById('bairro');
+        const cepError = document.getElementById('cepError');
+        const form = document.querySelector('form');
+        let cepEncontrado = true;  
 
-            cepInput.addEventListener('blur', function() {
-                const cep = cepInput.value.replace(/\D/g, '');
-                cepError.style.display = 'none'; 
+        cepInput.addEventListener('blur', function() {
+            const cep = cepInput.value.replace(/\D/g, '');
+            cepError.style.display = 'none';
+            cepEncontrado = true;  
 
-                if (cep.length < 8) {
-                    cepError.style.display = 'block'; 
-                } else {
-                    
-                    ruaInput.value = '';
-                    bairroInput.value = '';
+            if (cep.length < 8) {
+                cepError.textContent = 'O CEP deve ter 8 caracteres.';
+                cepError.style.display = 'block';
+                cepEncontrado = false;
+            } else {
+                ruaInput.value = '';
+                bairroInput.value = '';
 
-                    
-                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (!data.erro) {
-                                ruaInput.value = data.logradouro; 
-                                bairroInput.value = data.bairro;   
-                            } else {
-                                alert("CEP não encontrado.")
-                            }
-                        })
-                        .catch(error => console.error('Erro ao buscar endereço:', error));
-                }
-            });
-
-            form.addEventListener('submit', function(event) {
-                const cep = cepInput.value.replace(/\D/g, '');
-                if (cep.length < 8) {
-                    cepError.style.display = 'block'; 
-                    event.preventDefault(); 
-                } else {
-                    cepError.style.display = 'none'; 
-                }
-            });
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            ruaInput.value = data.logradouro;
+                            bairroInput.value = data.bairro;
+                        } else {
+                            cepError.textContent = 'CEP não encontrado.';
+                            cepError.style.display = 'block';
+                            cepEncontrado = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar endereço:', error);
+                        cepError.textContent = 'Erro ao buscar CEP. Tente novamente.';
+                        cepError.style.display = 'block';
+                        cepEncontrado = false;
+                    });
+            }
         });
+
+        form.addEventListener('submit', function(event) {
+            const cep = cepInput.value.replace(/\D/g, '');
+            if (cep.length < 8 || !cepEncontrado) {
+                cepError.style.display = 'block';
+                event.preventDefault();  
+                alert('Informe o CEP corretamente.')
+            } else {
+                cepError.style.display = 'none';
+            }
+        });
+    });
 
         const nameInput = document.getElementById('name');
         const noNameCheck = document.getElementById('noNameCheck');
