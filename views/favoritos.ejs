@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil</title>
+        <%- include('layout/head'); %>
+    </head>
+    <body>
+        <%- include('layout/menu'); %>
+        <div style=" flex-wrap: wrap; gap: 20px;">
+                <article id="art2">
+                  <% function formatarTelefone(numero) {
+                    let numeroLocal = numero.substring(2);
+                    let ddd = numeroLocal.substring(0, 2);
+                    let telefone = numeroLocal.substring(2);
+                    return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
+                  } %>
+                  <% if (dadosUsuario.length == 0) { %>
+                    <script>
+                        window.location.href = "/logout";
+                        alert('Conta não encontrada, pode ter sido excluida.')
+                    </script>
+                  <% } %>
+                <%dadosUsuario.forEach(function(dados) { %>
+                    
+                    
+                    <img id="pfp" class="rounded" src="/usuarios/<%= dados.pfp %>" width="280px" height="280px">
+                    <br>
+                    <br>
+                    <h5><a>Dados de usuário:</a></h5>
+                    <a><i class="material-icons">person</i>&nbsp;| <%= dados.nome %></a>
+                    <br>
+                    <a><i class="material-icons">mail</i>&nbsp;| <%= dados.email %></a>
+                    <br>
+                    <a><i class="material-icons">call</i>&nbsp;| <%= formatarTelefone(dados.telefone) %></a>
+                    <br>
+                    <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="/editar_perfil"><i class="material-icons">edit</i>&nbsp;| Editar Perfil</a>
+                    <br>
+                    <a data-bs-toggle="modal" data-bs-target="#modal" onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="#"><i class="material-icons">delete</i>&nbsp;| Deletar conta</a>
+                    <br>
+                    <br>
+                    <br>
+                    <h5><a>Cadastrar Animais:</a></h5>
+                    <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="cadastrar_adocao"><i class="material-icons">add_circle</i> Animais Para Adoção</a>
+                    <br>
+                    <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="cadastrar_desaparecido"><i class="material-icons">add_circle</i> Animais Desaparecidos</a>
+                    <br>
+                    <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="cadastrar_encontrado"><i class="material-icons">add_circle</i> Animais Encontrados</a>
+                    <br>
+                    <br>
+                    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Deletar conta</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Tem certeza que deseja deletar sua conta? esta ação é irreversível.
+                            </div>
+                            <div class="modal-footer">
+                              <a href="/deletar/<%= dados.id %>"><button  type="button" class="btn btn-dark" data-bs-dismiss="modal">Excluir</button></a>
+                            </div>
+                          </div>
+                    </div>
+                <% }) %>
+                  <br>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </article>
+            <article id="art3">
+              <% if (alerta) { %>
+                <br>
+                <div style="margin-right: 2%; font-size: 17px;" class="alert alert-info" role="alert"><%= alerta %></div>
+              <%} else { %>
+              <% } %>
+                <br>
+                <br>
+                <h3>Favoritos <i style="vertical-align:middle; margin-bottom: 2px;" class="material-icons">favorite</i></h3>
+                <br>
+                <hr style="width: 95%;">
+                <% if (animaisFav.length > 0) { %>
+                  <div class="row" style="gap: 30px;">
+                    <% animaisFav.forEach(function(dados, index) { %>
+                      <div id="cardFav" class="card">
+                        
+                        <img class="rounded" style="width: 235px; height: 235px; margin-top: 5%;  border: solid 1px black; " src="/animais/<%= dados.foto %>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title"><%= dados.nome %></h5>
+                          <hr>
+                          <div>
+                            <a href="/removerFavorito/<%= dados.id %>" style="border: outset 1px black; width: 100%;" class="btn btn-light"><i style="vertical-align:bottom;" class="material-icons">delete</i>Remover</a><br><br>
+                            <a href="/animal/<%= dados.id %>" style="border: outset 1px black; width: 100%;" class="btn btn-light"><i style="vertical-align:bottom;" class="material-icons">info</i> Detalhar</a>
+                          </div>
+                          <br>
+                        </div>
+                      </div>
+                      <br>
+                    <% }) %>
+                  </div>
+                <% } else { %>
+                  <br>
+                  <h5>Nenhum animal favorito</h5>
+                <% } %>
+                  <br>
+                </article>
+                </div>
+                
+        <%- include("layout/footer"); %>
+
+    </body>
+</html>

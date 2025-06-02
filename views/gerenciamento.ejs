@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar</title>
+    <%- include('layout/head'); %>
+</head>
+<body>
+    <%- include('layout/menu'); %>
+    <% function formatarTelefone(numero) {
+        let numeroLocal = numero.substring(2);
+        let ddd = numeroLocal.substring(0, 2);
+        let telefone = numeroLocal.substring(2);
+        return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
+      } %>
+    <div class="container my-4">
+        <div class="row mb-3">
+            <div class="col-12 col-md-4">
+                <a href="/gerenciamento" class="btn btn-light w-100" style="border: solid 1px darkgray;">
+                    <i class="material-icons">check_circle</i> Validação
+                </a>
+            </div>
+            <div class="col-12 col-md-4">
+                <a id="btn-usuarios" class="btn btn-light w-100" style="border: solid 1px darkgray;">
+                    <i class="material-icons">manage_accounts</i> Usuários
+                </a>
+            </div>
+            <div class="col-12 col-md-4">
+                <a id="btn-animais" class="btn btn-light w-100" style="border: solid 1px darkgray;">
+                    <i class="material-icons">pets</i> Animais
+                </a>
+            </div>
+        </div>
+        <hr>
+        <% if (tipo == "validacao") { %>
+            <h4>Validação</h4>
+            <% if (dados.length > 0 && dados.some(dado => dado.status == "Pendente")) { %>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                                <th scope="col"><i class="material-icons">badge</i> Nome</th>
+                                <th scope="col"><i class="material-icons">pending</i> Situação</th>
+                                <th scope="col"><i class="material-icons">check</i> Aprovar</th>
+                                <th scope="col"><i class="material-icons">close</i> Recusar</th>
+                                <th scope="col"><i class="material-icons">info</i> Detalhar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% dados.forEach(function(dados) { %>
+                                <% if (dados.status == "Pendente") { %>
+                                    <tr>
+                                        <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
+                                        <td><%= dados.nome %></td>
+                                        <td><%= dados.status %></td>
+                                        <td><button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#aprovarModal">Aprovar</button></td>
+                                        <td><button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#recusarModal">Recusar</button></td>
+                                        <td><a href="/animal/<%= dados.id %>" class="btn btn-dark w-100">Detalhar</a></td>
+                                        <div class="modal fade" id="aprovarModal" tabindex="-1" aria-labelledby="aprovarModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="aprovarModalLabel">Aprovar animal?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Ao aprovar, o animal se tornará visível na plataforma.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a style="width: 85px;" href="/aprovar/<%= dados.id %>?id_usuario=<%= dados.fk_usuario %>" class="btn btn-dark">Sim</a>
+                                                    <button style="width: 85px;" type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="recusarModal" tabindex="-1" aria-labelledby="recusarModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="recusarModalLabel">Recusar animal?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Ao recusar, o animal não ficará visível na plataforma.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a style="width: 85px;" href="/recusar/<%= dados.id %>?id_usuario=<%= dados.fk_usuario %>" class="btn btn-dark">Sim</a>
+                                                    <button style="width: 85px;" type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } else { %>
+                <br>
+                <h5>Nenhum animal pendente para aprovação.</h5>
+            <% } %>
+        <% } else if (tipo == "usuarios") { %>
+            <h4>Usuários</h4>
+            <% if (dados.length > 0) { %>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                                <th scope="col"><i class="material-icons">badge</i> Nome</th>
+                                <th scope="col"><i class="material-icons">mail</i> E-mail</th>
+                                <th scope="col"><i class="material-icons">call</i> Telefone</th>
+                                <th scope="col"><i class="material-icons">delete</i> Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% dados.forEach(function(dados, index) { %>
+                                <tr>
+                                    <td><img class="rounded img-fluid" src="/usuarios/<%= dados.pfp %>" style="max-width: 120px; border: solid 1px black;"></td>
+                                    <td><%= dados.nome %></td>
+                                    <td><%= dados.email %></td>
+                                    <td><%= formatarTelefone(dados.telefone) %></td>
+                                    <td><a data-bs-toggle="modal" data-bs-target="#excluirusuario<%= index %>" class="btn btn-dark w-100">Excluir</a></td>
+                                </tr>
+                                <div class="modal fade" id="excluirusuario<%= index %>" tabindex="-1" aria-labelledby="excluirusuarioLabel<%= index %>" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="excluirusuarioLabel<%= index %>">Excluir <%= dados.nome %> </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Tem certeza que deseja excluir?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                                            <a href="/deletar/<%= dados.id %>"><button type="button" class="btn btn-dark">Excluir</button></a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } else { %>
+                <br>
+                <h5>Nenhum usuário cadastrado.</h5>
+            <% } %>
+        <% } else { %>
+            <h4>Animais</h4>
+    <% if (dados.length > 0 && dados.some(dado => dado.status == "Aprovado")) { %>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"><i class="material-icons">photo</i> Foto</th>
+                        <th scope="col"><i class="material-icons">pets</i> Tipo</th>
+                        <th scope="col"><i class="material-icons">badge</i> Nome</th>
+                        <th scope="col"><i class="material-icons">description</i> Características</th>
+                        <th scope="col"><i class="material-icons">delete</i> Excluir</th>
+                        <th scope="col"><i class="material-icons">info</i> Detalhar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% dados.filter(dado => dado.status === "Aprovado").forEach(function(dados, index) { %> 
+                        <tr>
+                            <td><img class="rounded img-fluid" src="/animais/<%= dados.foto %>" style="max-width: 120px; border: solid 1px black;"></td>
+                            <td><%= dados.tipo %></td>
+                            <td><%= dados.nome %></td>
+                            <td><%= dados.caracteristicas %></td>
+                            <td><a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" class="btn btn-dark w-100">Excluir</a></td>
+                            <td><a href="/animal/<%= dados.id %>" class="btn btn-dark w-100">Detalhar</a></td>
+                        </tr>
+                        <div class="modal fade" id="excluiranimal<%= index %>" tabindex="-1" aria-labelledby="excluiranimalLabel<%= index %>" aria-hidden="true" style="color: black;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="excluiranimalLabel<%= index %>">Excluir <%= dados.nome %></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Tem certeza que deseja excluir?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                                        <a href="/deletar_animal/<%= dados.id %>?id_usuario=<%= dados.fk_usuario %>"><button type="button" class="btn btn-dark">Excluir</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <br>
+        <h5>Nenhum animal cadastrado.</h5>
+    <% } %>
+<% } %>
+    </div>
+    <script>
+        document.getElementById('btn-usuarios').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "/gerenciamento?tipo=usuarios";
+        });
+        
+        document.getElementById('btn-animais').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "/gerenciamento?tipo=animais";
+        });
+    </script>
+</body>
+</html>

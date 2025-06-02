@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil</title>
+        <%- include('layout/head'); %>
+    </head>
+    <body>
+        <%- include('layout/menu'); %>
+        <div style=" flex-wrap: wrap; gap: 20px;">
+                <article id="art2">
+                  <% function formatarTelefone(numero) {
+                    let numeroLocal = numero.substring(2);
+                    let ddd = numeroLocal.substring(0, 2);
+                    let telefone = numeroLocal.substring(2);
+                    return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
+                  } %>
+                  <% if (dadosUsuario.length == 0) { %>
+                    <script>
+                        window.location.href = "/logout";
+                        alert('Conta não encontrada, pode ter sido excluida.')
+                    </script>
+                  <% } %>
+                <%dadosUsuario.forEach(function(dados) { %>
+                    
+                    
+                    <img id="pfp" class="rounded" src="/usuarios/<%= dados.pfp %>" width="280px" height="280px">
+                    <br>
+                    <br>
+                    <h5><a>Dados de usuário:</a></h5>
+                    <a><i class="material-icons">person</i>&nbsp;| <%= dados.nome %></a>
+                    <br>
+                    <a><i class="material-icons">mail</i>&nbsp;| <%= dados.email %></a>
+                    <br>
+                    <a><i class="material-icons">call</i>&nbsp;| <%= formatarTelefone(dados.telefone) %></a>
+                    <br>
+                    <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="/editar_perfil"><i class="material-icons">edit</i>&nbsp;| Editar Perfil</a>
+                    <br>
+                    <a data-bs-toggle="modal" data-bs-target="#modal" onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="#"><i class="material-icons">delete</i>&nbsp;| Deletar conta</a>
+                    <br>
+                    <br>
+                    <br>
+                    <h5><a>Cadastrar Animais:</a></h5>
+                    <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="/cadastrar_adocao"><i class="material-icons">add_circle</i> Animais Para Adoção</a>
+                    <br>
+                    <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="/cadastrar_desaparecido"><i class="material-icons">add_circle</i> Animais Desaparecidos</a>
+                    <br>
+                    <a onmouseout="this.style.color='black';" onmouseover="this.style.color='dimgray';" href="/cadastrar_encontrado"><i class="material-icons">add_circle</i> Animais Encontrados</a>
+                    <br>
+                    <br>
+                    <a href="/favoritos" class="btn btn-light" style="width: 44%; border: outset 1px black;"><i style="vertical-align:bottom;" class="material-icons">favorite</i> Favoritos</a>
+                    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Deletar conta</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Tem certeza que deseja deletar sua conta? esta ação é irreversível.
+                            </div>
+                            <div class="modal-footer">
+                              <a href="/deletar/<%= dados.id %>"><button  type="button" class="btn btn-dark" data-bs-dismiss="modal">Excluir</button></a>
+                            </div>
+                          </div>
+                    </div>
+                <% }) %>
+                  <br>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </article>
+            <article id="art3">
+              <% if (alerta) { %>
+                <br>
+                <div style="margin-right: 2%; font-size: 17px;" class="alert alert-info" role="alert"><%= alerta %></div>
+              <%} else { %>
+              <% } %>
+                <br>
+                <br>
+                <h3>Animais Cadastrados</h3>
+                <br>
+                <h5>Filtros</h5>
+                <div id="d3">
+                  <a style="background-color: black; color: white;" href="/perfil" class="btn"><i class="material-icons">wysiwyg</i>&nbsp; Todos</a>
+                  <a style="background-color: black; color: white;" id="btn-adocao" href="#" class="btn"><i class="material-icons">pets</i>&nbsp; Adoção</a>
+                  <a style="background-color: black; color: white;" id="btn-desaparecidos" href="#" class="btn"><i class="material-icons">question_mark</i>&nbsp;Desaparecidos</a>
+                  <a style="background-color: black; color: white;" id="btn-encontrados" href="#" class="btn"><i class="material-icons">notification_important</i>&nbsp; Encontrados</a>
+              </div>
+                <hr style="width: 95%;">
+                <% if (dadosAdocao.length > 0) { %>
+                  <div id="listPerf" class="row">
+                    <% dadosAdocao.forEach(function(dados, index) { %>
+                      <div id="cardPerfil" class="card">
+                        <% if (dados.status == 'Pendente') { %>
+                          <div style="margin-top: 10px;"  class="btn btn-warning"><strong>Status:</strong> <%= dados.status %></div>
+                        <% } else if (dados.status == 'Aprovado') { %>
+                          <div style="margin-top: 10px;" class="btn btn-success"><strong>Status:</strong> <%= dados.status %></div>
+                        <% } else if (dados.status == 'Recusado') { %>
+                          <div style="margin-top: 10px;" class="btn btn-danger" ><strong>Status:</strong> <%= dados.status %></div>
+                        <% } %>
+
+                        <img class="rounded" style="width: 235px; height: 235px; margin-top: 5%;  border: solid 1px black; " src="/animais/<%= dados.foto %>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title"><%= dados.nome %></h5>
+                          <hr>
+                          <div style="display: flex; justify-content: flex-start; align-items: flex-end; gap: 30px;">
+                            <% if (dados.tipo == 'adocao') { %>
+                              <% if (dados.status != 'Recusado') { %>
+                                <a style="width:7em; color: white;" href="/editar_adocao/<%= dados.id %>" class="btn btn-dark">Editar</a>
+                                <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
+                              <% } else { %>
+                                <a href="/deletar_animal/<%= dados.id %>" style="width:100%; color: white;" class="btn btn-dark">Excluir</a>
+                              <% }%>
+                            <% } else if (dados.tipo == 'desaparecido') { %>
+                              <% if (dados.status != 'Recusado') { %>
+                                <a style="width:7em; color: white;" href="/editar_desaparecido/<%= dados.id %>" class="btn btn-dark">Editar</a>
+                                <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
+                                
+                              <% } else { %>
+                                <a href="/deletar_animal/<%= dados.id %>" style="width:100%; color: white;" class="btn btn-dark">Excluir</a>
+                              <% }%>
+                            <% } else if (dados.tipo == 'encontrado') { %>
+                              <% if (dados.status != 'Recusado') { %>
+                                <a style="width:7em; color: white;" href="/editar_encontrado/<%= dados.id%>" class="btn btn-dark">Editar</a>
+                                <a data-bs-toggle="modal" data-bs-target="#excluiranimal<%= index %>" style="width:7em; color: white;" class="btn btn-dark">Excluir</a>
+                              <% } else { %>
+                                <a href="/deletar_animal/<%= dados.id %>" style="width:100%; color: white;" class="btn btn-dark">Excluir</a>
+                              <% }%>
+                            <% } %>
+                          </div>
+                          <% if (dados.tipo == 'desaparecido' && dados.status != 'Recusado') { %>
+                            <br>
+                            <a href="/dowloadcartaz/<%= dados.id %>">
+                              <button id="download-button"  class="btn btn-light" style="width: 100%; border: outset 1px black;">
+                                  <span id="button-icon"><i style="vertical-align:bottom;" class="material-icons">download</i></span>
+                                  <span id="button-text" style="display: none; opacity: 0;">Baixar Cartaz</span>
+                              </button>
+                          </a>
+                          <% } %>
+                          <div class="modal fade" id="excluiranimal<%= index %>" tabindex="-1" aria-labelledby="excluiranimalLabel<%= index %>" aria-hidden="true" style="color: black;">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="excluiranimalLabel<%= index %>">Excluir <%= dados.nome %></h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  Tem certeza que deseja excluir?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                                  <a href="/deletar_animal/<%= dados.id %>"><button type="button" class="btn btn-dark">Excluir</button></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                      </div>
+                      <br>
+                    <% }) %>
+                  </div>
+                <% } else { %>
+                  <br>
+                  <h5>Nenhum animal cadastrado.</h5>
+                <% } %>
+                  <br>
+                </article>
+                </div>
+                
+        <%- include("layout/footer"); %>
+        <script>
+          document.getElementById('btn-adocao').addEventListener('click', function(event) {
+              event.preventDefault();
+              window.location.href = "/perfil?filtro=adocao";
+          });
+          
+          document.getElementById('btn-desaparecidos').addEventListener('click', function(event) {
+              event.preventDefault();
+              window.location.href = "/perfil?filtro=desaparecidos";
+          });
+          
+          document.getElementById('btn-encontrados').addEventListener('click', function(event) {
+              event.preventDefault();
+              window.location.href = "/perfil?filtro=encontrados";
+          });
+
+          const button = document.getElementById('download-button');
+          const icon = document.getElementById('button-icon');
+          const text = document.getElementById('button-text');
+
+          button.addEventListener('mouseover', () => {
+              icon.style.display = 'none';
+              text.style.display = 'inline'; 
+              setTimeout(() => {
+                  text.style.opacity = 1;r
+              }, 10);
+          });
+
+          button.addEventListener('mouseout', (event) => {
+            
+              if (!button.contains(event.relatedTarget)) {
+                  text.style.opacity = 0; 
+                  text.addEventListener('transitionend', () => {
+                      text.style.display = 'none'; 
+                      icon.style.display = 'inline';
+                  }, { once: true });
+              }
+          });
+
+
+          </script>
+    </body>
+</html>

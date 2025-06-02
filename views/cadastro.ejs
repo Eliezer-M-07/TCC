@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cadastrar-se</title>
+      <%- include('layout/head'); %>
+  </head>
+  <body>
+      <%- include('layout/menu'); %>
+      <br>
+      <br>
+      <div class="container">
+          <div class="container">
+            <% if (alerta) { %>
+              <div class="alert alert-dark alert-dismissible fade show" role="alert" >
+                <%= alerta %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <%} else { %>
+            <% } %>
+              <div class="card" style="border-radius: 10px;">
+                  <div class="container">
+                      <br>
+                      <div class="d-flex align-items-center">
+                          <i><img src="images/cadastro.png" width="50px"></i>
+                          <h4 class="ml-2">Cadastre-se</h4>
+                      </div>
+                      <br>
+                      <form id="Formu" method="post" action="/cadastrar" enctype="multipart/form-data">
+                          <div class="mb-3">
+                            <label for="name" class="form-label"><h6>Nome</h6></label>
+                            <input maxlength="40" name="nome" required type="text" class="form-control" id="name" aria-describedby="nameHelp">
+                            <div id="NameHelp" class="form-text">Informe seu nome.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="email" class="form-label"><h6>E-mail</h6></label>
+                            <input name="email" required type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">Informe seu e-mail.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="password" class="form-label"><h6>Senha</h6></label>
+                            <input minlength="8" name="senha" required type="password" class="form-control" id="password">
+                            <div id="passwordHelp" class="form-text">Informe sua senha.</div>
+                            <div id="passwordError" class="form-text text-danger" style="display:none;"><strong>A senha deve conter pelo menos 8 caracteres.</strong></div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="telefone" class="form-label"><h6>Telefone</h6></label>
+                            <input name="telefone" required type="text" class="form-control" id="telefone" pattern="^\d{10,11}$" title="O telefone deve estar no formato solicitado.">
+                            <div id="passwordHelp" class="form-text">Informe seu telefone | ex: 51998762897 </div>
+                          </div>
+                          <div class="mb-3">
+                              <label for="formFile" class="form-label"><h6>Foto de perfil</h6></label>
+                              <input name="pfp" required class="form-control" type="file" id="formFile">
+                              <div id="passwordHelp" class="form-text">Envie uma foto de perfil.</div>
+                          </div>
+                          Já possui conta? <a href="/login" style="text-decoration: none;"><strong>faça login!</strong></a>
+                          <br>
+                          <br>
+                          <button type="submit" class="btn btn-dark">Cadastrar</button>
+                        </form>
+                        <br>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <%- include("layout/footer"); %>
+  </body>
+  <script>
+    document.getElementById('telefone').addEventListener('input', function (e) {
+        var x = e.target.value.replace(/\D/g, '');
+        e.target.value = x;
+    });
+
+    document.getElementById("Formu").addEventListener("submit", function(event) {
+    const passwordInput = document.getElementById("password");
+    const passwordError = document.getElementById("passwordError");
+    
+   
+      if (passwordInput.value.length < 8) {
+        event.preventDefault(); 
+        passwordError.style.display = 'block';
+      } else {
+        passwordError.style.display = 'none'; 
+      }
+   });
+    </script>
+</html>

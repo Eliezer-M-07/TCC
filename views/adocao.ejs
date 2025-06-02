@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoção</title>
+    <%- include('layout/head'); %>
+</head>
+<body>
+    <%- include('layout/menu'); %>
+    <br>
+    <article id="art4">
+      <div class="container" >
+          <img src="/images/adocao.jpg" width="300px">
+          <form action="/adotar" method="GET" style="margin-left: 20px;">
+              <br>
+              <h4>Filtros</h4>
+              <br>
+                <h6>Estado</h6>
+                <select name="estado" id="estado" class="form-select" style="width: 85%;">
+                    <option value="">Todos</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
+                <br>
+                <h6>Cidade</h6>
+                <select name="cidade" id="cidade" class="form-select" style="width: 85%;">
+                    <option value="">Todas</option>
+                </select>
+                <br>
+                <h6>Espécie</h6>
+                <select name="especie" class="form-select" style="width: 85%;">
+                    <option value="">Todas</option>
+                    <option value="Cachorro">Cachorro</option>
+                    <option value="Gato">Gato</option>
+                </select>
+                <br>
+                <h6>Sexo</h6>
+                <select name="sexo" class="form-select" style="width: 85%;">
+                    <option value="">Ambos</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Fêmea">Fêmea</option>
+                </select>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-dark" style="width: 85%;">Aplicar</button>
+            </form>
+        </div>
+    </article>
+    <article id="art5">
+      <br>
+      <% let aprovados = all.filter(dados => dados.status === 'Aprovado'); %>
+      <% if (aprovados.length > 0) { %>
+        <div id="d5">
+          <% aprovados.forEach(function(dados) { %>
+            <div id="cardListagem" class="card">
+                <div style="text-align: center; background-color: black; color: white; border-radius: 5px 5px 0 0;" >ADOÇÃO</div>
+                  <img style="height: 280px;" src="/animais/<%= dados.foto %>" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= dados.nome %>
+                      <% if (logado == true && dados.fk_usuario != id) { %>
+                        <% if (dados.favoritado == true) { %>
+                            <a title="Desfavoritar" id="fav" href="/removerFavorito/<%= dados.id %>" style="float: right; color: inherit;">
+                                <i style="vertical-align:bottom; color: rgb(249, 34, 34);" class="material-icons">favorite</i>
+                            </a>
+                        <% } else { %>
+                            <a title="Favoritar" id="fav" href="/favoritar/<%= dados.id %>" style="float: right; color: inherit;">
+                                <i style="vertical-align:bottom;" class="material-icons">favorite_border</i>
+                            </a>
+                        <% } %>
+                    <% } %>
+                    </h5>
+                    <hr>
+                    <strong>Estado:</strong> <%= dados.estado %>
+                    <br>
+                    <strong>Sexo:</strong> <%= dados.sexo %>
+                    <br>
+                    <strong>Porte:</strong> <%= dados.porte %>
+                    <br>
+                    <br>
+                    <a style="width: 100%; background-color: black; color: white;" href="/animal/<%=dados.id %>" class="btn">Quero adotar</a>
+                  </div>
+              </div>
+              <br>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <br>
+        <center><h5>Nenhum animal cadastrado.</h5></center>
+      <% } %>
+  </article>
+  
+
+    <%- include("layout/footer"); %>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const estadoSelect = document.getElementById('estado');
+          const cidadeSelect = document.getElementById('cidade');
+      
+          
+          function fetchCidades(uf) {
+            fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos`)
+              .then(response => response.json())
+              .then(data => {
+                cidadeSelect.innerHTML = '<option value="">Todas</option>'; 
+                data.forEach(cidade => {
+                  const option = document.createElement('option');
+                  option.value = cidade.nome; 
+                  option.textContent = cidade.nome;
+                  cidadeSelect.appendChild(option);
+                });
+              })
+              .catch(error => console.error('Erro ao buscar cidades:', error));
+          }
+      
+
+          estadoSelect.addEventListener('change', function() {
+            const uf = this.value;
+            if (uf) {
+              fetchCidades(uf);
+            } else {
+              cidadeSelect.innerHTML = '<option value="">Todas</option>';
+            }
+          });
+        });
+      </script>
+</body>
+</html>

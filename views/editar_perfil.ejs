@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editar Perfil</title>
+        <%- include('layout/head'); %>
+    </head>
+    <body>
+        <%- include('layout/menu'); %>
+        <br>
+        <br>
+        <div class="container">
+            <div class="container">
+              <% if (alerta) { %>
+                <div class="alert alert-dark alert-dismissible fade show" role="alert" >
+                    <%= alerta %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              <%} else { %>
+              <% } %>
+                <div class="card" style="border-radius: 10px;">
+                    <div class="container">
+                        <br>
+                        <div class="d-flex align-items-center">
+                            <img src="images/editar_perfil.png" width="70px">&nbsp;
+                            <h4 class="ml-2">Editar Perfil</h4>
+                        </div>
+                        <br>
+                            <%dadosUsuario.forEach(function(dados) { %>
+                                <form method="post" action="/editar" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                    <label for="name" class="form-label"><h6>Nome</h6></label>
+                                    <input maxlength="40" value="<%= dados.nome%>"  name="nome" required type="text" class="form-control" id="name" aria-describedby="nameHelp">
+                                    <div id="NameHelp" class="form-text">Informe seu novo nome.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                    <label for="telefone" class="form-label"><h6>Telefone</h6></label>
+                                    <input value="<%= dados.telefone.substring(2) %>" name="telefone" required type="text" class="form-control" id="telefone" pattern="^\d{10,11}$" title="O telefone deve estar no formato solicitado.">
+                                    <div id="passwordHelp" class="form-text">Informe seu telefone | ex: 51998762897</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label"><h6>Foto de perfil</h6></label>
+                                        <input name="pfp" class="form-control" type="file" id="formFile">
+                                        <div id="passwordHelp" class="form-text">Envie uma foto de perfil se desejar.</div>
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-dark">Editar</button>
+                                </form>
+                            <% }) %>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include("layout/footer"); %>
+        <script>
+            document.getElementById('telefone').addEventListener('input', function (e) {
+                var x = e.target.value.replace(/\D/g, '');
+                e.target.value = x;
+            });
+            </script>
+    </body>
+</html>

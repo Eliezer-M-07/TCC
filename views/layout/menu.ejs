@@ -1,0 +1,203 @@
+<% if (logado == true && admin == false) { %>
+<head>
+  <% if (Notificacoes.length > 0) { %>
+    <style>
+      .notification::before {
+      content: "1";
+      color: white;
+      font-size: 11px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgb(36, 35, 35);
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    </style>
+    
+  <% } %>
+</head>
+  <nav class="navbar navbar-expand-lg navbar-light" style="border: solid 1px rgb(233, 233, 233);">
+    <div class="container-fluid">
+        <img src="/images/logo.png" alt="logo" width="195px" class="d-inline-block">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">&nbsp;&nbsp;
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/" style="color: black; font-size: 17px;">Página Inicial</a>
+          </li>&nbsp;&nbsp;
+          <li class="nav-item">
+            <a class="nav-link" href="/adotar" style="color: black; font-size: 17px;">Adoção</a>
+          </li>&nbsp;&nbsp;
+          <li class="nav-item">
+            <a class="nav-link" href="/desaparecidos" style="color: black; font-size: 17px;">Desaparecidos</a>
+          </li>&nbsp;&nbsp;
+          <li class="nav-item">
+            <a class="nav-link" href="/encontrados" style="color: black; font-size: 17px;">Encontrados</a>
+          </li>
+        </ul>        
+      </div>
+      <ul class="navbar-nav ms-auto" style="margin-top: 3px;">
+        <div class="notification dropdown">
+          <div class="bell-container" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="bell"></div>
+          </div>
+          <% if (Notificacoes.length > 0) { %>
+            <ul  id="notificationDropdown" class="dropdown-menu dropdown-menu-end scrollable-div" aria-labelledby="notificationBell" style="width: 315px; max-height: 400px; overflow-y: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px; cursor: default;">
+              <strong style="float: left;">Notificações</strong><a  href="/marcarlidas" title="Marcar todas como lida" style="float: right; margin-right: 10px; text-decoration: none; color: inherit;" ><i style="vertical-align:bottom;" class="material-icons">done_all</i></a><br>
+              <hr>
+              <% Notificacoes.sort((a, b) => new Date(b.data_criacao) - new Date(a.data_criacao)); %>
+              <% Notificacoes.forEach(function(dados) { %>
+                  <% if (dados.tipo_notificacao == "Aprovado") { %>
+                      <li id="notApro" class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.5s;">
+                          <img src="/animais/<%= dados.foto_animal %>" alt="Animal" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                          <div  style="flex: 1; white-space: normal;">
+                              <p style="margin: 0; font-size: 12px; color: #888;">
+                                  <%= new Date(dados.data_criacao).toLocaleDateString('pt-BR') %> às 
+                                  <%= new Date(dados.data_criacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %>
+                                    <i style="vertical-align:bottom; margin-left: 88px; color: #9ef0b1;" class="material-icons">sentiment_very_satisfied</i>
+                              </p>
+                              <p style="margin: 0; font-weight: bold; color: #333;"><%= dados.mensagem %></p>
+                          </div>
+                      </li>
+                  <% } else if (dados.tipo_notificacao == "Recusado") { %>
+                      <li id="notRec" class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.5s;">
+                          <img src="/animais/<%= dados.foto_animal %>" alt="Animal" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                          <div style="flex: 1; white-space: normal;">
+                              <p style="margin: 0; font-size: 12px; color: #888;">
+                                  <%= new Date(dados.data_criacao).toLocaleDateString('pt-BR') %> às 
+                                  <%= new Date(dados.data_criacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %>
+                                  <i style="vertical-align:bottom; margin-left: 88px; color: #f7dd89;" class="material-icons">sentiment_dissatisfied</i>
+                              </p>
+                              <p style="margin: 0; font-weight: bold; color: #333;"><%= dados.mensagem %></p>
+                          </div>
+                      </li>
+                  <% } else { %>
+                      <li class="dropdown-item d-flex align-items-start" style="padding: 10px; transition: background-color 0.3s;">
+                          <i style="vertical-align:bottom;" class="material-icons">report</i>&nbsp;&nbsp;&nbsp;
+                          <div style="flex: 1; white-space: normal;">
+                              <p style="margin: 0; font-size: 12px; color: #888;">
+                                  <%= new Date(dados.data_criacao).toLocaleDateString('pt-BR') %> às 
+                                  <%= new Date(dados.data_criacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) %>
+                                  <i style="vertical-align:bottom; margin-left: 101px; color: #ee7b85;" class="material-icons">sentiment_neutral</i>
+                              </p>
+                              <p style="margin: 0; font-weight: bold; color: #333;"><%= dados.mensagem %></p>
+                          </div>
+                      </li>
+                  <% } %>
+              <% }); %>
+
+              
+            </ul> 
+          <% } else  { %> 
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationBell" style="width: 300px; max-height: 400px; overflow-y: auto;">
+              <li class="dropdown-item d-flex align-items-center" >
+                <div>
+                  <p style="margin: 0; font-weight: bold;">Você não tem nenhuma notificação.</p>
+                </div>
+              </li>
+            </ul>
+          <% } %>
+          </ul>
+          <div  class="dropdown" style="margin-top: 2px;">
+            <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i style="vertical-align:bottom;" class="material-icons">switch_account</i>&nbsp;Opções&nbsp;</button>
+            <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="/perfil"><i style="vertical-align:bottom;"  class="material-icons">account_box</i>&nbsp;&nbsp;&nbsp;Perfil</a></li>
+              <li><a data-bs-toggle="modal" data-bs-target="#modal2" class="dropdown-item" href="/logout"><i style="vertical-align:bottom;"  class="material-icons">logout</i>&nbsp;&nbsp;&nbsp;Logout</a></li>
+            </ul>
+            <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Logout</h5>
+                  </div>
+                  <div class="modal-body">
+                    Tem certeza que deseja sair? 
+                  </div>
+                  <div class="modal-footer">
+                    <button style="width: 6rem;" type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="/logout"><button style="width: 6rem;"  type="button" class="btn btn-dark" data-bs-dismiss="modal">Sair</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <%}else if (logado == true && admin == true) { %>
+          <nav class="navbar navbar-expand-lg navbar-light" style="border: solid 1px rgb(233, 233, 233);">
+            <div class="container-fluid">
+                <img src="/images/logo.png" alt="logo" width="195px" class="d-inline-block">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                <div id="log">
+                  <a style="text-decoration: none; color: inherit;" data-bs-toggle="modal" data-bs-target="#modal2"  href="/logout"><i style="vertical-align:bottom;" class="material-icons">logout</i>&nbsp;&nbsp;Logout</a>
+                </div>
+                  <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel2">Logout</h5>
+                        </div>
+                        <div class="modal-body">
+                          Tem certeza que deseja sair? 
+                        </div>
+                        <div class="modal-footer">
+                          <button style="width: 6rem;" type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                          <a href="/logout"><button style="width: 6rem;"  type="button" class="btn btn-dark" data-bs-dismiss="modal">Sair</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        <% }else { %>
+          <nav class="navbar navbar-expand-lg navbar-light" style="border: solid 1px rgb(233, 233, 233);">
+            <div class="container-fluid">
+                <img src="/images/logo.png" alt="logo" width="195px" class="d-inline-block">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown" >
+                <ul class="navbar-nav">&nbsp;&nbsp;
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/" style="color: black; font-size: 17px;">Página Inicial</a>
+                  </li>&nbsp;&nbsp;
+                  <li class="nav-item">
+                    <a class="nav-link" href="/adotar" style="color: black; font-size: 17px;">Adoção</a>
+                  </li>&nbsp;&nbsp;
+                  <li class="nav-item">
+                    <a class="nav-link" href="/desaparecidos" style="color: black; font-size: 17px;">Desaparecidos</a>
+                  </li>&nbsp;&nbsp;
+                  <li class="nav-item">
+                    <a class="nav-link" href="/encontrados" style="color: black; font-size: 17px;">Encontrados</a>
+                  </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                  <div class="dropdown" >
+                    <button class="btn btn-black dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">person</i>&nbsp;Operações</button>
+                    <ul class="dropdown-menu dropdown-menu"  aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="/login"><i style="vertical-align:bottom;" class="material-icons">login</i>&nbsp;&nbsp;&nbsp;Login</a></li>
+                      <li><a class="dropdown-item" href="/cadastro"><i style="vertical-align:bottom;" class="material-icons"></i><i class="material-icons">person_add</i> &nbsp;&nbsp;Cadastrar-se</a></li>
+                    </ul>
+                  </div>
+        <% } %> 
+      </ul>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+    </div>
+  </div>
+</nav>
+<script>
+  
+</script>

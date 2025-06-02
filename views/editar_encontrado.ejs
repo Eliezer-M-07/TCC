@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Editar desaparecido</title>
+      <%- include('layout/head'); %>
+  </head>
+  <body>
+      <%- include('layout/menu'); %>
+      <br>
+      <br>
+      <div class="container">
+            <div class="card" style="border-radius: 10px;">
+              <div class="container">
+                  <br>
+                  <%dadosAnimal.forEach(function(dados) { %>
+                      <div class="d-flex align-items-center">
+                      <img style="border: solid 1px black;" src="/animais/<%= dados.foto %>" width="100px" class="rounded-circle" >&nbsp;&nbsp;&nbsp;<h4 class="ml-2">Editar <%= dados.nome %></h4>
+                  </div>
+                  <br>
+                  <form method="post" action="/alterar_encontrado" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <input type="hidden" name="id" value="<%= dados.id %>">
+                        <label for="name" class="form-label">
+                          <h6>Nome</h6>
+                        </label>
+                        <input value="<%= dados.nome %>" required maxlength="40" name="nome" type="text" class="form-control" id="name" aria-describedby="nameHelp">
+                        <div id="NameHelp" class="form-text">Informe o nome do animal ou marque a opção "Não tem Nome".</div>
+                        <div class="form-check">
+                            <br>
+                            <input class="form-check-input" type="checkbox" id="noNameCheck">
+                            <label class="form-check-label" for="noNameCheck">
+                                Não tem nome
+                            </label>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="especie" class="form-label"><h6>Espécie</h6></label>
+                        <select name="especie" id="especie" class="form-select" aria-label="Default select example" aria-describedby="especieHelp">
+                            <option value="Cachorro" <%= dados.especie === 'Cachorro' ? 'selected' : '' %>>Cachorro</option>
+                            <option value="Gato" <%= dados.especie === 'Gato' ? 'selected' : '' %>>Gato</option>
+                        </select>
+                        <div id="especieHelp" class="form-text">Informe a espécie do animal.</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="raca" class="form-label"><h6>Raça</h6></label>
+                        <select name="raca" id="raca" class="form-select" aria-label="Default select example" aria-describedby="racaHelp">
+                        </select>
+                        <div id="racaHelp" class="form-text">Informe a raça do animal.</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="sexo" class="form-label"><h6>Sexo</h6></label>
+                        <select name="sexo" id="sexo" class="form-select" aria-label="Default select example" aria-describedby="sexoHelp">
+                            <option value="Macho" <%= dados.sexo === 'Macho' ? 'selected' : '' %>>Macho</option>
+                            <option value="Fêmea" <%= dados.sexo === 'Fêmea' ? 'selected' : '' %>>Fêmea</option>
+                        </select>
+                        <div id="sexoHelp" class="form-text">Informe o sexo do animal.</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="porte" class="form-label"><h6>Porte</h6></label>
+                        <select name="porte" id="porte" class="form-select" aria-label="Default select example" aria-describedby="porteHelp">
+                          <option value="Pequeno" <%= dados.porte === 'Pequeno' ? 'selected' : '' %>>Pequeno</option>
+                          <option value="Médio" <%= dados.porte === 'Médio' ? 'selected' : '' %>>Médio</option>
+                          <option value="Grande" <%= dados.porte === 'Grande' ? 'selected' : '' %>>Grande</option>
+                          <option value="Gigante" <%= dados.porte === 'Gigante' ? 'selected' : '' %>>Gigante</option>
+                        </select>
+                        <div id="sexoHelp" class="form-text">Informe o porte do animal.</div>
+                        </div>
+                      <div class="mb-3">
+                        <label for="estado" class="form-label"><h6>Estado</h6></label>
+                        <select required name="estado" id="estado" class="form-select" aria-label="Default select example" aria-describedby="estadoHelp">
+                          <option value="">Selecione o estado</option>
+                          <option value="AC" <%= dados.estado === 'AC' ? 'selected' : '' %>>Acre</option>
+                          <option value="AL" <%= dados.estado === 'AL' ? 'selected' : '' %>>Alagoas</option>
+                          <option value="AP" <%= dados.estado === 'AP' ? 'selected' : '' %>>Amapá</option>
+                          <option value="AM" <%= dados.estado === 'AM' ? 'selected' : '' %>>Amazonas</option>
+                          <option value="BA" <%= dados.estado === 'BA' ? 'selected' : '' %>>Bahia</option>
+                          <option value="CE" <%= dados.estado === 'CE' ? 'selected' : '' %>>Ceará</option>
+                          <option value="DF" <%= dados.estado === 'DF' ? 'selected' : '' %>>Distrito Federal</option>
+                          <option value="ES" <%= dados.estado === 'ES' ? 'selected' : '' %>>Espírito Santo</option>
+                          <option value="GO" <%= dados.estado === 'GO' ? 'selected' : '' %>>Goiás</option>
+                          <option value="MA" <%= dados.estado === 'MA' ? 'selected' : '' %>>Maranhão</option>
+                          <option value="MT" <%= dados.estado === 'MT' ? 'selected' : '' %>>Mato Grosso</option>
+                          <option value="MS" <%= dados.estado === 'MS' ? 'selected' : '' %>>Mato Grosso do Sul</option>
+                          <option value="MG" <%= dados.estado === 'MG' ? 'selected' : '' %>>Minas Gerais</option>
+                          <option value="PA" <%= dados.estado === 'PA' ? 'selected' : '' %>>Pará</option>
+                          <option value="PB" <%= dados.estado === 'PB' ? 'selected' : '' %>>Paraíba</option>
+                          <option value="PR" <%= dados.estado === 'PR' ? 'selected' : '' %>>Paraná</option>
+                          <option value="PE" <%= dados.estado === 'PE' ? 'selected' : '' %>>Pernambuco</option>
+                          <option value="PI" <%= dados.estado === 'PI' ? 'selected' : '' %>>Piauí</option>
+                          <option value="RJ" <%= dados.estado === 'RJ' ? 'selected' : '' %>>Rio de Janeiro</option>
+                          <option value="RN" <%= dados.estado === 'RN' ? 'selected' : '' %>>Rio Grande do Norte</option>
+                          <option value="RS" <%= dados.estado === 'RS' ? 'selected' : '' %>>Rio Grande do Sul</option>
+                          <option value="RO" <%= dados.estado === 'RO' ? 'selected' : '' %>>Rondônia</option>
+                          <option value="RR" <%= dados.estado === 'RR' ? 'selected' : '' %>>Roraima</option>
+                          <option value="SC" <%= dados.estado === 'SC' ? 'selected' : '' %>>Santa Catarina</option>
+                          <option value="SP" <%= dados.estado === 'SP' ? 'selected' : '' %>>São Paulo</option>
+                          <option value="SE" <%= dados.estado === 'SE' ? 'selected' : '' %>>Sergipe</option>
+                          <option value="TO" <%= dados.estado === 'TO' ? 'selected' : '' %>>Tocantins</option>
+                        </select>
+                        <div id="estadoHelp" class="form-text">Informe o estado onde o animal está localizado.</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="cidade" class="form-label"><h6>Cidade</h6></label>
+                        <select required name="cidade" id="cidade" class="form-select" aria-label="Default select example" aria-describedby="cidadeHelp">
+                          <option value="">Selecione a cidade</option>
+                        </select>
+                        <div id="cidadeHelp" class="form-text">Informe a cidade onde o animal está localizado.</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="cep" class="form-label"><h6>CEP</h6></label>
+                        <input name="cep" type="text" class="form-control" id="cep" aria-describedby="cepHelp" minlength="8" maxlength="8">
+                        <div id="cepHelp" class="form-text">Informe o CEP da localização.</div>
+                        <div id="cepError" class="form-text text-danger" style="display: none;">O CEP deve ter 8 caracteres.</div>
+                    </div>
+                      <div class="mb-3">
+                        <label for="bairro" class="form-label"><h6>Bairro</h6></label>
+                        <input value="<%= dados.bairro %>" name="bairro" required type="text" class="form-control" id="bairro" aria-describedby="bairroHelp" readonly>
+                        <div id="bairroHelp" class="form-text">Bairro onde o animal foi encontrado.</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="rua" class="form-label"><h6>Rua</h6></label>
+                        <input value="<%= dados.rua %>" name="rua" required type="text" class="form-control" id="rua" aria-describedby="ruaHelp" readonly>
+                        <div id="ruaHelp" class="form-text">Rua onde o animal foi encontrado.</div>
+                      </div>
+                      <div class="mb-3">
+                          <label for="formFile" class="form-label"><h6>Foto do animal</h6></label>
+                          <input  name="foto" class="form-control" type="file" id="formFile">
+                          <div id="fotoHelp" class="form-text">Envie uma foto se desejar.</div>
+                      </div>
+                      <br>
+                      <button type="submit" class="btn btn-dark">Editar</button>
+                    </form>
+                    <br>
+              </div>
+          </div>
+          </div>
+      </div>
+
+      <%- include("layout/footer"); %>
+      <script>
+       
+        const especieSelect = document.getElementById('especie');
+        const racaSelect = document.getElementById('raca');
+      
+        const racaSelecionada = "<%= dados.raca %>";
+
+        const racasPorEspecie = {
+          Cachorro: [
+            "SRD (Sem Raça Definida)",
+            "Vira-lata",
+            "American Staffordshire Terrier",
+            "American Bully",
+            "Akita",
+            "Braco alemão de pelo duro",
+            "Boiadeiro Australiano",
+            "Boiadeiro da Flandres",
+            "Boiadeiro de Berna",
+            "Bichon havanês",
+            "Basset Hound",
+            "Bichon Frisé",
+            "Boston Terrier",
+            "Border Collie",
+            "Bulmastife",
+            "Boxer",
+            "Bulldog Americano",
+            "Bulldog Francês",
+            "Bulldog Inglês",
+            "Bull Terrier",
+            "Cavalier King Charles Spaniel",
+            "Cão de montanha dos Pirenéus",
+            "Cão-islandês-de-pastoreio",
+            "Cocker Spaniel Inglês",
+            "Cão-de-santo-humberto",
+            "Cairn terrier",
+            "Cane corso",
+            "Chihuahua",
+            "Chow Chow",
+            "Collie",
+            "Dogue-de-bordéus",
+            "Dogue alemão",
+            "Dachshund",
+            "Dálmata",
+            "Doberman",
+            "Flat-coated retriever",
+            "Foxhound-inglês",
+            "Grande boiadeiro suíço",
+            "Glen of imaal terrier",
+            "Golden Retriever",
+            "Griffon de Bruxelas",
+            "Husky Siberiano",
+            "Jack Russell Terrier",
+            "Kerry Blue Terrier",
+            "Labrador Retriever",
+            "Lulu da Pomerânia",
+            "Lhasa Apso",
+            "Leonberger",
+            "Maltês",
+            "Pastor-polonês-da-planície",
+            "Pastor-australiano",
+            "Pastor de Shetland",
+            "Pinscher alemão",
+            "Pastor Húngaro",
+            "Pointer inglês",
+            "Pastor Alemão",
+            "Pinscher",
+            "Poodle",
+            "Pit Bull",
+            "Pug",
+            "Rottweiler",
+            "Staffordshire Bull Terrier",
+            "Setter irlandês",
+            "Spaniel japonês",
+            "Spaniel bretão",
+            "Setter gordon",
+            "Silky terrier",
+            "São-bernardo",
+            "Schnauzer",
+            "Shih Tzu",
+            "Shiba Inu",
+            "Shar-pei",
+            "Terrier irlandês",
+            "Yorkshire",
+          ],
+          Gato:[
+          "SRD (Sem Raça Definida)",
+          "Siamês",
+          "Persa",
+          "Maine Coon",
+          "Ragdoll",
+          "Sphynx",
+          "Angorá Turco",
+          "Burmês",
+          "British Shorthair",
+          "Abyssinian",
+          "Chartreux",
+          "Himalaio",
+          "Exótico de Pelo Curto",
+          "Bengal",
+          "Norueguês da Floresta",
+          "Rex Cornish",
+          "Bombay",
+          "Munchkin",
+          "Devon Rex",
+          "Siberiano"
+        ]
+        };
+      
+        function atualizarRacas() {
+          racaSelect.innerHTML = '';
+      
+          const especieSelecionada = especieSelect.value;
+
+          const racas = racasPorEspecie[especieSelecionada];
+      
+          racas.forEach(raca => {
+            const option = document.createElement('option');
+            option.textContent = raca;
+            option.value = raca;
+            if (raca === racaSelecionada) {
+                option.selected = true;
+            }
+            racaSelect.appendChild(option);
+            });
+        }
+      
+        especieSelect.addEventListener('change', atualizarRacas);
+      
+        atualizarRacas();
+        document.addEventListener('DOMContentLoaded', function() {
+                    const estadoSelecionado = estadoSelect.value;
+                    if (estadoSelecionado) {
+                        carregarCidades(estadoSelecionado);
+                    }
+                });
+        document.addEventListener('DOMContentLoaded', function() {
+        const estadoSelect = document.getElementById('estado');
+        const cidadeSelect = document.getElementById('cidade');
+        const cidadeSelecionada = "<%= dados.cidade %>"; 
+       
+        function carregarCidades(uf) {
+          fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/distritos`)
+            .then(response => response.json())
+            .then(data => {
+              cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>'; 
+              data.forEach(cidade => {
+                const option = document.createElement('option');
+                option.value = cidade.nome;
+                option.textContent = cidade.nome;
+
+                if (cidade.nome === cidadeSelecionada) {
+                    option.selected = true;
+                }
+                cidadeSelect.appendChild(option);
+              });
+            })
+            .catch(error => console.error('Erro ao buscar cidades:', error));
+        }
+        
+        estadoSelect.addEventListener('change', function() {
+          const uf = this.value;
+          if (uf) {
+            carregarCidades(uf);
+          } else {
+            cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
+          }
+        });
+      
+        const estadoSelecionado = estadoSelect.value;
+        if (estadoSelecionado) {
+          carregarCidades(estadoSelecionado);
+        }
+        
+      });
+      
+
+      
+
+      document.getElementById('cep').addEventListener('input', function (e) {
+          var x = e.target.value.replace(/\D/g, '');
+          e.target.value = x;
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const cepInput = document.getElementById('cep');
+            const ruaInput = document.getElementById('rua');
+            const bairroInput = document.getElementById('bairro');
+            const cepError = document.getElementById('cepError');
+            const form = document.querySelector('form');
+
+            cepInput.addEventListener('blur', function() {
+                const cep = cepInput.value.replace(/\D/g, '');
+                cepError.style.display = 'none'; 
+
+                if (cep.length > 0 && cep.length < 8) {
+                    cepError.style.display = 'block'; 
+                } else {
+                    
+                    ruaInput.value = '';
+                    bairroInput.value = '';
+
+                    
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                ruaInput.value = data.logradouro; 
+                                bairroInput.value = data.bairro;   
+                            } else {
+                                alert("CEP não encontrado.")
+                            }
+                        })
+                        .catch(error => console.error('Erro ao buscar endereço:', error));
+                }
+            });
+
+            form.addEventListener('submit', function(event) {
+                const cep = cepInput.value.replace(/\D/g, '');
+                if (cep.length > 0 && cep.length < 8) {
+                    cepError.style.display = 'block'; 
+                    event.preventDefault(); 
+                } else {
+                    cepError.style.display = 'none'; 
+                }
+                
+                if (!ruaInput.value || !bairroInput.value) {
+                  alert("Por favor, informe o endereço completo preenchendo o CEP corretamente para obter Rua e Bairro.");
+                  event.preventDefault(); 
+                }
+            });
+        });
+
+        const nameInput = document.getElementById('name');
+        const noNameCheck = document.getElementById('noNameCheck');
+        var nome = "<%= dados.nome %>";
+
+        if (nome == "Sem Nome"){
+          document.getElementById('noNameCheck').checked = true;
+          nameInput.value = 'Sem Nome';
+          nameInput.setAttribute('readonly', 'readonly'); 
+        }
+
+        noNameCheck.addEventListener('change', function() {
+
+        if (noNameCheck.checked) {
+            nameInput.value = 'Sem Nome'; 
+            nameInput.setAttribute('readonly', 'readonly'); 
+        } else {
+            nameInput.value = ''; 
+            nameInput.removeAttribute('readonly'); 
+        }
+        });
+      
+      
+      </script>
+      <% }) %>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+public/animais/*
+!public/animais/.gitkeep
+
+public/usuarios/*
+!public/usuarios/.gitkeep

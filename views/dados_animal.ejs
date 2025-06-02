@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados animal</title>
+    <%- include('layout/head'); %>
+</head>
+    <body>
+        <%- include('layout/menu'); %>
+        <br>
+        <div id="d6" class="container" >
+            <% function formatarTelefone(numero) {
+                let numeroLocal = numero.substring(2);
+                let ddd = numeroLocal.substring(0, 2);
+                let telefone = numeroLocal.substring(2);
+                return `(${ddd}) ${telefone.substring(0, 5)}-${telefone.substring(5)}`;
+            } %>
+            <%informacoes.forEach(function(dados) { %>
+                <% if (dados.tipo == 'adocao') { %>
+                    <div>
+                        <div>
+                            <img src="/images/logo.png" width="230px" style="float: right;">  
+                            <div>
+                              <div style="width: 250px; background-color: black; color: white; text-align: center; border-radius: 15px 15px 0 0; box-shadow: 0 0 2px black;">ADOÇÃO</div>
+                              <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            </div>
+                            <div style="float: right;">
+                                </div>
+                                <div style="width: 23%; height: 10%;">
+                                    <br>
+                                    <h4><%= dados.nome %></h4>
+                                    <hr width="87%">
+                                    <span style="text-align: justify"><%= dados.caracteristicas %></span>
+                                </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div style="display: flex; gap: 15%; flex-wrap: wrap;">
+                        <article class="card p-3 mb-3 flex-grow-1" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1);">
+                          <h5 ><i class="material-icons">description</i> Informações Básicas</h5>
+                          <hr>
+                          <div class="row">
+                            <div class="col-md-6 mb-2">
+                              <strong>Nome: </strong> <span><%= dados.nome %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Estado: </strong> <span><%= dados.estado %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Cidade: </strong> <span><%= dados.cidade %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Espécie: </strong> <span><%= dados.especie %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Raça: </strong> <span><%= dados.raca %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Sexo: </strong> <span><%= dados.sexo %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Peso: </strong> <span><%= dados.peso %> Kg</span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Porte: </strong> <span><%= dados.porte %></span>
+                            </div>
+                          </div>
+                        </article>
+                      
+                        <article class="card p-3 mb-3 flex-grow-1" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1);">
+                          <h5><i class="material-icons">account_box</i> Dados Anunciante</h5>
+                          <hr>
+                          <div>
+                            <strong>Nome: </strong> <span><%= dados.anunciante_nome %></span>
+                            <br>
+                            <strong>E-mail: </strong> <span><%= dados.anunciante_email %></span>
+                            <br>
+                            <strong>Telefone: </strong> <span><%= formatarTelefone(dados.anunciante_tel) %></span>
+                            <br>
+                            <% if (admin == true) { %>
+                              
+                            <% } else { %>
+                              <br>
+                              <a style="box-shadow: 0 0 2px rgb(51, 50, 50);" href="https://api.whatsapp.com/send?phone=<%= dados.anunciante_tel %>" class="btn btn-white">
+                                <img src="/images/message.png" width="30px" class="">&nbsp;&nbsp;Entrar em contato
+                              </a>
+                            <% } %>
+                          </div>
+                        </article>
+                      </div>
+                      
+                <% } else if (dados.tipo == 'desaparecido') { %>
+                    <div>
+                        <div>
+                            <img src="/images/logo.png" width="230px" style="float: right;">  
+                            <div>
+                              <div style="width: 250px; background-color: black; color: white; text-align: center; border-radius: 15px 15px 0 0; box-shadow: 0 0 2px black;">
+                                <% if (dados.sexo == 'Macho') { %>
+                                  DESAPARECIDO
+                                <% } else { %>
+                                  DESAPARECIDA
+                                <% } %>
+                              </div>
+                              <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            </div>
+                            <div style="float: right;">
+                                </div>
+                                <div style="width: 23%; height: 10%;">
+                                    <br>
+                                    <h4><%= dados.nome %></h4>
+                                    <hr width="87%">
+                                    <span style="text-align: justify"><%= dados.caracteristicas %></span>
+                                </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15%;">
+                        <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 45%;">
+                          <h5><i class="material-icons">description</i> Informações Básicas</h5>
+                          <hr>
+                          <div class="row">
+                            <div class="col-md-6 mb-2">
+                              <strong>Nome: </strong> <span><%= dados.nome %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Estado: </strong> <span><%= dados.estado %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Espécie: </strong> <span><%= dados.especie %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Cidade: </strong> <span><%= dados.cidade %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Raça: </strong> <span><%= dados.raca %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Bairro: </strong> <span><%= dados.bairro %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Sexo: </strong> <span><%= dados.sexo %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Rua: </strong> <span><%= dados.rua %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <strong>Porte: </strong> <span><%= dados.porte %></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                              <strong>Desaparecimento: </strong> <span><%= new Date(dados.data).toLocaleDateString('pt-BR') %></span>
+                            </div>
+                          </div>
+                        </article>
+                        <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 45%;">
+                          <h5><i class="material-icons">account_box</i> Dados Anunciante</h5>
+                          <hr>
+                          <div>
+                            <strong>Nome: </strong> <span><%= dados.anunciante_nome %></span>
+                            <br>
+                            <strong>E-mail: </strong> <span><%= dados.anunciante_email %></span>
+                            <br>
+                            <strong>Telefone: </strong> <span><%= formatarTelefone(dados.anunciante_tel) %></span>
+                            <br>
+                            <% if (admin == true) { %>
+                              
+                            <% } else { %>
+                              <br>
+                              <a style="box-shadow: 0 0 2px rgb(51, 50, 50);" href="https://api.whatsapp.com/send?phone=<%= dados.anunciante_tel %>" class="btn btn-white">
+                                <img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato
+                              </a>
+                            <% } %>
+                          </div>
+                        </article>
+                        <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 100%;">
+                          <h5><i class="material-icons">location_on</i> Local de Desaparecimento</h5>
+                          <hr>
+                          <div id="map" style="height: 300px; width: 100%;"></div>
+                        </article>
+                      </div>
+                      
+                      
+                <% } else if (dados.tipo == 'encontrado') { %>
+                    <div>
+                        <div>
+                            <img src="/images/logo.png" width="230px" style="float: right;">
+                            <div>
+                              <div  style="width: 250px; background-color: black; color: white; text-align: center; border-radius: 15px 15px 0 0; box-shadow: 0 0 2px black;">
+                                <% if (dados.sexo == 'Macho') { %>
+                                  ENCONTRADO
+                                <% } else { %>
+                                  ENCONTRADA
+                                <% } %>
+                              </div>
+                              <img id="animal" src="/animais/<%= dados.foto %>" width="250px" height="250px">
+                            </div>
+                            <div style="float: right;">
+                            </div>
+                            <div style="width: 23%; height: 10%;">
+                                <br>
+                                <h4><%= dados.nome %></h4>
+                                <hr width="87%">
+                                <span style="text-align: justify"><%= dados.caracteristicas %></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15%;">
+                      <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 45%;">
+                        <h5><i class="material-icons">description</i> Informações Básicas</h5>
+                        <hr>
+                        <div class="row">
+                          <div class="col-md-6 mb-2">
+                            <strong>Nome: </strong> <span><%= dados.nome %></span>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <strong>Estado: </strong> <span><%= dados.estado %></span>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <strong>Espécie: </strong> <span><%= dados.especie %></span>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <strong>Cidade: </strong> <span><%= dados.cidade %></span>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <strong>Raça: </strong> <span><%= dados.raca %></span>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <strong>Bairro: </strong> <span><%= dados.bairro %></span>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <strong>Sexo: </strong> <span><%= dados.sexo %></span>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <strong>Rua: </strong> <span><%= dados.rua %></span>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                              <strong>Porte: </strong> <span><%= dados.porte %></span>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 45%;">
+                        <h5><i class="material-icons">account_box</i> Dados Anunciante</h5>
+                        <hr>
+                        <div>
+                          <strong>Nome: </strong> <span><%= dados.anunciante_nome %></span>
+                          <br>
+                          <strong>E-mail: </strong> <span><%= dados.anunciante_email %></span>
+                          <br>
+                          <strong>Telefone: </strong> <span><%= formatarTelefone(dados.anunciante_tel) %></span>
+                          <br>
+                          <% if (admin == true) { %>
+                            
+                          <% } else { %>
+                            <br>
+                            <a style="box-shadow: 0 0 2px rgb(51, 50, 50);" href="https://api.whatsapp.com/send?phone=<%= dados.anunciante_tel %>" class="btn btn-white">
+                              <img src="/images/message.png" width="30px">&nbsp;&nbsp;Entrar em contato
+                            </a>
+                          <% } %>
+                        </div>
+                      </article>
+                      <article class="card p-3 mb-3" style="box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1); flex: 1 1 100%;">
+                        <h5><i class="material-icons">location_on</i> Localização Onde Foi Encontrado</h5>
+                        <hr>
+                        <div id="map" style="height: 300px; width: 100%;"></div>
+                      </article>
+                    </div>
+                <% } %> 
+                </div>
+        </div>
+        <%- include('layout/footer'); %>
+    </body>
+    <script>
+        function initMap() {
+            var map = L.map('map').setView([0, 0], 13);
+    
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+    
+            var endereco = '<%= dados.rua %>, <%= dados.cidade %>, <%= dados.estado %>, Brasil';
+    
+            var geocoder = L.Control.Geocoder.nominatim();
+    
+            geocoder.geocode(endereco, function(results) {
+                if (results.length > 0) {
+                    var result = results[0];
+                    
+                    console.log('Coordenadas encontradas:', result.center);
+    
+                    map.setView(result.center, 16);
+    
+                    L.marker(result.center).addTo(map)
+                        .bindPopup('Endereço: ' + endereco)
+                        .openPopup();
+                } else {
+                    console.log('Nenhum resultado encontrado para o endereço:', endereco);
+                }
+            });
+        }
+    
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+    <% }) %>
+</html>
