@@ -18,3 +18,6 @@ Key features include the registration of animals for adoption, lost, or found; a
 - **Backend**: Node.js with Express  
 - **Database**: MySQL  
 - **Templating Engine**: EJS
+<br>
+<br>
+<img src="https://github.com/user-attachments/assets/6ba23c92-5422-42cf-9c2d-ae6c507f79d4">
